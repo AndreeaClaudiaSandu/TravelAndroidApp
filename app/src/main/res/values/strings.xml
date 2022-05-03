@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Travel</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="don_t_you_have_an_account_register_now">Don\'t you have an account? Register now.</string>
+    <string name="explore_the_world">Explore the World</string>
+    <string name="passportimage">PassportImage</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="country">Country</string>
+    <string name="city">City</string>
+    <string name="birth_date">Birth date</string>
+    <string name="register">Register</string>
+    <string name="code">code</string>
+    <string name="activation_code">Activation code</string>
+</resources>
