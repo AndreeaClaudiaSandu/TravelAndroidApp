@@ -30,7 +30,7 @@ public class Background extends AsyncTask<String, String, String>{
         Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
         if(s.equals("Login successfully")) {
             Intent intent = new Intent();
-            intent.setClass(context,MainActivity.class);
+            intent.setClass(context,MainActivity2.class);
             context.startActivity(intent);
         }
 

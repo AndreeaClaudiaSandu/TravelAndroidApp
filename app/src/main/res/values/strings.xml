@@ -14,4 +14,17 @@
     <string name="register">Register</string>
     <string name="code">code</string>
     <string name="activation_code">Activation code</string>
+
+    <string-array name="cities">
+        <item>Barcelona</item>
+        <item>Paris</item>
+        <item>Roma</item>
+        <item>Londra</item>
+        <item>Copenhaga</item>
+        <item>Milano</item>
+        <item>Madrid</item>
+        <item>Porto</item>
+        <item>Lisabona</item>
+        <item>aaa</item>
+    </string-array>
 </resources>
