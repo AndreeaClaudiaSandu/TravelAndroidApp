@@ -60,7 +60,7 @@ public class ActivateAccountActivity extends AppCompatActivity {
                 protected void onPostExecute(String s) {
                     super.onPostExecute(s);
                     Toast.makeText(ActivateAccountActivity.this, s, Toast.LENGTH_SHORT).show();
-                    if(s.equals("Account successfully created")) {
+                    if (s.equals("Account successfully created")) {
                         Intent intent = new Intent(ActivateAccountActivity.this, LoginActivity.class);
                         startActivity(intent);
                     }
@@ -112,12 +112,12 @@ public class ActivateAccountActivity extends AppCompatActivity {
             }
 
             CreateAccount createAccount = new CreateAccount();
-            createAccount.execute(email,password,firstName,lastName,country,city,birthDate);
+            createAccount.execute(email, password, firstName, lastName, country, city, birthDate);
 
         } else {
             Toast.makeText(view.getContext(), "wrong code", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(this, MainActivity.class);
+//            startActivity(intent);
         }
     }
 }

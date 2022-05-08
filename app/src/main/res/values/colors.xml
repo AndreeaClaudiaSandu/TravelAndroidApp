@@ -8,5 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="loginBlue">#a2d9ff</color>
+    <color name="loginBlueTransparent">#80a2d9ff</color>
     <color name="loginDarkBlue">#1E5077</color>
+    <color name="loginDarkBlueTransparent">#951E5077</color>
+    <color name="darkerBlue">#8fd2ff</color>
 </resources>

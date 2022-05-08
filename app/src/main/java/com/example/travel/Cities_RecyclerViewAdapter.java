@@ -17,7 +17,7 @@ public class Cities_RecyclerViewAdapter extends RecyclerView.Adapter<Cities_Recy
     Context context;
     ArrayList<City> cities;
 
-    public Cities_RecyclerViewAdapter(Context context, ArrayList<City> cities){
+    public Cities_RecyclerViewAdapter(Context context, ArrayList<City> cities) {
         this.context = context;
         this.cities = cities;
     }
@@ -26,7 +26,7 @@ public class Cities_RecyclerViewAdapter extends RecyclerView.Adapter<Cities_Recy
     @Override
     public Cities_RecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.recycler_view_row,parent,false);
+        View view = inflater.inflate(R.layout.recycler_view_row, parent, false);
         return new Cities_RecyclerViewAdapter.MyViewHolder(view);
     }
 
@@ -41,7 +41,7 @@ public class Cities_RecyclerViewAdapter extends RecyclerView.Adapter<Cities_Recy
         return cities.size();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView;
         TextView cityName;
