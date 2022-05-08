@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         toolbar.setTitle("Pick a city");
         replaceFragment(new FragmentPickCity());
+
     }
 
 
