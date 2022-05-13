@@ -2,12 +2,14 @@ package com.example.travel;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,6 +31,7 @@ import java.util.Objects;
 public class FragmentPickCity extends Fragment {
 
     private static final String ARG_PARAM = "param";
+
     ArrayList<City> cities = new ArrayList<>();
 
     /**
@@ -65,7 +68,7 @@ public class FragmentPickCity extends Fragment {
 
     private void setCities() {
 
-        class GetCities extends AsyncTask<String, String, String> {
+        class GetCities extends AsyncTask<String, String, String> implements Cities_RecyclerViewAdapter.ItemClickListener{
 
             ArrayList<String> citiesNameDatabase = new ArrayList<>();
 
@@ -79,7 +82,7 @@ public class FragmentPickCity extends Fragment {
                         cities.add(new City(citiesNameDatabase.get(i), getResources().getIdentifier(citiesNameDatabase.get(i), "drawable", getContext().getPackageName())));
                     }
                     RecyclerView recyclerView = getView().findViewById(R.id.citiesRecyclerView);
-                    Cities_RecyclerViewAdapter adapter = new Cities_RecyclerViewAdapter(getContext(), cities);
+                    Cities_RecyclerViewAdapter adapter = new Cities_RecyclerViewAdapter(getContext(), cities, this );
                     recyclerView.setAdapter(adapter);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -115,9 +118,19 @@ public class FragmentPickCity extends Fragment {
                 }
 
             }
+
+            @Override
+            public void onItemClick(City city) {
+                Toast.makeText(getContext(), city.getName(), Toast.LENGTH_SHORT).show();
+                Log.d("on click", Integer.toString( cities.size()));
+
+                Fragment fragment = FragmentCity.newInstance(cities, city.getName());
+                ((MainActivity) getActivity()).replaceFragment(fragment);
+            }
         }
 
         GetCities cities = new GetCities();
         cities.execute();
     }
+
 }

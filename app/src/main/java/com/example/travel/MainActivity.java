@@ -1,5 +1,6 @@
 package com.example.travel;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,9 +12,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -25,6 +29,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+//            @Override
+//            public void handleOnBackPressed() {
+//                if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+//                    drawerLayout.closeDrawer(GravityCompat.START);
+//                } else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+//                    getSupportFragmentManager().popBackStackImmediate();
+//                    Log.i("back", "ceva");
+//                } else {
+//                    Log.i("back", "nada");
+//                    onBackPressed();
+//                }
+//            }
+//        });
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -51,11 +70,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
+
+
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
+        } else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStackImmediate();
+            Log.i("back", "ceva");
         } else {
+            Log.i("back", "nada");
             super.onBackPressed();
         }
+
+
     }
 
     @Override
@@ -82,11 +109,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    private void replaceFragment(Fragment fragment) {
+    public void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frameLayout, fragment);
-        fragmentTransaction.commit();
+        fragmentManager.beginTransaction().replace(R.id.frameLayout, fragment).addToBackStack(null).commit();
+        Log.i("number", Integer.toString(getSupportFragmentManager().getBackStackEntryCount()));
+
     }
 
 }

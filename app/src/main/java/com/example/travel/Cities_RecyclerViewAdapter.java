@@ -1,5 +1,6 @@
 package com.example.travel;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +17,12 @@ public class Cities_RecyclerViewAdapter extends RecyclerView.Adapter<Cities_Recy
 
     Context context;
     ArrayList<City> cities;
+    private ItemClickListener clickListener;
 
-    public Cities_RecyclerViewAdapter(Context context, ArrayList<City> cities) {
+    public Cities_RecyclerViewAdapter(Context context, ArrayList<City> cities, ItemClickListener clickListener) {
         this.context = context;
         this.cities = cities;
+        this.clickListener = clickListener;
     }
 
     @NonNull
@@ -31,9 +34,16 @@ public class Cities_RecyclerViewAdapter extends RecyclerView.Adapter<Cities_Recy
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Cities_RecyclerViewAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull Cities_RecyclerViewAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.cityName.setText(cities.get(position).getName());
         holder.imageView.setImageResource(cities.get(position).getImg());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickListener.onItemClick(cities.get(position));
+            }
+        });
     }
 
     @Override
@@ -52,5 +62,9 @@ public class Cities_RecyclerViewAdapter extends RecyclerView.Adapter<Cities_Recy
             imageView = itemView.findViewById(R.id.cityImage);
             cityName = itemView.findViewById(R.id.cityName);
         }
+    }
+
+    public interface ItemClickListener{
+        public  void onItemClick(City city);
     }
 }
