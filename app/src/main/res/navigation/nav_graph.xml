@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph">
 
+    <fragment
+        android:id="@+id/fragmentPickCity"
+        android:name="com.example.travel.FragmentPickCity"
+        android:label="fragment_pick_city"
+        tools:layout="@layout/fragment_pick_city" >
+        <action
+            android:id="@+id/action_fragmentPickCity_to_fragmentCity"
+            app:destination="@id/fragmentCity" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentCity"
+        android:name="com.example.travel.FragmentCity"
+        android:label="fragment_city"
+        tools:layout="@layout/fragment_city" >
+        <action
+            android:id="@+id/action_fragmentCity_to_fragmentPickCity"
+            app:destination="@id/fragmentPickCity" />
+    </fragment>
 </navigation>

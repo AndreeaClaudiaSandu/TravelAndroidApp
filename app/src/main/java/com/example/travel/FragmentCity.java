@@ -54,6 +54,8 @@ public class FragmentCity extends Fragment {
             setCityName(getArguments().getString("cityName"));
 
         }
+
+
     }
 
     @Override
@@ -62,6 +64,17 @@ public class FragmentCity extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_city, container, false);
         ((TextView) root.findViewById(R.id.textView5)).setText(cityName);
+//        ((TextView) root.findViewById(R.id.textView2)).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Fragment fragment = FragmentPickCity.newInstance(cities);
+//                ((MainActivity) getActivity()).replaceFragment(fragment);
+//            }
+//        });
         return root;
+    }
+
+    public void nextFragment(View view){
+
     }
 }

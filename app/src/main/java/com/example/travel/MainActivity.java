@@ -30,21 +30,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
-//            @Override
-//            public void handleOnBackPressed() {
-//                if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-//                    drawerLayout.closeDrawer(GravityCompat.START);
-//                } else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-//                    getSupportFragmentManager().popBackStackImmediate();
-//                    Log.i("back", "ceva");
-//                } else {
-//                    Log.i("back", "nada");
-//                    onBackPressed();
-//                }
-//            }
-//        });
-
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
@@ -63,7 +48,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         toolbar.setTitle("Pick a city");
-        replaceFragment(new FragmentPickCity());
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.add(R.id.frameLayout, new FragmentPickCity());
+        transaction.commit();
 
     }
 
@@ -98,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     break;
                 case R.id.activities:
                     toolbar.setTitle("Unforgettable experiences");
+                    replaceFragment(new FragmentActivities());
                     break;
                 default:
                     return true;
@@ -111,9 +100,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.frameLayout, fragment).addToBackStack(null).commit();
-        Log.i("number", Integer.toString(getSupportFragmentManager().getBackStackEntryCount()));
-
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.frameLayout, fragment);
+        if (!getSupportFragmentManager().getFragments().isEmpty()){
+            transaction.addToBackStack(null);
+        }
+        transaction.commit();
     }
 
 }

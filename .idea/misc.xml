@@ -15,6 +15,7 @@
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/drawable/round_border_left_menu_item.xml" value="0.192" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/drawable/round_border_menu_item.xml" value="0.2285" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/drawable/round_border_nav.xml" value="0.1215" />
+        <entry key="..\:/facultate/licentaTravel/app/src/main/res/drawable/round_border_right_menu_item.xml" value="0.157" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/drawable/round_button.xml" value="0.2265" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/drawable/wave_down.xml" value="0.136" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/activity_activate_account.xml" value="0.176" />
@@ -22,9 +23,12 @@
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/activity_main2.xml" value="0.176" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/activity_main3.xml" value="0.20854700854700856" />
+        <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/activity_recycler_view_row.xml" value="0.4" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/activity_register.xml" value="0.2" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/app_bar_main.xml" value="0.20854700854700856" />
+        <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/city_recycler_view_row.xml" value="0.1" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/content_main.xml" value="0.20854700854700856" />
+        <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/fragment_activities.xml" value="0.20854700854700856" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/fragment_city.xml" value="0.2" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/fragment_gallery.xml" value="0.20854700854700856" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/fragment_home.xml" value="0.20854700854700856" />

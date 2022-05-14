@@ -25,8 +25,7 @@ import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link FragmentPickCity#newInstance} factory method to
- * create an instance of this fragment.
+
  */
 public class FragmentPickCity extends Fragment {
 
@@ -34,20 +33,20 @@ public class FragmentPickCity extends Fragment {
 
     ArrayList<City> cities = new ArrayList<>();
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param arrayList Parameter 1.
-     * @return A new instance of fragment FragmentPickCity.
-     */
-    public static FragmentPickCity newInstance(ArrayList arrayList) {
-        FragmentPickCity fragment = new FragmentPickCity();
-        Bundle args = new Bundle();
-        args.putStringArrayList(ARG_PARAM, arrayList);
-        fragment.setArguments(args);
-        return fragment;
-    }
+//    /**
+//     * Use this factory method to create a new instance of
+//     * this fragment using the provided parameters.
+//     *
+//     * @param arrayList Parameter 1.
+//     * @return A new instance of fragment FragmentPickCity.
+//     */
+//    public static FragmentPickCity newInstance(ArrayList arrayList) {
+//        FragmentPickCity fragment = new FragmentPickCity();
+////        Bundle args = new Bundle();
+////        args.putStringArrayList(ARG_PARAM, arrayList);
+////        fragment.setArguments(args);
+//        return fragment;
+//    }
 
     public FragmentPickCity() {
         // Required empty public constructor
