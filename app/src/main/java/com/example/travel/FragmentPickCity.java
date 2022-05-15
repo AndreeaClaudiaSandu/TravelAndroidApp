@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,30 +22,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Objects;
 
-/**
- * A simple {@link Fragment} subclass.
-
- */
 public class FragmentPickCity extends Fragment {
 
-    private static final String ARG_PARAM = "param";
-
     ArrayList<City> cities = new ArrayList<>();
-
-//    /**
-//     * Use this factory method to create a new instance of
-//     * this fragment using the provided parameters.
-//     *
-//     * @param arrayList Parameter 1.
-//     * @return A new instance of fragment FragmentPickCity.
-//     */
-//    public static FragmentPickCity newInstance(ArrayList arrayList) {
-//        FragmentPickCity fragment = new FragmentPickCity();
-////        Bundle args = new Bundle();
-////        args.putStringArrayList(ARG_PARAM, arrayList);
-////        fragment.setArguments(args);
-//        return fragment;
-//    }
 
     public FragmentPickCity() {
         // Required empty public constructor
@@ -92,7 +70,6 @@ public class FragmentPickCity extends Fragment {
             protected String doInBackground(String... strings) {
 
                 String server = LoginActivity.server.concat("getCities.php");
-                StringBuilder result = new StringBuilder();
                 try {
                     URL url = new URL(server);
                     HttpURLConnection http = (HttpURLConnection) url.openConnection();
@@ -101,7 +78,7 @@ public class FragmentPickCity extends Fragment {
 
                     InputStream input = http.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(input, StandardCharsets.ISO_8859_1));
-                    String line = "";
+                    String line;
                     while ((line = reader.readLine()) != null) {
                         citiesNameDatabase.add(line);
                     }
@@ -123,7 +100,7 @@ public class FragmentPickCity extends Fragment {
                 Toast.makeText(getContext(), city.getName(), Toast.LENGTH_SHORT).show();
                 Log.d("on click", Integer.toString( cities.size()));
 
-                Fragment fragment = FragmentCity.newInstance(cities, city.getName());
+                Fragment fragment = FragmentCity.newInstance(city);
                 ((MainActivity) getActivity()).replaceFragment(fragment);
             }
         }

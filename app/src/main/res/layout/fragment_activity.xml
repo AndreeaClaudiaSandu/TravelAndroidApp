@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".FragmentActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <ImageView
+                android:id="@+id/specificActivityImage"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:fadingEdge="horizontal"
+                android:scaleType="centerCrop"
+                android:src="@drawable/hotairballoonflight"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/specificActivityTitle"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:autoText="false"
+                android:fontFamily="sans-serif-smallcaps"
+                android:gravity="bottom|center"
+                android:paddingStart="40dp"
+                android:paddingEnd="40dp"
+                android:text="Hot air balloon flight"
+                android:textAlignment="center"
+                android:textColor="@color/loginDarkBlue"
+                android:textSize="24sp"
+                android:textStyle="bold|italic"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/specificActivityImage" />
+
+            <TextView
+                android:id="@+id/Description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="32dp"
+                android:fontFamily="sans-serif"
+                android:text="Description"
+                android:textAlignment="textStart"
+                android:textColor="@color/loginDarkBlue"
+                android:textSize="24sp"
+                android:typeface="normal"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/specificActivityTitle" />
+
+            <TextView
+                android:id="@+id/specificActivityDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="njmlk"
+                android:textAlignment="textStart"
+                android:textSize="16sp"
+                app:autoSizeTextType="none"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Description" />
+
+            <TextView
+                android:id="@+id/Location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="sans-serif"
+                android:text="Location"
+                android:textColor="@color/loginDarkBlue"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/specificActivityDescription" />
+
+            <TextView
+                android:id="@+id/specificActivityLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="sans-serif"
+                android:text="locationnn"
+                android:textAlignment="textStart"
+                android:textSize="16sp"
+                app:autoSizeTextType="none"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Location" />
+
+            <TextView
+                android:id="@+id/Price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="sans-serif"
+                android:text="Price"
+                android:textAlignment="textStart"
+                android:textColor="@color/loginDarkBlue"
+                android:textSize="24sp"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/specificActivityLocation" />
+
+            <TextView
+                android:id="@+id/specificActiivityPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="sans-serif"
+                android:text="100$/person"
+                android:textAlignment="textStart"
+                android:textSize="16sp"
+                app:autoSizeTextType="none"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Price" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</FrameLayout>

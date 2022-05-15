@@ -17,7 +17,7 @@ public class Cities_RecyclerViewAdapter extends RecyclerView.Adapter<Cities_Recy
 
     Context context;
     ArrayList<City> cities;
-    private ItemClickListener clickListener;
+    private final ItemClickListener clickListener;
 
     public Cities_RecyclerViewAdapter(Context context, ArrayList<City> cities, ItemClickListener clickListener) {
         this.context = context;
@@ -38,12 +38,7 @@ public class Cities_RecyclerViewAdapter extends RecyclerView.Adapter<Cities_Recy
         holder.cityName.setText(cities.get(position).getName());
         holder.imageView.setImageResource(cities.get(position).getImg());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickListener.onItemClick(cities.get(position));
-            }
-        });
+        holder.itemView.setOnClickListener(v -> clickListener.onItemClick(cities.get(position)));
     }
 
     @Override
@@ -65,6 +60,6 @@ public class Cities_RecyclerViewAdapter extends RecyclerView.Adapter<Cities_Recy
     }
 
     public interface ItemClickListener{
-        public  void onItemClick(City city);
+        void onItemClick(City city);
     }
 }

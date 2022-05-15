@@ -1,7 +1,14 @@
 package com.example.travel;
 
-import androidx.activity.OnBackPressedCallback;
+import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.Display;
+import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -11,19 +18,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
-
 import com.google.android.material.navigation.NavigationView;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
+    Display display;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
 
+        setFrameLayoutHeight();
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -48,25 +51,44 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         toolbar.setTitle("Pick a city");
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.frameLayout, new FragmentPickCity());
-        transaction.commit();
+        replaceFragment(new FragmentPickCity());
 
+    }
+
+    private void setFrameLayoutHeight() {
+        display = getWindowManager().getDefaultDisplay();
+        DisplayMetrics metrics = new DisplayMetrics();
+        display.getMetrics(metrics);
+
+        float density = getResources().getDisplayMetrics().density;
+        int dpHeight = (int) (metrics.heightPixels / density);
+        int frameHeightdp = dpHeight - 90;
+        int frameHeightPixels = (int) (frameHeightdp * density);
+        FrameLayout layout = (FrameLayout) findViewById(R.id.frameLayout);
+        ViewGroup.LayoutParams parms = (ViewGroup.LayoutParams) layout.getLayoutParams();
+        parms.height = frameHeightPixels;
+        layout.setLayoutParams(parms);
     }
 
 
     @Override
     public void onBackPressed() {
 
-
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStackImmediate();
-            Log.i("back", "ceva");
+            if (getSupportFragmentManager().getFragments().size() > 0) {
+                Fragment currentFragment = getSupportFragmentManager().getFragments().get(getSupportFragmentManager().getFragments().size() - 1);
+                if (currentFragment instanceof FragmentActivities || currentFragment instanceof FragmentActivity) {
+                    ((Toolbar) findViewById(R.id.toolbar)).setTitle(getResources().getString(R.string.experiences));
+                    navigationView.getMenu().findItem(R.id.activities).setChecked(true);
+                } else {
+                    ((Toolbar) findViewById(R.id.toolbar)).setTitle(getResources().getString(R.string.pick_a_city));
+                    navigationView.getMenu().findItem(R.id.pick_city).setChecked(true);
+                }
+            }
         } else {
-            Log.i("back", "nada");
             super.onBackPressed();
         }
 
@@ -81,11 +103,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             drawerLayout.closeDrawer(GravityCompat.START);
             switch (id) {
                 case R.id.pick_city:
-                    toolbar.setTitle("Pick a city");
+                    toolbar.setTitle(getResources().getString(R.string.pick_a_city));
                     replaceFragment(new FragmentPickCity());
                     break;
                 case R.id.activities:
-                    toolbar.setTitle("Unforgettable experiences");
+                    toolbar.setTitle(getResources().getString(R.string.experiences));
                     replaceFragment(new FragmentActivities());
                     break;
                 default:
@@ -101,11 +123,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.frameLayout, fragment);
-        if (!getSupportFragmentManager().getFragments().isEmpty()){
+        transaction.add(R.id.frameLayout, fragment);
+        if (!getSupportFragmentManager().getFragments().isEmpty()) {
             transaction.addToBackStack(null);
         }
         transaction.commit();
     }
 
+    @Nullable
+    @Override
+    public Display getDisplay() {
+        return display;
+    }
 }

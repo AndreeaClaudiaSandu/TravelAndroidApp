@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         InputStream input = http.getInputStream();
                         BufferedReader reader = new BufferedReader(new InputStreamReader(input, StandardCharsets.ISO_8859_1));
-                        String line = "";
+                        String line;
                         while ((line = reader.readLine()) != null) {
                             result.append(line);
                         }

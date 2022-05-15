@@ -17,7 +17,7 @@ public class Activities_RecyclerViewAdapter extends RecyclerView.Adapter<Activit
 
     Context context;
     ArrayList<Activity> activities;
-    private Activities_RecyclerViewAdapter.ItemClickListener clickListener;
+    private final Activities_RecyclerViewAdapter.ItemClickListener clickListener;
 
     public Activities_RecyclerViewAdapter(Context context, ArrayList<Activity> activities, Activities_RecyclerViewAdapter.ItemClickListener clickListener) {
         this.context = context;
@@ -36,15 +36,11 @@ public class Activities_RecyclerViewAdapter extends RecyclerView.Adapter<Activit
     @Override
     public void onBindViewHolder(@NonNull Activities_RecyclerViewAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.activityName.setText(activities.get(position).getDenumire());
-        holder.activityLocation.setText(activities.get(position).getTara() + ", " +  activities.get(position).getOras());
+        String location = activities.get(position).getTara() + ", " +  activities.get(position).getOras();
+        holder.activityLocation.setText(location);
         holder.imageView.setImageResource(activities.get(position).getImage());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickListener.onItemClick(activities.get(position));
-            }
-        });
+        holder.itemView.setOnClickListener(v -> clickListener.onItemClick(activities.get(position)));
     }
 
     @Override
@@ -53,7 +49,7 @@ public class Activities_RecyclerViewAdapter extends RecyclerView.Adapter<Activit
     }
 
     public interface ItemClickListener {
-        public  void onItemClick(Activity activity);
+        void onItemClick(Activity activity);
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {

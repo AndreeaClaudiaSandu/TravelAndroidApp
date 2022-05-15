@@ -2,16 +2,15 @@ package com.example.travel;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,7 +27,6 @@ import java.util.Objects;
  */
 public class FragmentActivities extends Fragment {
 
-    private static final String ARG_PARAM = "param";
     ArrayList<Activity> activities = new ArrayList<>();
 
     public FragmentActivities() {
@@ -83,14 +81,19 @@ public class FragmentActivities extends Fragment {
 
                         InputStream input = http.getInputStream();
                         BufferedReader reader = new BufferedReader(new InputStreamReader(input, StandardCharsets.ISO_8859_1));
-                        String line = "";
+                        String line;
                         while ((line = reader.readLine()) != null) {
                             result.append(line);
-                            String[] fields=  line.split(",");
-                            String tara = fields[3].substring(0,1).toUpperCase() + fields[3].substring(1);
-                            String oras = fields[2].substring(0,1).toUpperCase() + fields[2].substring(1);
-                            Log.i("poza", fields[0].trim().toLowerCase());
-                            activities.add(new Activity(fields[0],fields[1],oras,tara,getResources().getIdentifier(fields[0].replace(" ", "").toLowerCase(), "drawable", getContext().getPackageName())));
+                            String[] fields=  line.split("=,");
+
+                            Log.i("pos0: ", fields[0]);
+                            Log.i("pos1: ", fields[1]);
+                            Log.i("pos2: ", fields[2]);
+                            Log.i("pos3: ", fields[3]);
+                            Log.i("pos4: ", fields[4]);
+                            String tara = fields[4].substring(0,1).toUpperCase() + fields[4].substring(1);
+                            String oras = fields[3].substring(0,1).toUpperCase() + fields[3].substring(1);
+                            activities.add(new Activity(fields[0],fields[1], fields[2], oras,tara,getResources().getIdentifier(fields[0].replace(" ", "").toLowerCase(), "drawable", getContext().getPackageName())));
                         }
                         reader.close();
                         input.close();
@@ -108,7 +111,8 @@ public class FragmentActivities extends Fragment {
                 @Override
                     public void onItemClick(Activity activity) {
                     Toast.makeText(getContext(), activity.getDenumire(), Toast.LENGTH_SHORT).show();
-
+                    Fragment fragment = FragmentActivity.newInstance(activity);
+                    ((MainActivity) getActivity()).replaceFragment(fragment);
 //                    Fragment fragment = FragmentCity.newInstance(cities, city.getName());
 //                    ((MainActivity) getActivity()).replaceFragment(fragment);
                 }
@@ -119,4 +123,6 @@ public class FragmentActivities extends Fragment {
         }
 
     }
+
+
 }

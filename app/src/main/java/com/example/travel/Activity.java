@@ -4,13 +4,15 @@ public class Activity {
 
     private String denumire;
     private String descriere;
+    private String pret;
     private String oras;
     private String tara;
     private int image;
 
-    public Activity(String denumire, String descriere, String oras, String tara, int image) {
+    public Activity(String denumire, String descriere, String pret, String oras, String tara, int image) {
         this.denumire = denumire;
         this.descriere = descriere;
+        this.pret = pret;
         this.oras = oras;
         this.tara = tara;
         this.image = image;
@@ -34,5 +36,9 @@ public class Activity {
 
     public int getImage() {
         return image;
+    }
+
+    public String getPret() {
+        return pret;
     }
 }

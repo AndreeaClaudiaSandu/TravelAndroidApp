@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -63,24 +62,16 @@ public class RegisterActivity extends AppCompatActivity {
         city = findViewById(R.id.city);
         birthDate = findViewById(R.id.birth_date);
 
-        birthDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Calendar calendar = Calendar.getInstance();
-                year = calendar.get(Calendar.YEAR);
-                month = calendar.get(Calendar.MONTH);
-                day = calendar.get(Calendar.DATE);
-                DatePickerDialog datePickerDialog = new DatePickerDialog(RegisterActivity.this, R.style.DatePicker, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        birthDate.setText(year+"-"+month+"-"+dayOfMonth);
-                    }
-                }, year,month,day);
-                datePickerDialog.show();
-                datePickerDialog.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.loginDarkBlue));
-                datePickerDialog.getButton(DatePickerDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.loginDarkBlue));
+        birthDate.setOnClickListener(v -> {
+            final Calendar calendar = Calendar.getInstance();
+            year = calendar.get(Calendar.YEAR);
+            month = calendar.get(Calendar.MONTH);
+            day = calendar.get(Calendar.DATE);
+            DatePickerDialog datePickerDialog = new DatePickerDialog(RegisterActivity.this, R.style.DatePicker, (view, year, month, dayOfMonth) -> birthDate.setText(year+"-"+month+"-"+dayOfMonth), year,month,day);
+            datePickerDialog.show();
+            datePickerDialog.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.loginDarkBlue));
+            datePickerDialog.getButton(DatePickerDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.loginDarkBlue));
 
-            }
         });
     }
 
@@ -94,16 +85,18 @@ public class RegisterActivity extends AppCompatActivity {
                 @Override
                 protected void onPostExecute(String s) {
                     super.onPostExecute(s);
-                    if(s.equals("An account with this email already exists")){
-                        Toast.makeText(RegisterActivity.this, s, Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                    }
-                    else if(s.equals("Not an existing account")){
-                        sendCode();
-                    }
-                    else if(s.equals("Not connected")){
-                        Toast.makeText(RegisterActivity.this, "Connection error. Try again.", Toast.LENGTH_SHORT).show();
+                    switch (s) {
+                        case "An account with this email already exists":
+                            Toast.makeText(RegisterActivity.this, s, Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                            break;
+                        case "Not an existing account":
+                            sendCode();
+                            break;
+                        case "Not connected":
+                            Toast.makeText(RegisterActivity.this, "Connection error. Try again.", Toast.LENGTH_SHORT).show();
+                            break;
                     }
                 }
 
@@ -131,7 +124,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                         InputStream input = http.getInputStream();
                         BufferedReader reader = new BufferedReader(new InputStreamReader(input, StandardCharsets.ISO_8859_1));
-                        String line = "";
+                        String line;
                         while ((line = reader.readLine()) != null) {
                             result.append(line);
                         }
