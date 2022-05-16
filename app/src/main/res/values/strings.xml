@@ -41,11 +41,12 @@
     <string name="pick_a_city">Pick a city</string>
     <string name="activities">Activities</string>
 
-    <string name="nav_drawer_open">"Open navigation drawer"</string>
-    <string name="nav_drawer_close">"Close navigation drawer"</string>
+    <string name="nav_drawer_open">Open navigation drawer</string>
+    <string name="nav_drawer_close">Close navigation drawer</string>
 
-    <string name="experiences">"Unforgettable experiences"</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="experiences">Unforgettable experiences</string>
+    <string name="getToCity">Getting from airport to city</string>
+    <string name="transportInCity">Transport in the city</string>
+
 
 </resources>

@@ -35,10 +35,10 @@ public class FragmentActivity extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_activity, container, false);
-        ((TextView) root.findViewById(R.id.specificActivityTitle)).setText(activity.getDenumire());
-        ((TextView) root.findViewById(R.id.specificActivityDescription)).setText(activity.getDescriere());
-        ((TextView) root.findViewById(R.id.specificActivityLocation)).setText(activity.getTara() + ", " + activity.getOras());
-        ((TextView) root.findViewById(R.id.specificActiivityPrice)).setText("Starting from: " + activity.getPret());
+        ((TextView) root.findViewById(R.id.specificActivityTitle)).setText(activity.getName());
+        ((TextView) root.findViewById(R.id.specificActivityDescription)).setText(activity.getDescription());
+        ((TextView) root.findViewById(R.id.specificActivityLocation)).setText(activity.getCountry() + ", " + activity.getCity());
+        ((TextView) root.findViewById(R.id.specificActiivityPrice)).setText("Starting from: " + activity.getPrice());
         ((ImageView) root.findViewById(R.id.specificActivityImage)).setImageResource(activity.getImage());
         return root;
     }

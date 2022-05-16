@@ -2,43 +2,43 @@ package com.example.travel;
 
 public class Activity {
 
-    private String denumire;
-    private String descriere;
-    private String pret;
-    private String oras;
-    private String tara;
+    private String name;
+    private String description;
+    private String price;
+    private String city;
+    private String country;
     private int image;
 
     public Activity(String denumire, String descriere, String pret, String oras, String tara, int image) {
-        this.denumire = denumire;
-        this.descriere = descriere;
-        this.pret = pret;
-        this.oras = oras;
-        this.tara = tara;
+        this.name = denumire;
+        this.description = descriere;
+        this.price = pret;
+        this.city = oras;
+        this.country = tara;
         this.image = image;
     }
 
-    public String getDenumire() {
-        return denumire;
+    public String getName() {
+        return name;
     }
 
-    public String getDescriere() {
-        return descriere;
+    public String getDescription() {
+        return description;
     }
 
-    public String getOras() {
-        return oras;
+    public String getCity() {
+        return city;
     }
 
-    public String getTara() {
-        return tara;
+    public String getCountry() {
+        return country;
     }
 
     public int getImage() {
         return image;
     }
 
-    public String getPret() {
-        return pret;
+    public String getPrice() {
+        return price;
     }
 }

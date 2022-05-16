@@ -86,11 +86,6 @@ public class FragmentActivities extends Fragment {
                             result.append(line);
                             String[] fields=  line.split("=,");
 
-                            Log.i("pos0: ", fields[0]);
-                            Log.i("pos1: ", fields[1]);
-                            Log.i("pos2: ", fields[2]);
-                            Log.i("pos3: ", fields[3]);
-                            Log.i("pos4: ", fields[4]);
                             String tara = fields[4].substring(0,1).toUpperCase() + fields[4].substring(1);
                             String oras = fields[3].substring(0,1).toUpperCase() + fields[3].substring(1);
                             activities.add(new Activity(fields[0],fields[1], fields[2], oras,tara,getResources().getIdentifier(fields[0].replace(" ", "").toLowerCase(), "drawable", getContext().getPackageName())));
@@ -110,7 +105,7 @@ public class FragmentActivities extends Fragment {
 
                 @Override
                     public void onItemClick(Activity activity) {
-                    Toast.makeText(getContext(), activity.getDenumire(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), activity.getName(), Toast.LENGTH_SHORT).show();
                     Fragment fragment = FragmentActivity.newInstance(activity);
                     ((MainActivity) getActivity()).replaceFragment(fragment);
 //                    Fragment fragment = FragmentCity.newInstance(cities, city.getName());

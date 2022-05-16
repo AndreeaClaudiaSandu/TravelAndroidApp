@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:clickable="true"
     tools:context=".FragmentCity">
 
 
@@ -20,7 +21,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            app:layout_constraintTop_toBottomOf="@+id/descriptionCityTitle"
             app:layout_constraintVertical_bias="0.0" />
 
         <LinearLayout
@@ -78,7 +79,39 @@
                 android:textSize="20sp"
                 android:textStyle="bold|italic" />
 
+
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/descriptionCityImage"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:clickable="false"
+            android:fadingEdge="horizontal"
+            android:scaleType="centerCrop"
+            android:src="@drawable/barcelona"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+        <TextView
+            android:id="@+id/descriptionCityTitle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-smallcaps"
+            android:gravity="bottom|center"
+            android:paddingStart="40dp"
+            android:paddingEnd="40dp"
+            android:text="Barcelona"
+            android:textAlignment="center"
+            android:textColor="@color/loginDarkBlue"
+            android:textSize="34sp"
+            android:textStyle="bold|italic"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/descriptionCityImage" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

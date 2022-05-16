@@ -36,9 +36,7 @@ public class FragmentCityDescription extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root= inflater.inflate(R.layout.fragment_city_description, container, false);
-        ((TextView) root.findViewById(R.id.descriptionCityTitle)).setText(city.getName());
         ((TextView) root.findViewById(R.id.descriptionCity)).setText(" descriereeeeee");
-        ((ImageView) root.findViewById(R.id.descriptionCityImage)).setImageResource(city.getImg());
         return root;
     }
 

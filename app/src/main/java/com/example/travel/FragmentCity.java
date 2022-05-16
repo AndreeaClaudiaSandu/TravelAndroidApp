@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -43,6 +44,14 @@ public class FragmentCity extends Fragment {
             Fragment fragment = FragmentCityDescription.newInstance(city);
             replaceFragment(fragment);
         });
+
+        ((TextView) root.findViewById(R.id.transportButon)).setOnClickListener(v -> {
+            Fragment fragment = FragmentCityTransport.newInstance(city.getName());
+            replaceFragment(fragment);
+        });
+
+        ((TextView) root.findViewById(R.id.descriptionCityTitle)).setText(city.getName());
+        ((ImageView) root.findViewById(R.id.descriptionCityImage)).setImageResource(city.getImg());
         return root;
     }
 
