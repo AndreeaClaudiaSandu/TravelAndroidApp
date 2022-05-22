@@ -46,7 +46,7 @@ public class FragmentCity extends Fragment {
         });
 
         ((TextView) root.findViewById(R.id.transportButon)).setOnClickListener(v -> {
-            Fragment fragment = FragmentCityTransport.newInstance(city.getName());
+            Fragment fragment = FragmentCityTransport.newInstance(city);
             replaceFragment(fragment);
         });
 

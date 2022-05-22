@@ -1,14 +1,13 @@
 package com.example.travel;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 public class FragmentCityDescription extends Fragment {
 
@@ -36,7 +35,7 @@ public class FragmentCityDescription extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root= inflater.inflate(R.layout.fragment_city_description, container, false);
-        ((TextView) root.findViewById(R.id.descriptionCity)).setText(" descriereeeeee");
+        ((TextView) root.findViewById(R.id.descriptionCity)).setText(Html.fromHtml( city.getDescription()));
         return root;
     }
 

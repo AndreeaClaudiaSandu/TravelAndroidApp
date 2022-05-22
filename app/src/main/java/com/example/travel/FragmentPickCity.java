@@ -47,17 +47,12 @@ public class FragmentPickCity extends Fragment {
 
         class GetCities extends AsyncTask<String, String, String> implements Cities_RecyclerViewAdapter.ItemClickListener{
 
-            ArrayList<String> citiesNameDatabase = new ArrayList<>();
-
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 if (s.equals("Connection error. Try again.")) {
                     Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
                 } else {
-                    for (int i = 0; i < citiesNameDatabase.size(); i++) {
-                        cities.add(new City(citiesNameDatabase.get(i), getResources().getIdentifier(citiesNameDatabase.get(i), "drawable", getContext().getPackageName())));
-                    }
                     RecyclerView recyclerView = getView().findViewById(R.id.citiesRecyclerView);
                     Cities_RecyclerViewAdapter adapter = new Cities_RecyclerViewAdapter(getContext(), cities, this );
                     recyclerView.setAdapter(adapter);
@@ -70,6 +65,7 @@ public class FragmentPickCity extends Fragment {
             protected String doInBackground(String... strings) {
 
                 String server = LoginActivity.server.concat("getCities.php");
+                StringBuilder result = new StringBuilder();
                 try {
                     URL url = new URL(server);
                     HttpURLConnection http = (HttpURLConnection) url.openConnection();
@@ -80,12 +76,15 @@ public class FragmentPickCity extends Fragment {
                     BufferedReader reader = new BufferedReader(new InputStreamReader(input, StandardCharsets.ISO_8859_1));
                     String line;
                     while ((line = reader.readLine()) != null) {
-                        citiesNameDatabase.add(line);
+                        result.append(line);
+                        String[] fields = line.split("=,");
+
+                        cities.add(new City(fields[0], fields[1], fields[2], fields[3] == "null" ? null: fields[3], fields[4] == "null" ? null: fields[4], getResources().getIdentifier(fields[0], "drawable", getContext().getPackageName())));
                     }
                     reader.close();
                     input.close();
                     http.disconnect();
-                    return citiesNameDatabase.toString();
+                    return result.toString();
 
                 } catch (
                         IOException e) {
