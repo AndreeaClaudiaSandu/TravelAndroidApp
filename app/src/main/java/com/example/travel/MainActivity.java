@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -86,6 +88,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 } else {
                     ((Toolbar) findViewById(R.id.toolbar)).setTitle(getResources().getString(R.string.pick_a_city));
                     navigationView.getMenu().findItem(R.id.pick_city).setChecked(true);
+                }
+                if(currentFragment instanceof FragmentCityDescription || currentFragment instanceof FragmentCityTransport){
+                    findViewById(R.id.descriptionCityImage).setVisibility(View.VISIBLE);
+                    findViewById(R.id.descriptionCityTitle).setVisibility(View.VISIBLE);
+                }
+                if (currentFragment instanceof FragmentCityAttractions || currentFragment instanceof  FragmentCityAttraction){
+                    findViewById(R.id.descriptionCityImage).setVisibility(View.GONE);
+                    findViewById(R.id.descriptionCityTitle).setVisibility(View.GONE);
                 }
             }
         } else {

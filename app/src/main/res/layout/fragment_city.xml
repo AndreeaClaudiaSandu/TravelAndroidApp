@@ -34,7 +34,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/descriereButon"
+                android:id="@+id/descriptionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -42,14 +42,17 @@
                 android:clickable="true"
                 android:fontFamily="serif-monospace"
                 android:gravity="center"
-                android:text="Descriere"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:text="Description"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                android:textStyle="bold|italic" />
+                android:textStyle="bold|italic"
+                app:autoSizeTextType="uniform" />
 
             <TextView
-                android:id="@+id/transportButon"
+                android:id="@+id/transportButton"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -57,15 +60,18 @@
                 android:clickable="true"
                 android:fontFamily="serif-monospace"
                 android:gravity="center"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
                 android:text="Transport"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold|italic"
-                android:typeface="normal" />
+                android:typeface="normal"
+                app:autoSizeTextType="uniform" />
 
             <TextView
-                android:id="@+id/atractiiButon"
+                android:id="@+id/attractionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -73,11 +79,14 @@
                 android:clickable="true"
                 android:fontFamily="serif-monospace"
                 android:gravity="center"
-                android:text="Atractii"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:text="Attractions"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                android:textStyle="bold|italic" />
+                android:textStyle="bold|italic"
+                app:autoSizeTextType="uniform" />
 
 
         </LinearLayout>

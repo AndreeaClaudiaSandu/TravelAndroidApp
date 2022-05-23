@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,6 +34,7 @@ public class FragmentCity extends Fragment {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(R.id.cityFrameLayout, FragmentCityDescription.newInstance(city));
         transaction.commit();
+
     }
 
     @Override
@@ -40,14 +42,25 @@ public class FragmentCity extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_city, container, false);
-        ((TextView) root.findViewById(R.id.descriereButon)).setOnClickListener(v -> {
+        ((TextView) root.findViewById(R.id.descriptionButton)).setOnClickListener(v -> {
             Fragment fragment = FragmentCityDescription.newInstance(city);
             replaceFragment(fragment);
+            getView().findViewById(R.id.descriptionCityImage).setVisibility(View.VISIBLE);
+            getView().findViewById(R.id.descriptionCityTitle).setVisibility(View.VISIBLE);
         });
 
-        ((TextView) root.findViewById(R.id.transportButon)).setOnClickListener(v -> {
+        ((TextView) root.findViewById(R.id.transportButton)).setOnClickListener(v -> {
             Fragment fragment = FragmentCityTransport.newInstance(city);
             replaceFragment(fragment);
+            getView().findViewById(R.id.descriptionCityImage).setVisibility(View.VISIBLE);
+            getView().findViewById(R.id.descriptionCityTitle).setVisibility(View.VISIBLE);
+        });
+
+        ((TextView) root.findViewById(R.id.attractionButton)).setOnClickListener(v -> {
+            Fragment fragment = FragmentCityAttractions.newInstance(city);
+            replaceFragment(fragment);
+            getView().findViewById(R.id.descriptionCityImage).setVisibility(View.GONE);
+            getView().findViewById(R.id.descriptionCityTitle).setVisibility(View.GONE);
         });
 
         ((TextView) root.findViewById(R.id.descriptionCityTitle)).setText(city.getName());

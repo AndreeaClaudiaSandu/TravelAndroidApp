@@ -62,7 +62,7 @@ public class ExternalTransport_RecyclerViewAdapter extends RecyclerView.Adapter<
         } else {
             holder.frequency.setVisibility(View.GONE);
         }
-        holder.price.setText("Price " + externalTransports.get(position).getPrice());
+        holder.price.setText("Price: " + externalTransports.get(position).getPrice() + " euro");
 
         if (externalTransports.get(position).getLink() != null && !externalTransports.get(position).getLink().isEmpty()) {
             holder.link.setVisibility(View.VISIBLE);
