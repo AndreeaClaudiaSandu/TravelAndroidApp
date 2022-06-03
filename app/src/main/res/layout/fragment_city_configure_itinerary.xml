@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".FragmentCityConfigureItinerary">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        tools:ignore="SpeakableTextPresentCheck">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/titleConfigureItinerary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/configure_your_itinerary"
+                android:textColor="@color/loginDarkBlue"
+                android:textSize="24sp"
+                android:textStyle="bold|italic"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewNumberOfDays"
+                android:layout_width="wrap_content"
+                android:layout_height="29dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/round_border_nav"
+                android:gravity="center"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@string/select_the_number_of_days"
+                android:textColor="@color/loginDarkBlue"
+                android:textSize="18dp"
+                android:textStyle="bold|italic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleConfigureItinerary" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewNumberOfDays">
+
+                <RadioButton
+                    android:id="@+id/radio_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/loginDarkBlue"
+                    android:text="@string/_1"
+                    android:textColor="@color/loginDarkBlue" />
+
+                <RadioButton
+                    android:id="@+id/radio_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/loginDarkBlue"
+                    android:text="@string/_2"
+                    android:textColor="@color/loginDarkBlue" />
+
+                <RadioButton
+                    android:id="@+id/radio_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/loginDarkBlue"
+                    android:text="@string/_3"
+                    android:textColor="@color/loginDarkBlue" />
+
+                <RadioButton
+                    android:id="@+id/radio_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/loginDarkBlue"
+                    android:text="@string/_5"
+                    android:textColor="@color/loginDarkBlue" />
+
+                <RadioButton
+                    android:id="@+id/radio_7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/loginDarkBlue"
+                    android:text="@string/_7"
+                    android:textColor="@color/loginDarkBlue" />
+
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/textViewTrnsportTypes"
+                android:layout_width="wrap_content"
+                android:layout_height="29dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/round_border_nav"
+                android:gravity="left|center_vertical"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@string/select_the_transport_types_you_want_to_use"
+                android:textColor="@color/loginDarkBlue"
+                android:textSize="18dp"
+                android:textStyle="bold|italic"
+                app:autoSizeTextType="none"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+            <CheckBox
+                android:id="@+id/carCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:button="@null"
+                android:drawableLeft="@drawable/checkbox"
+                android:paddingEnd="8dp"
+                android:text="@string/car"
+                android:textColor="@color/loginDarkBlue"
+                android:textSize="18dp"
+                android:textStyle="italic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewTrnsportTypes" />
+
+            <CheckBox
+                android:id="@+id/busCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:button="@null"
+                android:drawableLeft="@drawable/checkbox"
+                android:paddingEnd="8dp"
+                android:text="@string/bus"
+                android:textColor="@color/loginDarkBlue"
+                android:textSize="18dp"
+                android:textStyle="italic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/carCheckBox" />
+
+            <CheckBox
+                android:id="@+id/subwayCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:button="@null"
+                android:drawableLeft="@drawable/checkbox"
+                android:paddingEnd="8dp"
+                android:text="@string/subway"
+                android:textColor="@color/loginDarkBlue"
+                android:textSize="18dp"
+                android:textStyle="italic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/busCheckBox" />
+
+            <CheckBox
+                android:id="@+id/tramCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:button="@null"
+                android:drawableLeft="@drawable/checkbox"
+                android:paddingEnd="8dp"
+                android:text="@string/tram"
+                android:textColor="@color/loginDarkBlue"
+                android:textSize="18dp"
+                android:textStyle="italic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/subwayCheckBox" />
+
+            <CheckBox
+                android:id="@+id/trainCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:button="@null"
+                android:drawableLeft="@drawable/checkbox"
+                android:paddingEnd="8dp"
+                android:text="@string/train"
+                android:textColor="@color/loginDarkBlue"
+                android:textSize="18dp"
+                android:textStyle="italic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tramCheckBox" />
+
+            <TextView
+                android:id="@+id/textViewAttractions"
+                android:layout_width="wrap_content"
+                android:layout_height="29dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/round_border_nav"
+                android:gravity="left|center_vertical"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@string/select_the_attractions_you_would_like_to_see"
+                android:textColor="@color/loginDarkBlue"
+                android:textSize="18dp"
+                android:textStyle="bold|italic"
+                app:autoSizeMaxTextSize="50dp"
+                app:autoSizeMinTextSize="16dp"
+                app:autoSizeTextType="none"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/trainCheckBox" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/chooseAttractionsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:nestedScrollingEnabled="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewAttractions">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <Button
+                android:id="@+id/generateItinerary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/round_button"
+                android:backgroundTint="@color/loginBlue"
+                android:fontFamily="sans-serif"
+                android:text="@string/get_itinerary"
+                android:textColor="@color/loginDarkBlue"
+                android:textSize="16sp"
+                android:textStyle="bold|italic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/chooseAttractionsRecyclerView" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</FrameLayout>

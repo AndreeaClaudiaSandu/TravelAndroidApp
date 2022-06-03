@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -42,6 +41,7 @@ public class FragmentCity extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_city, container, false);
+
         ((TextView) root.findViewById(R.id.descriptionButton)).setOnClickListener(v -> {
             Fragment fragment = FragmentCityDescription.newInstance(city);
             replaceFragment(fragment);
@@ -58,6 +58,13 @@ public class FragmentCity extends Fragment {
 
         ((TextView) root.findViewById(R.id.attractionButton)).setOnClickListener(v -> {
             Fragment fragment = FragmentCityAttractions.newInstance(city);
+            replaceFragment(fragment);
+            getView().findViewById(R.id.descriptionCityImage).setVisibility(View.GONE);
+            getView().findViewById(R.id.descriptionCityTitle).setVisibility(View.GONE);
+        });
+
+        ((TextView) root.findViewById(R.id.configureItinerary)).setOnClickListener(v -> {
+            Fragment fragment = FragmentCityConfigureItinerary.newInstance(city);
             replaceFragment(fragment);
             getView().findViewById(R.id.descriptionCityImage).setVisibility(View.GONE);
             getView().findViewById(R.id.descriptionCityTitle).setVisibility(View.GONE);

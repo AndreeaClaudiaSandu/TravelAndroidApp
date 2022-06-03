@@ -15,17 +15,12 @@
     <string name="code">code</string>
     <string name="activation_code">Activation code</string>
 
-    <string-array name="cities">
-        <item>Barcelona</item>
-        <item>Paris</item>
-        <item>Roma</item>
-        <item>Londra</item>
-        <item>Copenhaga</item>
-        <item>Milano</item>
-        <item>Madrid</item>
-        <item>Porto</item>
-        <item>Lisabona</item>
-        <item>aaa</item>
+    <string-array name="numberOfDays">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>5</item>
+        <item>7</item>
     </string-array>
     <string name="title_activity_main3">MainActivity3</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -47,6 +42,23 @@
     <string name="experiences">Unforgettable experiences</string>
     <string name="getToCity">Getting from airport to city</string>
     <string name="transportInCity">Transport in the city</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="select_the_number_of_days">Select the number of days:</string>
+    <string name="select_the_transport_types_you_want_to_use">Select the transport types you want to use:</string>
+    <string name="select_the_attractions_you_would_like_to_see">Select the attractions you would like to see:</string>
+    <string name="configure_your_itinerary">Configure your itinerary</string>
+    <string name="_1">1</string>
+    <string name="_2">2</string>
+    <string name="_3">3</string>
+    <string name="_5">5</string>
+    <string name="_7">7</string>
+    <string name="car">Car</string>
+    <string name="bus">Bus</string>
+    <string name="subway">Subway</string>
+    <string name="tram">Tram</string>
+    <string name="train">Train</string>
+    <string name="get_itinerary">Get itinerary</string>
 
 
 </resources>

@@ -3,7 +3,6 @@ package com.example.travel;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,21 +27,17 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-
-public class FragmentCityAttractions extends Fragment {
+public class FragmentCityConfigureItinerary extends Fragment {
 
     ArrayList<Attraction> attractions = new ArrayList<>();
     City city;
 
-    public FragmentCityAttractions() {
+    public FragmentCityConfigureItinerary() {
         // Required empty public constructor
     }
 
-    public static FragmentCityAttractions newInstance(City city) {
-        FragmentCityAttractions fragment = new FragmentCityAttractions();
+    public static FragmentCityConfigureItinerary newInstance(City city) {
+        FragmentCityConfigureItinerary fragment = new FragmentCityConfigureItinerary();
         fragment.city = city;
         return fragment;
     }
@@ -57,12 +52,13 @@ public class FragmentCityAttractions extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_city_attractions, container, false);
+        View root = inflater.inflate(R.layout.fragment_city_configure_itinerary, container, false);
+        return root;
     }
 
     private void setAttractions(){
 
-        class GetAttractions extends AsyncTask<String, String, String> implements Attractions_RecyclerViewAdapter.ItemClickListener  {
+        class GetAttractions extends AsyncTask<String, String, String> implements PickAttractions_RecyclerViewAdapter.ItemClickListener  {
 
             @Override
             protected void onPostExecute(String s) {
@@ -70,8 +66,8 @@ public class FragmentCityAttractions extends Fragment {
                 if (s.equals("Connection error. Try again.") || s.equals("No attractions")) {
                     Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
                 } else {
-                    RecyclerView recyclerView = getView().findViewById(R.id.attractionsRecyclerView);
-                    Attractions_RecyclerViewAdapter adapter = new Attractions_RecyclerViewAdapter(getContext(), attractions, this );
+                    RecyclerView recyclerView = getView().findViewById(R.id.chooseAttractionsRecyclerView);
+                    PickAttractions_RecyclerViewAdapter adapter = new PickAttractions_RecyclerViewAdapter(getContext(), attractions, this );
                     recyclerView.setAdapter(adapter);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -131,18 +127,6 @@ public class FragmentCityAttractions extends Fragment {
             public void onItemClick(Attraction attraction) {
                 Fragment fragment = FragmentCityAttraction.newInstance(attraction);
                 replaceFragment(fragment);
-//                OkHttpClient client = new OkHttpClient().newBuilder()
-//                        .build();
-//                Request request = new Request.Builder()
-//                        .url("https://maps.googleapis.com/maps/api/directions/json?origin=Piazza del Colosseo, 1, 00184 Roma RM, Italia&destination=Piazza del Popolo, 00187 Roma RM, Italia&mode=transit&transit_mode=bus|subway&departure_time=now&key=AIzaSyBU9zEvhGTMNA42QzdZIo0Z3gzn-5WmIjQ")
-//                        .method("GET", null)
-//                        .build();
-//                try {
-//                    Response response = client.newCall(request).execute();
-//                    Log.i("api", response.body().string());
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
             }
         }
         GetAttractions attractions = new GetAttractions();

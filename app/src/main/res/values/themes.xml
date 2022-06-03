@@ -23,10 +23,13 @@
         <item name="android:colorPrimary">@color/loginDarkBlue</item>
         <item name="android:colorActivatedHighlight">@color/loginDarkBlue</item>
         <item name="android:colorBackground">@color/loginDarkBlue</item>
-
-
-
     </style>
+
+    <style name="colored_checkBox" parent="Theme.MaterialComponents.DayNight">
+        <item name="colorAccent">@color/loginDarkBlue</item>
+        <item name="android:textColorSecondary">@color/loginDarkBlue</item>
+    </style>
+
     <style name="Theme.Travel.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
