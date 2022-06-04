@@ -40,4 +40,9 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">10dp</item>
     </style>
+
+    <style name="navigation_view">
+        <item name="android:listDivider">@color/babyBlue</item>
+        <item name="android:textColorSecondary">@color/loginDarkBlue</item>
+    </style>
 </resources>

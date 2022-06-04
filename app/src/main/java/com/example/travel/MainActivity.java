@@ -7,7 +7,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -82,18 +81,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager().popBackStackImmediate();
             if (getSupportFragmentManager().getFragments().size() > 0) {
                 Fragment currentFragment = getSupportFragmentManager().getFragments().get(getSupportFragmentManager().getFragments().size() - 1);
-                if (currentFragment instanceof FragmentActivities || currentFragment instanceof FragmentActivity) {
+               if (currentFragment instanceof FragmentActivities || currentFragment instanceof FragmentActivity) {
                     ((Toolbar) findViewById(R.id.toolbar)).setTitle(getResources().getString(R.string.experiences));
-                    navigationView.getMenu().findItem(R.id.activities).setChecked(true);
+                    navigationView.getMenu().findItem(R.id.experiences).setChecked(true);
                 } else {
                     ((Toolbar) findViewById(R.id.toolbar)).setTitle(getResources().getString(R.string.pick_a_city));
                     navigationView.getMenu().findItem(R.id.pick_city).setChecked(true);
                 }
                 if(currentFragment instanceof FragmentCityDescription || currentFragment instanceof FragmentCityTransport){
-                    findViewById(R.id.descriptionCityImage).setVisibility(View.VISIBLE);
-                    findViewById(R.id.descriptionCityTitle).setVisibility(View.VISIBLE);
+                    if(findViewById(R.id.descriptionCityImage)!=null) {
+                        findViewById(R.id.descriptionCityImage).setVisibility(View.VISIBLE);
+                        findViewById(R.id.descriptionCityTitle).setVisibility(View.VISIBLE);
+                    }
                 }
-                if (currentFragment instanceof FragmentCityAttractions || currentFragment instanceof  FragmentCityAttraction){
+                if (currentFragment instanceof FragmentCityAttractions || currentFragment instanceof  FragmentCityAttraction || currentFragment instanceof  FragmentCityConfigureItinerary){
                     findViewById(R.id.descriptionCityImage).setVisibility(View.GONE);
                     findViewById(R.id.descriptionCityTitle).setVisibility(View.GONE);
                 }
@@ -108,7 +109,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if (!navigationView.getMenu().findItem(id).isChecked()) {
             item.setChecked(true);
             drawerLayout.closeDrawer(GravityCompat.START);
             switch (id) {
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     toolbar.setTitle(getResources().getString(R.string.pick_a_city));
                     replaceFragment(new FragmentPickCity());
                     break;
-                case R.id.activities:
+                case R.id.experiences:
                     toolbar.setTitle(getResources().getString(R.string.experiences));
                     replaceFragment(new FragmentActivities());
                     break;
@@ -124,9 +124,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     return true;
 
             }
-        } else {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        }
         return true;
     }
 

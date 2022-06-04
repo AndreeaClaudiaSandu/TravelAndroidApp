@@ -15,8 +15,10 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@drawable/border_left_menu"
+        android:theme="@style/navigation_view"
         app:headerLayout="@layout/header"
-
+        app:itemTextColor="@color/loginDarkBlue"
+        app:itemIconTint="@color/loginDarkBlue"
         app:menu="@menu/main_menu">
 
     </com.google.android.material.navigation.NavigationView>

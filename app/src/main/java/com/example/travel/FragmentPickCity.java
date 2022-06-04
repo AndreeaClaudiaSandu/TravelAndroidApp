@@ -97,10 +97,9 @@ public class FragmentPickCity extends Fragment {
             @Override
             public void onItemClick(City city) {
                 Toast.makeText(getContext(), city.getName(), Toast.LENGTH_SHORT).show();
-                Log.d("on click", Integer.toString( cities.size()));
-
                 Fragment fragment = FragmentCity.newInstance(city);
                 ((MainActivity) getActivity()).replaceFragment(fragment);
+
             }
         }
 
