@@ -2,6 +2,7 @@ package com.example.travel;
 
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,26 @@ public class FragmentCityDescription extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ((TextView) getActivity().findViewById(R.id.descriptionButton)).setOnClickListener(v -> {
+            Fragment fragment = FragmentCityDescription.newInstance(city);
+            ((MainActivity) getActivity()).replaceFragment(fragment);
+           });
+
+        ((TextView) getActivity().findViewById(R.id.transportButton)).setOnClickListener(v -> {
+            Fragment fragment = FragmentCityTransport.newInstance(city);
+            ((MainActivity) getActivity()).replaceFragment(fragment);
+           });
+
+        ((TextView) getActivity().findViewById(R.id.attractionButton)).setOnClickListener(v -> {
+            Fragment fragment = FragmentCityAttractions.newInstance(city);
+            ((MainActivity) getActivity()).replaceFragment(fragment);
+           });
+
+        ((TextView) getActivity().findViewById(R.id.configureItinerary)).setOnClickListener(v -> {
+            Fragment fragment = FragmentCityConfigureItinerary.newInstance(city);
+            ((MainActivity) getActivity()).replaceFragment(fragment);
+            });
 
     }
 

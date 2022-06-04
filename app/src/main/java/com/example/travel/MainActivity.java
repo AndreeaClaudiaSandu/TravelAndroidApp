@@ -1,5 +1,6 @@
 package com.example.travel;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -7,6 +8,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
 
-        setFrameLayoutHeight();
+//        setFrameLayoutHeight();
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -53,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         toolbar.setTitle("Pick a city");
         replaceFragment(new FragmentPickCity());
+
+
 
     }
 
@@ -88,16 +93,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     ((Toolbar) findViewById(R.id.toolbar)).setTitle(getResources().getString(R.string.pick_a_city));
                     navigationView.getMenu().findItem(R.id.pick_city).setChecked(true);
                 }
+
                 if(currentFragment instanceof FragmentCityDescription || currentFragment instanceof FragmentCityTransport){
                     if(findViewById(R.id.descriptionCityImage)!=null) {
+                        findViewById(R.id.linearLayout).setVisibility(View.VISIBLE);
+                        findViewById(R.id.linearLayout2).setVisibility(View.VISIBLE);
                         findViewById(R.id.descriptionCityImage).setVisibility(View.VISIBLE);
                         findViewById(R.id.descriptionCityTitle).setVisibility(View.VISIBLE);
                     }
-                }
-                if (currentFragment instanceof FragmentCityAttractions || currentFragment instanceof  FragmentCityAttraction || currentFragment instanceof  FragmentCityConfigureItinerary){
+                }else if(currentFragment instanceof FragmentCityAttractions || currentFragment instanceof FragmentCityAttraction || currentFragment instanceof FragmentCityConfigureItinerary){
+                    findViewById(R.id.linearLayout).setVisibility(View.VISIBLE);
+                    findViewById(R.id.linearLayout2).setVisibility(View.VISIBLE);
+                    findViewById(R.id.descriptionCityImage).setVisibility(View.GONE);
+                    findViewById(R.id.descriptionCityTitle).setVisibility(View.GONE);
+                }else{
+                    findViewById(R.id.linearLayout).setVisibility(View.GONE);
+                    findViewById(R.id.linearLayout2).setVisibility(View.GONE);
                     findViewById(R.id.descriptionCityImage).setVisibility(View.GONE);
                     findViewById(R.id.descriptionCityTitle).setVisibility(View.GONE);
                 }
+
             }
         } else {
             super.onBackPressed();
@@ -120,6 +135,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     toolbar.setTitle(getResources().getString(R.string.experiences));
                     replaceFragment(new FragmentActivities());
                     break;
+                case R.id.my_profile:
+                    toolbar.setTitle(getResources().getString(R.string.my_profile));
+                    replaceFragment(new FragmentActivities());
+                    break;
+                case R.id.logout:
+                    getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    startActivity(intent);
+                    break;
                 default:
                     return true;
 
@@ -128,6 +152,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void replaceFragment(Fragment fragment) {
+
+        if(fragment instanceof FragmentCityDescription || fragment instanceof FragmentCityTransport){
+            findViewById(R.id.linearLayout).setVisibility(View.VISIBLE);
+            findViewById(R.id.linearLayout2).setVisibility(View.VISIBLE);
+            findViewById(R.id.descriptionCityImage).setVisibility(View.VISIBLE);
+            findViewById(R.id.descriptionCityTitle).setVisibility(View.VISIBLE);
+        }else if(fragment instanceof FragmentCityAttractions || fragment instanceof FragmentCityAttraction || fragment instanceof FragmentCityConfigureItinerary){
+            findViewById(R.id.linearLayout).setVisibility(View.VISIBLE);
+            findViewById(R.id.linearLayout2).setVisibility(View.VISIBLE);
+            findViewById(R.id.descriptionCityImage).setVisibility(View.GONE);
+            findViewById(R.id.descriptionCityTitle).setVisibility(View.GONE);
+        }else{
+            findViewById(R.id.linearLayout).setVisibility(View.GONE);
+            findViewById(R.id.linearLayout2).setVisibility(View.GONE);
+            findViewById(R.id.descriptionCityImage).setVisibility(View.GONE);
+            findViewById(R.id.descriptionCityTitle).setVisibility(View.GONE);
+        }
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(R.id.frameLayout, fragment);

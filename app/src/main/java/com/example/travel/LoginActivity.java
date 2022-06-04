@@ -29,9 +29,9 @@ public class LoginActivity extends AppCompatActivity {
     EditText emailField, passwordField;
 //    public static String server = "http://192.168.0.101/travel/";
 
-    public static String server = "http://172.20.10.2/travel/";
+//    public static String server = "http://172.20.10.2/travel/";
 
-//    public static String server = "http://192.168.0.100/travel/";
+    public static String server = "http://192.168.0.102/travel/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,4 +135,8 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public void onBackPressed() {
+        // do nothing
+    }
 }

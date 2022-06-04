@@ -152,7 +152,7 @@ public class FragmentCityAttractions extends Fragment {
     public void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.cityFrameLayout, fragment);
+        transaction.add(R.id.frameLayout, fragment);
         if (!fragmentManager.getFragments().isEmpty()) {
             transaction.addToBackStack(null);
         }

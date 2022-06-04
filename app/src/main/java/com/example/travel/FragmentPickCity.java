@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -97,7 +99,9 @@ public class FragmentPickCity extends Fragment {
             @Override
             public void onItemClick(City city) {
                 Toast.makeText(getContext(), city.getName(), Toast.LENGTH_SHORT).show();
-                Fragment fragment = FragmentCity.newInstance(city);
+                ((TextView) getActivity().findViewById(R.id.descriptionCityTitle)).setText(city.getName());
+                ((ImageView) getActivity().findViewById(R.id.descriptionCityImage)).setImageResource(city.getImg());
+                Fragment fragment = FragmentCityDescription.newInstance(city);
                 ((MainActivity) getActivity()).replaceFragment(fragment);
 
             }
