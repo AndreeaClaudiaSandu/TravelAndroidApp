@@ -23,6 +23,16 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
+import java.util.Properties;
+
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -32,6 +42,9 @@ public class LoginActivity extends AppCompatActivity {
 //    public static String server = "http://172.20.10.2/travel/";
 
     public static String server = "http://192.168.0.102/travel/";
+
+    public static String connectedAccount;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                 protected void onPostExecute(String s) {
                     Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
                     if (s.equals("Login successfully")) {
+                        connectedAccount = email;
                         Intent intent = new Intent();
                         intent.setClass(context, MainActivity.class);
                         context.startActivity(intent);
@@ -139,4 +153,10 @@ public class LoginActivity extends AppCompatActivity {
     public void onBackPressed() {
         // do nothing
     }
+
+    public void goToEnterEmailActivity(View view) {
+        Intent intent = new Intent(this, EnterEmailActivity.class);
+        startActivity(intent);
+    }
+
 }

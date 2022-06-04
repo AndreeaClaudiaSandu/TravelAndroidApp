@@ -15,13 +15,17 @@
     </group>
 
 
-    <item android:title="Profile" >
+    <item android:title="@string/my_profile" >
         <menu>
             <group android:checkableBehavior="single">
                 <item
-                    android:id="@+id/my_profile"
+                    android:id="@+id/update_profile"
                     android:icon="@drawable/profile_icon"
-                    android:title="@string/my_profile" />
+                    android:title="@string/update_profile_info" />
+                <item
+                    android:id="@+id/change_password"
+                    android:icon="@drawable/password_darkblue"
+                    android:title="@string/change_password" />
                 <item
                     android:id="@+id/logout"
                     android:icon="@drawable/logout_icon"

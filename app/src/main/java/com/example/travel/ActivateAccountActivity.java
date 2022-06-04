@@ -51,7 +51,7 @@ public class ActivateAccountActivity extends AppCompatActivity {
     }
 
     public void verifyCode(View view) {
-//        Toast.makeText(this, editText.getText(), Toast.LENGTH_LONG);
+
         if (editText.getText().toString().equals(code)) {
 
             class CreateAccount extends AsyncTask<String, String, String> {
@@ -116,8 +116,7 @@ public class ActivateAccountActivity extends AppCompatActivity {
 
         } else {
             Toast.makeText(view.getContext(), "wrong code", Toast.LENGTH_LONG).show();
-//            Intent intent = new Intent(this, MainActivity.class);
-//            startActivity(intent);
         }
     }
+
 }

@@ -114,8 +114,4 @@ public class ExternalTransport_RecyclerViewAdapter extends RecyclerView.Adapter<
         }
     }
 
-    public interface ItemClickListener {
-        void onItemClick(ExternalTransport externalTransport);
-    }
-
 }

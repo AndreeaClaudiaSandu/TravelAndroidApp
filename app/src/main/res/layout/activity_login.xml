@@ -143,6 +143,7 @@
         android:height="48dp"
         android:clickable="true"
         android:gravity="center_vertical"
+        android:onClick="goToEnterEmailActivity"
         android:text="Forgot password?"
         android:textColor="@color/loginDarkBlue"
         android:textStyle="italic"

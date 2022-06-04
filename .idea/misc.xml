@@ -8,6 +8,7 @@
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/drawable/check_box_darkblue.xml" value="0.181" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/drawable/check_box_outline_darkblue.xml" value="0.154" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/drawable/checkbox.xml" value="0.181" />
+        <entry key="..\:/facultate/licentaTravel/app/src/main/res/drawable/code.xml" value="0.14" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/drawable/email.xml" value="0.2265" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/drawable/home.xml" value="0.2265" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/drawable/location.xml" value="0.2595" />
@@ -24,6 +25,8 @@
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/drawable/round_button.xml" value="0.2265" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/drawable/wave_down.xml" value="0.136" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/activity_activate_account.xml" value="0.176" />
+        <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/activity_enter_email.xml" value="0.264" />
+        <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/activity_forgot_password.xml" value="0.20854700854700856" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/activity_main2.xml" value="0.176" />
@@ -37,6 +40,7 @@
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/external_recycler_view_row.xml" value="0.264" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/fragment_activities.xml" value="0.20854700854700856" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/fragment_activity.xml" value="0.16" />
+        <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/fragment_change_password.xml" value="0.20854700854700856" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/fragment_city.xml" value="0.2" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/fragment_city_attraction.xml" value="0.20854700854700856" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/fragment_city_attractions.xml" value="0.2" />
@@ -47,6 +51,7 @@
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/fragment_home.xml" value="0.20854700854700856" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/fragment_pick_attraction_recycler_view_row.xml" value="0.2" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/fragment_pick_city.xml" value="0.20854700854700856" />
+        <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/fragment_profile.xml" value="0.20854700854700856" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/fragment_slideshow.xml" value="0.20854700854700856" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/header.xml" value="0.2" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/internal_recycler_view_row.xml" value="0.2" />

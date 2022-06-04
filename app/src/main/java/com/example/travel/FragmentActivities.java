@@ -2,7 +2,6 @@ package com.example.travel;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,8 +107,6 @@ public class FragmentActivities extends Fragment {
                     Toast.makeText(getContext(), activity.getName(), Toast.LENGTH_SHORT).show();
                     Fragment fragment = FragmentActivity.newInstance(activity);
                     ((MainActivity) getActivity()).replaceFragment(fragment);
-//                    Fragment fragment = FragmentCity.newInstance(cities, city.getName());
-//                    ((MainActivity) getActivity()).replaceFragment(fragment);
                 }
             }
 
