@@ -66,6 +66,7 @@
     <string name="change_password">Change password</string>
     <string name="send_code">Send code</string>
     <string name="send_mail_reset_password">A code for resetting the password will be sent. Enter the email of the account.</string>
+    <string name="enter_the_address_of_your_accommodation">Enter the address of your accommodation</string>
 
 
 </resources>

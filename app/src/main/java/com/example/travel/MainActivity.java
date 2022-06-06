@@ -10,8 +10,11 @@ import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,8 +27,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.navigation.NavigationView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -37,7 +45,12 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Objects;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -46,11 +59,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Toolbar toolbar;
     Display display;
     EditText firstName, lastName, country, city, birthDate, password, newPassword, confirmPassword;
+    public static ArrayList<String> pickedAttractions;
+    public static String accommodationAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        pickedAttractions = new ArrayList<>();
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -443,6 +460,194 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         CheckPassword checkPassword = new CheckPassword();
         checkPassword.execute(LoginActivity.connectedAccount, newPassword.getText().toString());
 
+    }
+
+    public void configureItinerary(View view) {
+        if (verifyTheItineraryConfiguration()) {
+            Log.i("status", "ok");
+            Log.i("list", pickedAttractions.toString());
+            accommodationAddress = ((EditText) findViewById(R.id.addressEditText)).getText().toString();
+            ConfigureItinerary configureItinerary = new ConfigureItinerary();
+            ArrayList<String> attractionsOrder = configureItinerary.getAttractionsOrder(accommodationAddress);
+            Log.i("attractions order", attractionsOrder.toString());
+
+            ArrayList<String> transport = getTransportSelected();
+            replaceFragment(FragmentItinerary.newInstance(attractionsOrder, FragmentCityConfigureItinerary.attractions, transport));
+
+            //TODO
+        } else {
+            Log.i("status", "not ok");
+        }
+    }
+
+    private ArrayList<String> getTransportSelected() {
+        CheckBox car = findViewById(R.id.carCheckBox);
+        CheckBox bus = findViewById(R.id.busCheckBox);
+        CheckBox subway = findViewById(R.id.subwayCheckBox);
+        CheckBox tram = findViewById(R.id.tramCheckBox);
+        CheckBox train = findViewById(R.id.trainCheckBox);
+        ArrayList<String> transport = new ArrayList<>();
+        if (car.isChecked()) {
+            transport.add("car");
+        }
+        if (bus.isChecked()) {
+            transport.add("bus");
+        }
+        if (subway.isChecked()) {
+            transport.add("subway");
+        }
+        if (tram.isChecked()) {
+            transport.add("tram");
+        }
+        if (train.isChecked()) {
+            transport.add("train");
+        }
+        return transport;
+    }
+
+    private boolean verifyTheItineraryConfiguration() {
+
+        pickedAttractions = new ArrayList<>();
+
+        RadioGroup group = findViewById(R.id.radioGroup);
+        if (group.getCheckedRadioButtonId() == -1) {
+            ((TextView) findViewById(R.id.textViewNumberOfDays)).requestFocus();
+            ((TextView) findViewById(R.id.textViewNumberOfDays)).setError("Select the number of days");
+            return false;
+        }
+
+        CheckBox car = findViewById(R.id.carCheckBox);
+        CheckBox bus = findViewById(R.id.busCheckBox);
+        CheckBox subway = findViewById(R.id.subwayCheckBox);
+        CheckBox tram = findViewById(R.id.tramCheckBox);
+        CheckBox train = findViewById(R.id.trainCheckBox);
+
+        if (!car.isChecked() && !bus.isChecked() && !subway.isChecked() && !tram.isChecked() && !train.isChecked()) {
+            ((TextView) findViewById(R.id.textViewTrnsportTypes)).requestFocus();
+            ((TextView) findViewById(R.id.textViewTrnsportTypes)).setError("Select at least one transport type");
+            return false;
+        }
+
+        RecyclerView recyclerView = findViewById(R.id.chooseAttractionsRecyclerView);
+        for (int i = 0; i < recyclerView.getAdapter().getItemCount(); i++) {
+            View view = recyclerView.findViewHolderForAdapterPosition(i).itemView;
+            if (((CheckBox) view.findViewById(R.id.pickAttractionCheckBox)).isChecked()) {
+                pickedAttractions.add(((TextView) view.findViewById(R.id.attractionName)).getText().toString());
+            }
+        }
+        if (pickedAttractions.size() == 0) {
+            ((TextView) findViewById(R.id.textViewAttractions)).requestFocus();
+            ((TextView) findViewById(R.id.textViewAttractions)).setError("Select at least one attraction");
+            return false;
+        }
+//        else {
+//            int id = group.getCheckedRadioButtonId();
+//            RadioButton radioButton = findViewById(id);
+//            String value = radioButton.getText().toString();
+//            int numberOfDays = 0;
+//            switch (value) {
+//                case "1":
+//                    numberOfDays = 1;
+//                    break;
+//                case "2":
+//                    numberOfDays = 2;
+//                    break;
+//                case "3":
+//                    numberOfDays = 3;
+//                    break;
+//                case "5":
+//                    numberOfDays = 5;
+//                    break;
+//                case "7":
+//                    numberOfDays = 7;
+//                    break;
+//            }
+//            Log.i("number:" , Integer.toString( numberOfDays));
+//            if (pickedAttractions.size() > (numberOfDays*3)) {
+//                ((TextView) findViewById(R.id.textViewAttractions)).requestFocus();
+//                if(numberOfDays==1){
+//                    ((TextView) findViewById(R.id.textViewAttractions)).setError("There are too many attractions for " + numberOfDays + " day. Select maximim " + numberOfDays * 3 + ".");
+//                }else {
+//                    ((TextView) findViewById(R.id.textViewAttractions)).setError("There are too many attractions for " + numberOfDays + " days. Select maximim " + numberOfDays * 3 + ".");
+//                }
+//                return false;
+//            }
+//        }
+
+        if (((EditText) findViewById(R.id.addressEditText)).getText().toString().isEmpty()) {
+            ((TextView) findViewById(R.id.addressEditText)).requestFocus();
+            ((TextView) findViewById(R.id.addressEditText)).setError("Enter the address of your accommodation for the best configuration");
+            return false;
+        } else {
+            Log.i("city", ((TextView) findViewById(R.id.descriptionCityTitle)).getText().toString());
+            OkHttpClient client = new OkHttpClient().newBuilder().build();
+            String url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + ((TextView) findViewById(R.id.descriptionCityTitle)).getText().toString() + "&key=" + ConfigureItinerary.API_KEY;
+            Request request = new Request.Builder()
+                    .url(url)
+                    .method("GET", null)
+                    .build();
+            try {
+                Response response = client.newCall(request).execute();
+                JSONObject object = new JSONObject(response.body().string());
+                if (!checkBoundaries(((EditText) findViewById(R.id.addressEditText)).getText().toString(), object)) {
+                    ((TextView) findViewById(R.id.addressEditText)).requestFocus();
+                    ((TextView) findViewById(R.id.addressEditText)).setError("The address is not in the city");
+                    return false;
+                }
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return true;
+
+    }
+
+    private boolean checkBoundaries(String address, JSONObject object) {
+        double latNE, lngNE, latSW, lngSW, lat, lng;
+        JSONArray results = object.optJSONArray("results");
+        if (results != null) {
+            JSONObject geometry = results.optJSONObject(0).optJSONObject("geometry");
+            if (geometry != null) {
+                JSONObject bounds = geometry.optJSONObject("bounds");
+                if (bounds != null) {
+                    JSONObject ne = bounds.optJSONObject("northeast");
+                    latNE = ne.optDouble("lat");
+                    lngNE = ne.optDouble("lng");
+                    JSONObject sw = bounds.optJSONObject("southwest");
+                    latSW = sw.optDouble("lat");
+                    lngSW = sw.optDouble("lng");
+
+                    OkHttpClient client = new OkHttpClient().newBuilder().build();
+                    String url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=" + ConfigureItinerary.API_KEY;
+                    Request request = new Request.Builder()
+                            .url(url)
+                            .method("GET", null)
+                            .build();
+                    try {
+                        Response response = client.newCall(request).execute();
+                        JSONObject accommodationObj = new JSONObject(response.body().string());
+                        JSONArray accommodationResults = accommodationObj.optJSONArray("results");
+                        if (accommodationResults != null && accommodationResults.optJSONObject(0) != null) {
+                            JSONObject accommodationGeometry = accommodationResults.optJSONObject(0).optJSONObject("geometry");
+                            if (geometry != null) {
+                                JSONObject location = accommodationGeometry.optJSONObject("location");
+                                if (location != null) {
+                                    lat = location.optDouble("lat");
+                                    lng = location.optDouble("lng");
+                                    if (Double.compare(lat, latSW) > 0 && Double.compare(lat, latNE) < 0 && Double.compare(lng, lngSW) > 0 && Double.compare(lng, lngNE) < 0) {
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        return false;
     }
 
 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -29,7 +30,7 @@ import java.util.Objects;
 
 public class FragmentCityConfigureItinerary extends Fragment {
 
-    ArrayList<Attraction> attractions = new ArrayList<>();
+    public static ArrayList<Attraction> attractions = new ArrayList<>();
     City city;
 
     public FragmentCityConfigureItinerary() {
@@ -142,4 +143,7 @@ public class FragmentCityConfigureItinerary extends Fragment {
         }
         transaction.commit();
     }
+
+
+
 }

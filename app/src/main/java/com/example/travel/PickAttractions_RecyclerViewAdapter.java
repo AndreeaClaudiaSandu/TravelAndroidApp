@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -47,11 +48,13 @@ public class PickAttractions_RecyclerViewAdapter extends RecyclerView.Adapter<Pi
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         ImageView imageView;
         TextView attractionName;
+        CheckBox checkBox;
 
         public MyViewHolder(View itemView){
             super(itemView);
             imageView = itemView.findViewById(R.id.attractionImage);
             attractionName = itemView.findViewById(R.id.attractionName);
+            checkBox = itemView.findViewById(R.id.pickAttractionCheckBox);
         }
     }
 

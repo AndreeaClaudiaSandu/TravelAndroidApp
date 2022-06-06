@@ -34,7 +34,7 @@ import okhttp3.Response;
 
 public class FragmentCityAttractions extends Fragment {
 
-    ArrayList<Attraction> attractions = new ArrayList<>();
+    public static ArrayList<Attraction> attractions = new ArrayList<>();
     City city;
 
     public FragmentCityAttractions() {
