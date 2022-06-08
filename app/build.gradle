@@ -51,5 +51,10 @@ dependencies {
     implementation files('libs/mail.jar')
 
     implementation 'com.squareup.okhttp3:okhttp:4.9.3'
-    implementation group: 'org.json', name: 'json', version: '20210307'
+//    implementation group: 'org.json', name: 'json', version: '20210307'
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-math3
+    implementation group: 'org.apache.commons', name: 'commons-math3', version: '3.6.1'
+    // https://mvnrepository.com/artifact/com.google.guava/guava
+    implementation group: 'com.google.guava', name: 'guava', version: '31.1-jre'
+
 }

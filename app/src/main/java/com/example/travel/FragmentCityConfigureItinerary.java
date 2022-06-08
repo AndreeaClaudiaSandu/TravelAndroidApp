@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -54,6 +55,9 @@ public class FragmentCityConfigureItinerary extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_city_configure_itinerary, container, false);
+        ((Button) root.findViewById(R.id.generateItinerary)).setTextScaleX(1);
+        root.findViewById(R.id.progressBar).setVisibility(View.INVISIBLE);
+        root.findViewById(R.id.progressBar).bringToFront();
         return root;
     }
 

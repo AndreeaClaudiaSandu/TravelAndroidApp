@@ -10,9 +10,11 @@ import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     EditText firstName, lastName, country, city, birthDate, password, newPassword, confirmPassword;
     public static ArrayList<String> pickedAttractions;
     public static String accommodationAddress;
+    public static int numberOfDays;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -466,13 +469,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (verifyTheItineraryConfiguration()) {
             Log.i("status", "ok");
             Log.i("list", pickedAttractions.toString());
+            ((Button) findViewById(R.id.generateItinerary)).setTextScaleX(0);
+            findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+
             accommodationAddress = ((EditText) findViewById(R.id.addressEditText)).getText().toString();
             ConfigureItinerary configureItinerary = new ConfigureItinerary();
-            ArrayList<String> attractionsOrder = configureItinerary.getAttractionsOrder(accommodationAddress);
-            Log.i("attractions order", attractionsOrder.toString());
+            ArrayList<String> order = configureItinerary.getOrder(accommodationAddress);
+//            ArrayList<String> attractionsOrder = configureItinerary.getAttractionsOrder(accommodationAddress);
+//            Log.i("attractions order", attractionsOrder.toString());
 
-            ArrayList<String> transport = getTransportSelected();
-            replaceFragment(FragmentItinerary.newInstance(attractionsOrder, FragmentCityConfigureItinerary.attractions, transport));
+//            ArrayList<String> transport = getTransportSelected();
+//            replaceFragment(FragmentItinerary.newInstance(attractionsOrder, FragmentCityConfigureItinerary.attractions, transport));
+
+//            ArrayList<String> transport = getTransportSelected();
+//            replaceFragment(FragmentItinerary.newInstance(attractionsOrder, FragmentCityConfigureItinerary.attractions, transport));
 
             //TODO
         } else {
@@ -515,6 +525,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             ((TextView) findViewById(R.id.textViewNumberOfDays)).setError("Select the number of days");
             return false;
         }
+        else{
+
+        }
 
         CheckBox car = findViewById(R.id.carCheckBox);
         CheckBox bus = findViewById(R.id.busCheckBox);
@@ -540,39 +553,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             ((TextView) findViewById(R.id.textViewAttractions)).setError("Select at least one attraction");
             return false;
         }
-//        else {
-//            int id = group.getCheckedRadioButtonId();
-//            RadioButton radioButton = findViewById(id);
-//            String value = radioButton.getText().toString();
-//            int numberOfDays = 0;
-//            switch (value) {
-//                case "1":
-//                    numberOfDays = 1;
-//                    break;
-//                case "2":
-//                    numberOfDays = 2;
-//                    break;
-//                case "3":
-//                    numberOfDays = 3;
-//                    break;
-//                case "5":
-//                    numberOfDays = 5;
-//                    break;
-//                case "7":
-//                    numberOfDays = 7;
-//                    break;
-//            }
-//            Log.i("number:" , Integer.toString( numberOfDays));
-//            if (pickedAttractions.size() > (numberOfDays*3)) {
-//                ((TextView) findViewById(R.id.textViewAttractions)).requestFocus();
-//                if(numberOfDays==1){
-//                    ((TextView) findViewById(R.id.textViewAttractions)).setError("There are too many attractions for " + numberOfDays + " day. Select maximim " + numberOfDays * 3 + ".");
-//                }else {
-//                    ((TextView) findViewById(R.id.textViewAttractions)).setError("There are too many attractions for " + numberOfDays + " days. Select maximim " + numberOfDays * 3 + ".");
-//                }
-//                return false;
-//            }
-//        }
+        else {
+            int id = group.getCheckedRadioButtonId();
+            RadioButton radioButton = findViewById(id);
+            numberOfDays = Integer.valueOf( radioButton.getText().toString());
+            Log.i("number:" , Integer.toString( numberOfDays));
+            if (pickedAttractions.size() > (numberOfDays*4)) {
+                ((TextView) findViewById(R.id.textViewAttractions)).requestFocus();
+                if(numberOfDays==1){
+                    ((TextView) findViewById(R.id.textViewAttractions)).setError("There are too many attractions for " + numberOfDays + " day. Select maximim " + numberOfDays * 4 + ".");
+                }else {
+                    ((TextView) findViewById(R.id.textViewAttractions)).setError("There are too many attractions for " + numberOfDays + " days. Select maximim " + numberOfDays * 4 + ".");
+                }
+                return false;
+            }
+        }
 
         if (((EditText) findViewById(R.id.addressEditText)).getText().toString().isEmpty()) {
             ((TextView) findViewById(R.id.addressEditText)).requestFocus();
@@ -627,6 +622,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     try {
                         Response response = client.newCall(request).execute();
                         JSONObject accommodationObj = new JSONObject(response.body().string());
+                        Log.i("locationResult", accommodationObj.toString());
                         JSONArray accommodationResults = accommodationObj.optJSONArray("results");
                         if (accommodationResults != null && accommodationResults.optJSONObject(0) != null) {
                             JSONObject accommodationGeometry = accommodationResults.optJSONObject(0).optJSONObject("geometry");

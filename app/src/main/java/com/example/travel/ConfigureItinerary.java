@@ -2,17 +2,19 @@ package com.example.travel;
 
 import android.util.Log;
 
+import com.google.common.collect.Sets;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ConfigureItinerary {
@@ -20,6 +22,11 @@ public class ConfigureItinerary {
     static ArrayList<String> addresses;
     static final String API_KEY = "AIzaSyBU9zEvhGTMNA42QzdZIo0Z3gzn-5WmIjQ";
     int[][] distanceMatrix;
+    int numberOfDays;
+
+    public ConfigureItinerary(){
+        numberOfDays = MainActivity.numberOfDays;
+    }
 
     public void setAddresses(String accommodationAddress) {
         addresses = new ArrayList<>();
@@ -35,15 +42,116 @@ public class ConfigureItinerary {
         }
     }
 
-    public ArrayList<String> getAttractionsOrder(String accommodationAddress) {
-        JSONObject jsonObject = getJsonMatrix(accommodationAddress);
-//
-//        if (!jsonObject.optString("status").equals("OK")) {
-//            return "Not a valid address";
+    public ArrayList<String> getOrder(String accommodationAddress){
+        setMatrix(accommodationAddress);
+
+        int numberOfAttractions = addresses.size()-1;
+        int minAttractions = numberOfAttractions/numberOfDays;
+        int nrOfDaysWithMoreAttractions =  numberOfAttractions%numberOfDays;
+        ArrayList<Integer> alreadyVisited = new ArrayList<>();
+        ArrayList<String> orderByDay = new ArrayList<>();
+        for(int j=0; j<numberOfDays; j++) {
+            Set<Integer> set = new HashSet<>();
+            Set<Set<Integer>> combinations;
+            for (int i = 0; i < numberOfAttractions; i++) {
+                if(!alreadyVisited.contains(i)) {
+                    set.add(i + 1);
+                }
+            }
+
+            if (nrOfDaysWithMoreAttractions != 0 && j<nrOfDaysWithMoreAttractions) {
+                combinations = Sets.combinations(set, minAttractions + 1);
+            } else {
+                combinations = Sets.combinations(set, minAttractions);
+            }
+
+            ArrayList<String> orderForADay = new ArrayList<>();
+            ArrayList<Integer> maybeVisited = new ArrayList<>();
+            orderForADay = getOrderForADay(combinations, orderForADay, maybeVisited);
+
+            alreadyVisited.addAll(alreadyVisited.size(), maybeVisited);
+            Log.i("now now already", alreadyVisited.toString());
+            Log.i("now now order", orderForADay.toString());
+            orderByDay.add("day" + (j+1));
+            orderByDay.addAll(orderByDay.size(),orderForADay);
+        }
+
+        return orderByDay;
+    }
+
+    private ArrayList<String> getOrderForADay(Set<Set<Integer>> combinations, ArrayList<String> firstOrder, ArrayList<Integer> maybeVisited) {
+        int min = Integer.MAX_VALUE;
+        for( Set<Integer> subset: combinations){
+            Log.i("now subset", subset.toString());
+            int[][] subMatrix = generateSubMatrix(subset);
+
+            Integer[] subsetOrder = new Integer[subset.size()];
+            subset.toArray(subsetOrder);
+
+            ArrayList<String> attractionsOrder = new ArrayList<>();
+            ArrayList<Integer> order = new ArrayList<>();
+            int value = travelingSalesmanProblem(subMatrix, 0, order);
+            if(value < min) {
+                min = value;
+
+                attractionsOrder.add("accommodation");
+                maybeVisited.removeAll(maybeVisited);
+                for(int i=1 ;i<order.size()-1;i++){
+                    maybeVisited.add(subsetOrder[order.get(i) - 1]-1);
+                    attractionsOrder.add(MainActivity.pickedAttractions.get(subsetOrder[order.get(i) - 1]-1));
+                }
+                attractionsOrder.add("accommodation");
+                firstOrder = attractionsOrder;
+
+            }
+        }
+        return firstOrder;
+    }
+
+    private int[][] generateSubMatrix(Set<Integer> subset) {
+
+        Integer[]  array = subset.toArray(new Integer[subset.size()]);
+        for(int i=0; i<array.length; i++){
+            Log.i("now array", Integer.toString( array[i]));
+        }
+
+        int[][] subMatrix = new int[subset.size()+1][subset.size()+1];
+        subMatrix[0][0] = 0;
+        for(int i=1;i<subMatrix.length;i++){
+            subMatrix[0][i] = distanceMatrix[0][array[i-1]];
+            subMatrix[i][0] = distanceMatrix[array[i-1]][0];
+        }
+        for(int i=1; i<subMatrix.length;i++){
+            for(int j=1; j<subMatrix.length; j++){
+                subMatrix[i][j]=distanceMatrix[array[i-1]][array[j-1]];
+            }
+        }
+
+        return subMatrix;
+//        //afisare matrice
+//        StringBuilder builder = new StringBuilder();
+//        for (int i = 0; i < distanceMatrix.length; i++) {
+//            builder = new StringBuilder();
+//            for (int j = 0; j < distanceMatrix[i].length; j++) {
+//                builder.append(distanceMatrix[i][j]).append(" ");
+//            }
+//            Log.i("now matrix", builder.toString());
+//        }
+//        //afisare submatrice
+//        builder = new StringBuilder();
+//        for (int i = 0; i < subMatrix.length; i++) {
+//            builder = new StringBuilder();
+//            for (int j = 0; j < subMatrix[i].length; j++) {
+//                builder.append(subMatrix[i][j]).append(" ");
+//            }
+//            Log.i("now line", builder.toString());
 //        }
 
-        distanceMatrix = new int[addresses.size()][addresses.size()];
+    }
 
+    private void setMatrix(String accommodationAddress) {
+        JSONObject jsonObject = getJsonMatrix(accommodationAddress);
+        distanceMatrix = new int[addresses.size()][addresses.size()];
         JSONArray rowsArray = jsonObject.optJSONArray("rows");
         for (int i = 0; i < rowsArray.length(); i++) {
             JSONObject firstElements = rowsArray.optJSONObject(i);
@@ -55,6 +163,10 @@ public class ConfigureItinerary {
                 distanceMatrix[i][j] = value;
             }
         }
+    }
+
+    public ArrayList<String> getAttractionsOrder(String accommodationAddress) {
+        setMatrix(accommodationAddress);
 
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < distanceMatrix.length; i++) {
@@ -66,13 +178,14 @@ public class ConfigureItinerary {
         }
 
         ArrayList<String> attractionsOrder = new ArrayList<>();
-        ArrayList<Integer> order = travelingSalesmanProblem(distanceMatrix, 0);
+        ArrayList<Integer> order = new ArrayList<>();
+        travelingSalesmanProblem(distanceMatrix, 0, order);
         attractionsOrder.add("accommodation");
         for(int i=1 ;i<order.size()-1;i++){
             attractionsOrder.add(MainActivity.pickedAttractions.get(order.get(i) - 1));
         }
         attractionsOrder.add("accommodation");
-        Log.i("line graph", travelingSalesmanProblem(distanceMatrix, 0).toString());
+        Log.i("line graph", order.toString());
 
         return  attractionsOrder;
     }
@@ -118,10 +231,10 @@ public class ConfigureItinerary {
         return url.toString();
     }
 
-    static ArrayList<Integer> travelingSalesmanProblem(int graph[][], int s) {
+    static int travelingSalesmanProblem(int graph[][], int s, ArrayList<Integer> order) {
         ArrayList<Integer> vertex = new ArrayList<Integer>();
 
-        ArrayList<Integer> solution = new ArrayList<>();
+//        ArrayList<Integer> solution = new ArrayList<>();
 
         for (int i = 0; i < graph.length; i++)
             if (i != s)
@@ -144,15 +257,19 @@ public class ConfigureItinerary {
             possibleSolution.add(s);
             current_pathweight += graph[k][s];
 
+
             if (Math.min(min_path, current_pathweight) == current_pathweight) {
-                solution = possibleSolution;
+                order.removeAll(order);
+                for(int i=0;i<possibleSolution.size();i++){
+                    order.add(possibleSolution.get(i));
+                }
             }
             min_path = Math.min(min_path, current_pathweight);
 
         } while (findNextPermutation(vertex));
 
         Log.i("min", "" + min_path);
-        return solution;
+        return min_path;
     }
 
     public static ArrayList<Integer> swap(ArrayList<Integer> data, int left, int right) {
@@ -196,6 +313,7 @@ public class ConfigureItinerary {
         data = reverse(data, last + 1, data.size() - 1);
         return true;
     }
+
 
 
 }
