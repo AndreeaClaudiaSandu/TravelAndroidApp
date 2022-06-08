@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         findViewById(R.id.descriptionCityImage).setVisibility(View.VISIBLE);
                         findViewById(R.id.descriptionCityTitle).setVisibility(View.VISIBLE);
                     }
-                } else if (currentFragment instanceof FragmentCityAttractions || currentFragment instanceof FragmentCityAttraction || currentFragment instanceof FragmentCityConfigureItinerary) {
+                } else if (currentFragment instanceof FragmentCityAttractions || currentFragment instanceof FragmentCityAttraction || currentFragment instanceof FragmentCityConfigureItinerary ) {
                     findViewById(R.id.linearLayout).setVisibility(View.VISIBLE);
                     findViewById(R.id.linearLayout2).setVisibility(View.VISIBLE);
                     findViewById(R.id.descriptionCityImage).setVisibility(View.GONE);
@@ -145,6 +145,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     findViewById(R.id.linearLayout2).setVisibility(View.GONE);
                     findViewById(R.id.descriptionCityImage).setVisibility(View.GONE);
                     findViewById(R.id.descriptionCityTitle).setVisibility(View.GONE);
+                }
+
+                if(currentFragment instanceof FragmentCityConfigureItinerary){
+                    findViewById(R.id.progressBar).setVisibility(View.INVISIBLE);
+                }
+                if(!(currentFragment instanceof FragmentItinerary)){
+                    findViewById(R.id.linearLayoutDays).setVisibility(View.GONE);
+                }
+                else{
+                    findViewById(R.id.linearLayoutDays).setVisibility(View.VISIBLE);
                 }
 
             }
@@ -197,7 +207,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             findViewById(R.id.linearLayout2).setVisibility(View.VISIBLE);
             findViewById(R.id.descriptionCityImage).setVisibility(View.VISIBLE);
             findViewById(R.id.descriptionCityTitle).setVisibility(View.VISIBLE);
-        } else if (fragment instanceof FragmentCityAttractions || fragment instanceof FragmentCityAttraction || fragment instanceof FragmentCityConfigureItinerary) {
+        } else if (fragment instanceof FragmentCityAttractions || fragment instanceof FragmentCityAttraction || fragment instanceof FragmentCityConfigureItinerary || fragment instanceof FragmentItinerary) {
             findViewById(R.id.linearLayout).setVisibility(View.VISIBLE);
             findViewById(R.id.linearLayout2).setVisibility(View.VISIBLE);
             findViewById(R.id.descriptionCityImage).setVisibility(View.GONE);
@@ -207,6 +217,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             findViewById(R.id.linearLayout2).setVisibility(View.GONE);
             findViewById(R.id.descriptionCityImage).setVisibility(View.GONE);
             findViewById(R.id.descriptionCityTitle).setVisibility(View.GONE);
+        }
+
+        if(!(fragment instanceof FragmentItinerary)){
+            findViewById(R.id.linearLayoutDays).setVisibility(View.GONE);
         }
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -466,20 +480,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void configureItinerary(View view) {
+
         if (verifyTheItineraryConfiguration()) {
             Log.i("status", "ok");
             Log.i("list", pickedAttractions.toString());
-            ((Button) findViewById(R.id.generateItinerary)).setTextScaleX(0);
             findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+//            ((Button) findViewById(R.id.generateItinerary)).setTextScaleX(0);
+
 
             accommodationAddress = ((EditText) findViewById(R.id.addressEditText)).getText().toString();
             ConfigureItinerary configureItinerary = new ConfigureItinerary();
             ArrayList<String> order = configureItinerary.getOrder(accommodationAddress);
-//            ArrayList<String> attractionsOrder = configureItinerary.getAttractionsOrder(accommodationAddress);
-//            Log.i("attractions order", attractionsOrder.toString());
+            ArrayList<String> attractionsOrder = configureItinerary.getAttractionsOrder(accommodationAddress);
+            Log.i("attractions order", attractionsOrder.toString());
 
-//            ArrayList<String> transport = getTransportSelected();
-//            replaceFragment(FragmentItinerary.newInstance(attractionsOrder, FragmentCityConfigureItinerary.attractions, transport));
+            ArrayList<String> transport = getTransportSelected();
+            replaceFragment(FragmentItinerary.newInstance(attractionsOrder, FragmentCityConfigureItinerary.attractions, transport));
 
 //            ArrayList<String> transport = getTransportSelected();
 //            replaceFragment(FragmentItinerary.newInstance(attractionsOrder, FragmentCityConfigureItinerary.attractions, transport));

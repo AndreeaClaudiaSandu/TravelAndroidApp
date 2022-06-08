@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
+        android:visibility="visible"
         tools:ignore="SpeakableTextPresentCheck">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,6 +34,7 @@
 
             <TextView
                 android:id="@+id/textViewNumberOfDays"
+                style="@android:style/Widget.EditText"
                 android:layout_width="wrap_content"
                 android:layout_height="29dp"
                 android:layout_marginStart="16dp"
@@ -45,7 +47,6 @@
                 android:textColor="@color/loginDarkBlue"
                 android:textSize="18dp"
                 android:textStyle="bold|italic"
-                style="@android:style/Widget.EditText"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/titleConfigureItinerary" />
 
@@ -103,6 +104,7 @@
 
             <TextView
                 android:id="@+id/textViewTrnsportTypes"
+                style="@android:style/Widget.EditText"
                 android:layout_width="wrap_content"
                 android:layout_height="29dp"
                 android:layout_marginStart="16dp"
@@ -115,7 +117,6 @@
                 android:textColor="@color/loginDarkBlue"
                 android:textSize="18dp"
                 android:textStyle="bold|italic"
-                style="@android:style/Widget.EditText"
                 app:autoSizeTextType="none"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
@@ -202,6 +203,7 @@
 
             <TextView
                 android:id="@+id/textViewAttractions"
+                style="@android:style/Widget.EditText"
                 android:layout_width="wrap_content"
                 android:layout_height="29dp"
                 android:layout_marginStart="16dp"
@@ -214,7 +216,6 @@
                 android:textColor="@color/loginDarkBlue"
                 android:textSize="18dp"
                 android:textStyle="bold|italic"
-                style="@android:style/Widget.EditText"
                 app:autoSizeMaxTextSize="50dp"
                 app:autoSizeMinTextSize="16dp"
                 app:autoSizeTextType="none"
@@ -238,6 +239,7 @@
 
             <TextView
                 android:id="@+id/addressTextView"
+                style="@android:style/Widget.EditText"
                 android:layout_width="wrap_content"
                 android:layout_height="29dp"
                 android:layout_marginStart="16dp"
@@ -250,7 +252,6 @@
                 android:textColor="@color/loginDarkBlue"
                 android:textSize="18sp"
                 android:textStyle="bold|italic"
-                style="@android:style/Widget.EditText"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/chooseAttractionsRecyclerView" />
@@ -282,27 +283,28 @@
                 android:background="@drawable/round_button"
                 android:backgroundTint="@color/loginBlue"
                 android:fontFamily="sans-serif"
+                android:onClick="configureItinerary"
                 android:text="@string/get_itinerary"
                 android:textColor="@color/loginDarkBlue"
                 android:textSize="16sp"
                 android:textStyle="bold|italic"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/addressEditText"
-                android:onClick="configureItinerary"/>
+                app:layout_constraintTop_toBottomOf="@+id/addressEditText" />
 
             <ProgressBar
                 android:id="@+id/progressBar"
                 style="?android:attr/progressBarStyle"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="36dp"
-                android:background="@drawable/circular_shape"
-                android:indeterminate="true"
-                android:progressDrawable="@drawable/circular_progress_bar"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="32dp"
+                android:elevation="7dp"
+                android:indeterminateDrawable="@drawable/progress_bar"
                 android:visibility="visible"
-                app:layout_constraintStart_toStartOf="parent"
+                android:indeterminateDuration="@integer/material_motion_duration_short_2"
+                app:layout_constraintStart_toEndOf="@+id/generateItinerary"
                 app:layout_constraintTop_toBottomOf="@+id/addressEditText" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

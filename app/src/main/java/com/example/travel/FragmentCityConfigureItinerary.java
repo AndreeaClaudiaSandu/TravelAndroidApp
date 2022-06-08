@@ -40,6 +40,7 @@ public class FragmentCityConfigureItinerary extends Fragment {
 
     public static FragmentCityConfigureItinerary newInstance(City city) {
         FragmentCityConfigureItinerary fragment = new FragmentCityConfigureItinerary();
+        fragment.attractions = new ArrayList<>();
         fragment.city = city;
         return fragment;
     }
@@ -55,9 +56,9 @@ public class FragmentCityConfigureItinerary extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_city_configure_itinerary, container, false);
-        ((Button) root.findViewById(R.id.generateItinerary)).setTextScaleX(1);
+//        ((Button) root.findViewById(R.id.generateItinerary)).setTextScaleX(1);
         root.findViewById(R.id.progressBar).setVisibility(View.INVISIBLE);
-        root.findViewById(R.id.progressBar).bringToFront();
+//        root.findViewById(R.id.progressBar).bringToFront();
         return root;
     }
 

@@ -43,7 +43,7 @@
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="32dp"
+            android:layout_height="30dp"
             android:orientation="horizontal"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
@@ -111,7 +111,7 @@
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
-            android:layout_height="32dp"
+            android:layout_height="30dp"
             android:orientation="horizontal"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
@@ -150,8 +150,160 @@
                 android:text="Configure Itinerary"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold|italic"
+                app:autoSizeMaxTextSize="28dp"
+                app:autoSizeTextType="uniform" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutDays"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" >
+
+            <TextView
+                android:id="@+id/day1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/day_shape"
+                android:clickable="true"
+                android:fontFamily="serif-monospace"
+                android:gravity="center"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:text="day1"
+                android:textAlignment="center"
+                android:textColor="@color/loginDarkBlue"
+                android:textSize="16sp"
+                android:textStyle="bold|italic"
+                android:visibility="invisible"
+                app:autoSizeMaxTextSize="28dp"
+                app:autoSizeTextType="uniform" />
+
+            <TextView
+                android:id="@+id/day2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/day_shape"
+                android:clickable="true"
+                android:fontFamily="serif-monospace"
+                android:gravity="center"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:text="day2"
+                android:textAlignment="center"
+                android:textColor="@color/loginDarkBlue"
+                android:textSize="16sp"
+                android:textStyle="bold|italic"
+                android:visibility="invisible"
+                app:autoSizeMaxTextSize="28dp"
+                app:autoSizeTextType="uniform" />
+
+            <TextView
+                android:id="@+id/day3"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/day_shape"
+                android:clickable="true"
+                android:fontFamily="serif-monospace"
+                android:gravity="center"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:text="day3"
+                android:textAlignment="center"
+                android:textColor="@color/loginDarkBlue"
+                android:textSize="16sp"
+                android:textStyle="bold|italic"
+                android:visibility="invisible"
+                app:autoSizeMaxTextSize="28dp"
+                app:autoSizeTextType="uniform" />
+
+            <TextView
+                android:id="@+id/day4"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/day_shape"
+                android:clickable="true"
+                android:fontFamily="serif-monospace"
+                android:gravity="center"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:text="day4"
+                android:textAlignment="center"
+                android:textColor="@color/loginDarkBlue"
+                android:textSize="16sp"
+                android:textStyle="bold|italic"
+                android:visibility="invisible"
+                app:autoSizeMaxTextSize="28dp"
+                app:autoSizeTextType="uniform" />
+
+            <TextView
+                android:id="@+id/day5"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/day_shape"
+                android:clickable="true"
+                android:fontFamily="serif-monospace"
+                android:gravity="center"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:text="day5"
+                android:textAlignment="center"
+                android:textColor="@color/loginDarkBlue"
+                android:textSize="16sp"
+                android:textStyle="bold|italic"
+                android:visibility="invisible"
+                app:autoSizeMaxTextSize="28dp"
+                app:autoSizeTextType="uniform" />
+
+            <TextView
+                android:id="@+id/day6"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/day_shape"
+                android:clickable="true"
+                android:fontFamily="serif-monospace"
+                android:gravity="center"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:text="day6"
+                android:textAlignment="center"
+                android:textColor="@color/loginDarkBlue"
+                android:textSize="16sp"
+                android:textStyle="bold|italic"
+                android:visibility="invisible"
+                app:autoSizeMaxTextSize="28dp"
+                app:autoSizeTextType="uniform" />
+
+            <TextView
+                android:id="@+id/day7"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/day_shape"
+                android:clickable="true"
+                android:fontFamily="serif-monospace"
+                android:gravity="center"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:text="day7"
+                android:textAlignment="center"
+                android:textColor="@color/loginDarkBlue"
+                android:textSize="16sp"
+                android:textStyle="bold|italic"
+                android:visibility="invisible"
                 app:autoSizeMaxTextSize="28dp"
                 app:autoSizeTextType="uniform" />
 
@@ -168,7 +320,7 @@
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayoutDays" />
 
         <TextView
             android:id="@+id/descriptionCityTitle"
