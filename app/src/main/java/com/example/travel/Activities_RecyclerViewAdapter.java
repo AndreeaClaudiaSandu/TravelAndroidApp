@@ -63,7 +63,7 @@ public class Activities_RecyclerViewAdapter extends RecyclerView.Adapter<Activit
 
             imageView = itemView.findViewById(R.id.activityImage);
             activityName = itemView.findViewById(R.id.activityName);
-            activityLocation = itemView.findViewById(R.id.activityLocation);
+            activityLocation = itemView.findViewById(R.id.visitDurationTextView);
         }
 
 

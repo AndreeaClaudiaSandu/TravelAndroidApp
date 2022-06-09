@@ -1,23 +1,22 @@
 package com.example.travel;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
-import android.os.TestLooperManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.Date;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -28,64 +27,104 @@ public class FragmentItinerary extends Fragment {
     ArrayList<String> attractionsOrder;
     ArrayList<Attraction> attractions;
     ArrayList<String> transport;
-    TextView orderTextView;
-    TextView routeTextView;
+    String dayNumber;
+    ArrayList<String> dayOrder;
+    ArrayList<String> daysInfo;
 
     public FragmentItinerary() {
         // Required empty public constructor
     }
 
 
-    public static FragmentItinerary newInstance(ArrayList<String> attractionsOrder, ArrayList<Attraction> attractions, ArrayList<String> transport) {
+    public static FragmentItinerary newInstance(ArrayList<String> attractionsOrder, ArrayList<Attraction> attractions, ArrayList<String> transport, String dayNumber) {
         FragmentItinerary fragment = new FragmentItinerary();
         fragment.attractionsOrder = attractionsOrder;
         fragment.attractions = attractions;
         fragment.transport = transport;
+        fragment.dayNumber = dayNumber;
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setDayOrder();
+
+        getActivity().findViewById(R.id.day1).setOnClickListener(v -> {
+            Fragment fragment = FragmentItinerary.newInstance(attractionsOrder, attractions, transport, "day1");
+            ((MainActivity) getActivity()).replaceFragment(fragment);
+        });
+        getActivity().findViewById(R.id.day2).setOnClickListener(v -> {
+            Fragment fragment = FragmentItinerary.newInstance(attractionsOrder, attractions, transport, "day2");
+            ((MainActivity) getActivity()).replaceFragment(fragment);
+        });
+        getActivity().findViewById(R.id.day3).setOnClickListener(v -> {
+            Fragment fragment = FragmentItinerary.newInstance(attractionsOrder, attractions, transport, "day3");
+            ((MainActivity) getActivity()).replaceFragment(fragment);
+        });
+        getActivity().findViewById(R.id.day4).setOnClickListener(v -> {
+            Fragment fragment = FragmentItinerary.newInstance(attractionsOrder, attractions, transport, "day4");
+            ((MainActivity) getActivity()).replaceFragment(fragment);
+        });
+        getActivity().findViewById(R.id.day5).setOnClickListener(v -> {
+            Fragment fragment = FragmentItinerary.newInstance(attractionsOrder, attractions, transport, "day5");
+            ((MainActivity) getActivity()).replaceFragment(fragment);
+        });
+        getActivity().findViewById(R.id.day6).setOnClickListener(v -> {
+            Fragment fragment = FragmentItinerary.newInstance(attractionsOrder, attractions, transport, "day6");
+            ((MainActivity) getActivity()).replaceFragment(fragment);
+        });
+        getActivity().findViewById(R.id.day7).setOnClickListener(v -> {
+            Fragment fragment = FragmentItinerary.newInstance(attractionsOrder, attractions, transport, "day7");
+            ((MainActivity) getActivity()).replaceFragment(fragment);
+        });
 
     }
 
-    private String getTransportInfo() {
+    private void setDayOrder() {
+        dayOrder = new ArrayList<>();
+        int index = attractionsOrder.indexOf(dayNumber);
+        index++;
+        while(index<attractionsOrder.size() && !attractionsOrder.get(index).equals("day1") && !attractionsOrder.get(index).equals("day2") && !attractionsOrder.get(index).equals("day3") && !attractionsOrder.get(index).equals("day4") && !attractionsOrder.get(index).equals("day5") && !attractionsOrder.get(index).equals("day6") && !attractionsOrder.get(index).equals("day7")){
+            dayOrder.add(attractionsOrder.get(index));
+            index++;
+        }
+    }
 
-        StringBuilder info = new StringBuilder();
+    private void getTransportInfo() {
+
         String accommodationAddress = MainActivity.accommodationAddress;
         accommodationAddress = accommodationAddress.replace(" ", "%20").replace(",", "%2C").replace("à", "%C3%A0");
         String location;
+        daysInfo = new ArrayList<>();
 
-        for (int i = 0; i < attractionsOrder.size() - 1; i++) {
-            String location1 = attractionsOrder.get(i);
-            String location1Adress = "";
+        for (int i = 0; i < dayOrder.size() - 1; i++) {
+            String location1 = dayOrder.get(i);
+            String location1Address = "";
             if (location1.equals("accommodation")) {
-                location1Adress = MainActivity.accommodationAddress;
+                location1Address = MainActivity.accommodationAddress;
             } else {
                 for (int j = 0; j < attractions.size(); j++) {
                     if (attractions.get(j).getName().equals(location1)) {
-                        location1Adress = attractions.get(j).getLocation();
+                        location1Address = attractions.get(j).getLocation();
                     }
                 }
             }
-            String location2 = attractionsOrder.get(i + 1);
-            String location2Adress = "";
+            String location2 = dayOrder.get(i + 1);
+            String location2Address = "";
             if (location2.equals("accommodation")) {
-                location2Adress = MainActivity.accommodationAddress;
+                location2Address = MainActivity.accommodationAddress;
             } else {
                 for (int j = 0; j < attractions.size(); j++) {
                     if (attractions.get(j).getName().equals(location2)) {
-                        location2Adress = attractions.get(j).getLocation();
+                        location2Address = attractions.get(j).getLocation();
                     }
                 }
             }
-            info.append("From ").append(location1).append(" to ").append(location2).append("\n");
+            location1Address = location1Address.replace(" ", "%20").replace(",", "%2C").replace("à", "%C3%A0");
+            location2Address = location2Address.replace(" ", "%20").replace(",", "%2C").replace("à", "%C3%A0");
 
-            location1Adress = location1Adress.replace(" ", "%20").replace(",", "%2C").replace("à", "%C3%A0");
-            location2Adress = location2Adress.replace(" ", "%20").replace(",", "%2C").replace("à", "%C3%A0");
-
-            String url = generateURL(location1Adress, location2Adress);
+            String url = generateURL(location1Address, location2Address);
 
             OkHttpClient client = new OkHttpClient().newBuilder()
                     .build();
@@ -97,14 +136,11 @@ public class FragmentItinerary extends Fragment {
                 Response response = client.newCall(request).execute();
                 JSONObject directionObject = new JSONObject(response.body().string());
                 String route = parseObject(directionObject);
-                Log.i("route", directionObject.toString());
-                info.append("\n" + route);
-
+                daysInfo.add(route);
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
         }
-        return info.toString();
     }
 
     private String parseObject(JSONObject directionObject) {
@@ -127,38 +163,37 @@ public class FragmentItinerary extends Fragment {
                             JSONObject durationStep = steps.optJSONObject(i).optJSONObject("duration");
                             int seconds = durationStep.optInt("value");
                             int minutesStep = seconds / 60;
-                            route.append(minutesStep).append(" minutes\n");
+                            route.append("Duration: ").append(minutesStep).append(" minutes\n");
                             String travelMode = steps.optJSONObject(i).optString("travel_mode");
-                            route.append("travel mode: ").append(travelMode).append("\n");
+                            route.append("Travel mode: ").append(travelMode.toLowerCase()).append("\n");
                             if (travelMode.equals("TRANSIT")) {
                                 JSONObject transitDetails = steps.optJSONObject(i).optJSONObject("transit_details");
                                 if (transitDetails != null) {
                                     JSONObject departureStop = transitDetails.optJSONObject("departure_stop");
                                     if (departureStop != null) {
                                         String departureName = departureStop.optString("name");
-                                        route.append("departure stop: ").append(departureName).append("\n");
+                                        route.append("Departure stop: ").append(departureName).append("\n");
                                     }
                                     JSONObject arrivalStop = transitDetails.optJSONObject("arrival_stop");
                                     if (arrivalStop != null) {
                                         String arrivalName = arrivalStop.optString("name");
-                                        route.append("arrival stop: ").append(arrivalName).append("\n");
+                                        route.append("Arrival stop: ").append(arrivalName).append("\n");
                                     }
                                     JSONObject line = transitDetails.optJSONObject("line");
                                     if (line != null) {
                                         JSONObject vehicle = line.optJSONObject("vehicle");
                                         if (vehicle != null) {
                                             String vehicleType = vehicle.optString("type");
-                                            route.append("vehicle type: ").append(vehicleType).append("\n");
+                                            route.append("Vehicle type: ").append(vehicleType).append("\n");
                                         }
                                         String shortName = line.optString("short_name");
-                                        route.append("vehicle name: ").append(shortName).append("\n");
+                                        route.append("Vehicle name: ").append(shortName).append("\n");
                                         int stops = line.optInt("num_stops");
-                                        route.append("number of stops: ").append(stops).append("\n");
+                                        route.append("Number of stops: ").append(stops).append("\n");
                                     }
                                 }
                             }
                         }
-                        route.append("\n");
                     }
                 }
             }
@@ -188,7 +223,6 @@ public class FragmentItinerary extends Fragment {
             url.deleteCharAt(url.length() - 1);
         }
         url.append("&key=").append(ConfigureItinerary.API_KEY);
-
         return url.toString();
     }
 
@@ -197,12 +231,13 @@ public class FragmentItinerary extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_itinerary, container, false);
-        orderTextView = root.findViewById(R.id.attractionsOrder);
-        orderTextView.setText(attractionsOrder.toString());
-
-        routeTextView = root.findViewById(R.id.routeTextView);
-        routeTextView.setText(getTransportInfo());
         setTheDaysVisibility();
+        getTransportInfo();
+        int accommodationImage = getResources().getIdentifier("accommodation", "drawable", getContext().getPackageName());
+        RecyclerView recyclerView = root.findViewById(R.id.attarctionItineraryRecyclerView);
+        ItineraryAttraction_RecyclerViewAdapter adapter = new ItineraryAttraction_RecyclerViewAdapter(getContext(), dayOrder, daysInfo, attractions, accommodationImage);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return root;
     }

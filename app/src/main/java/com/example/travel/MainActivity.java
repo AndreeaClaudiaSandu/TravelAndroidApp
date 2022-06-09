@@ -491,11 +491,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             accommodationAddress = ((EditText) findViewById(R.id.addressEditText)).getText().toString();
             ConfigureItinerary configureItinerary = new ConfigureItinerary();
             ArrayList<String> order = configureItinerary.getOrder(accommodationAddress);
-            ArrayList<String> attractionsOrder = configureItinerary.getAttractionsOrder(accommodationAddress);
-            Log.i("attractions order", attractionsOrder.toString());
+//            ArrayList<String> attractionsOrder = configureItinerary.getAttractionsOrder(accommodationAddress);
+//            Log.i("attractions order", attractionsOrder.toString());
 
             ArrayList<String> transport = getTransportSelected();
-            replaceFragment(FragmentItinerary.newInstance(attractionsOrder, FragmentCityConfigureItinerary.attractions, transport));
+            replaceFragment(FragmentItinerary.newInstance(order, FragmentCityConfigureItinerary.attractions, transport, "day1"));
 
 //            ArrayList<String> transport = getTransportSelected();
 //            replaceFragment(FragmentItinerary.newInstance(attractionsOrder, FragmentCityConfigureItinerary.attractions, transport));

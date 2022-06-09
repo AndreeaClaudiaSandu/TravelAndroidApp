@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/attractionCardView"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:cardBackgroundColor="@color/loginDarkBlue"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/attractionItineraryImage"
+                android:layout_width="130dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/roundedCorners"
+                app:srcCompat="@drawable/barcelona" />
+
+            <TextView
+                android:id="@+id/attractionItineraryName"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="sans-serif-smallcaps"
+                android:text="TextView"
+                android:textAlignment="textStart"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold|italic"
+                app:autoSizeMaxTextSize="96sp"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/attractionItineraryImage"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/visitDurationTextView"
+                android:layout_width="0dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="sans-serif"
+                android:text="Visit duration:"
+                android:textAlignment="textStart"
+                android:textColor="@color/darkerBlue"
+                android:textSize="16sp"
+                android:textStyle="italic"
+                app:autoSizeMaxTextSize="48sp"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintStart_toEndOf="@+id/attractionItineraryImage"
+                app:layout_constraintTop_toBottomOf="@+id/attractionItineraryName" />
+
+            <TextView
+                android:id="@+id/visitDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="sans-serif"
+                android:text="TextView"
+                android:textColor="@color/loginBlue"
+                android:textSize="16sp"
+                android:textStyle="italic"
+                app:layout_constraintStart_toEndOf="@+id/visitDurationTextView"
+                app:layout_constraintTop_toBottomOf="@+id/attractionItineraryName" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/travelDetailsCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
+        app:cardBackgroundColor="@color/babyBlue"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/attractionCardView">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/depratureTimeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="serif"
+                android:text="Departure time:"
+                android:textColor="@color/loginDarkBlue"
+                android:textSize="16sp"
+                android:textStyle="bold|italic"
+                android:typeface="normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/departureTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="17dp"
+                android:text="TextView"
+                android:textColor="@color/loginDarkBlue"
+                android:textSize="16dp"
+                android:textStyle="italic"
+                app:layout_constraintStart_toEndOf="@+id/depratureTimeTextView"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/travelTimeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="serif"
+                android:text="Total travel time:"
+                android:textColor="@color/loginDarkBlue"
+                android:textSize="16sp"
+                android:textStyle="bold|italic"
+                android:typeface="normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/depratureTimeTextView" />
+
+            <TextView
+                android:id="@+id/totalTravelTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="9dp"
+                android:text="TextView"
+                android:textColor="@color/loginDarkBlue"
+                android:textSize="16sp"
+                android:textStyle="italic"
+                app:layout_constraintStart_toEndOf="@+id/travelTimeTextView"
+                app:layout_constraintTop_toBottomOf="@+id/departureTime" />
+
+            <TextView
+                android:id="@+id/travelDetailsTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="serif"
+                android:text="Travel details:"
+                android:textColor="@color/loginDarkBlue"
+                android:textSize="16sp"
+                android:textStyle="bold|italic"
+                android:typeface="normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/travelTimeTextView" />
+
+            <TextView
+                android:id="@+id/travelDetails"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="serif"
+                android:text="TextView"
+                android:textColor="@color/loginDarkBlue"
+                android:textSize="14dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/travelDetailsTextView" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

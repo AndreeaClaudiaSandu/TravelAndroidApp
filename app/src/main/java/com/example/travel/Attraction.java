@@ -8,7 +8,7 @@ public class Attraction {
     String location;
     String timetable;
     String price;
-    String visitTime;
+    int visitTime;
     String station;
     String link;
     int image;
@@ -20,7 +20,7 @@ public class Attraction {
         this.location = location;
         this.timetable = timetable;
         this.price = price;
-        this.visitTime = visitTime;
+        this.visitTime = Integer.valueOf(visitTime);
         this.station = station;
         this.link = link;
         this.image = image;
@@ -50,7 +50,7 @@ public class Attraction {
         return price;
     }
 
-    public String getVisitTime() {
+    public int getVisitTime() {
         return visitTime;
     }
 
