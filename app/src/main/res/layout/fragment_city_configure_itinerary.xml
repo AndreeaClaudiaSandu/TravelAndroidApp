@@ -66,7 +66,8 @@
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/loginDarkBlue"
                     android:text="@string/_1"
-                    android:textColor="@color/loginDarkBlue" />
+                    android:textColor="@color/loginDarkBlue"
+                    android:onClick="setNumberOfDaysNoError"/>
 
                 <RadioButton
                     android:id="@+id/radio_2"
@@ -74,7 +75,8 @@
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/loginDarkBlue"
                     android:text="@string/_2"
-                    android:textColor="@color/loginDarkBlue" />
+                    android:textColor="@color/loginDarkBlue"
+                    android:onClick="setNumberOfDaysNoError"/>
 
                 <RadioButton
                     android:id="@+id/radio_3"
@@ -90,7 +92,8 @@
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/loginDarkBlue"
                     android:text="@string/_5"
-                    android:textColor="@color/loginDarkBlue" />
+                    android:textColor="@color/loginDarkBlue"
+                    android:onClick="setNumberOfDaysNoError"/>
 
                 <RadioButton
                     android:id="@+id/radio_7"
@@ -98,7 +101,8 @@
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/loginDarkBlue"
                     android:text="@string/_7"
-                    android:textColor="@color/loginDarkBlue" />
+                    android:textColor="@color/loginDarkBlue"
+                    android:onClick="setNumberOfDaysNoError"/>
 
             </RadioGroup>
 
@@ -135,7 +139,8 @@
                 android:textSize="18dp"
                 android:textStyle="italic"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewTrnsportTypes" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewTrnsportTypes"
+                android:onClick="setTransportTypeNoError"/>
 
             <CheckBox
                 android:id="@+id/busCheckBox"
@@ -151,7 +156,8 @@
                 android:textSize="18dp"
                 android:textStyle="italic"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/carCheckBox" />
+                app:layout_constraintTop_toBottomOf="@+id/carCheckBox"
+                android:onClick="setTransportTypeNoError"/>
 
             <CheckBox
                 android:id="@+id/subwayCheckBox"
@@ -167,7 +173,8 @@
                 android:textSize="18dp"
                 android:textStyle="italic"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/busCheckBox" />
+                app:layout_constraintTop_toBottomOf="@+id/busCheckBox"
+                android:onClick="setTransportTypeNoError"/>
 
             <CheckBox
                 android:id="@+id/tramCheckBox"
@@ -183,7 +190,8 @@
                 android:textSize="18dp"
                 android:textStyle="italic"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/subwayCheckBox" />
+                app:layout_constraintTop_toBottomOf="@+id/subwayCheckBox"
+                android:onClick="setTransportTypeNoError"/>
 
             <CheckBox
                 android:id="@+id/trainCheckBox"
@@ -199,7 +207,8 @@
                 android:textSize="18dp"
                 android:textStyle="italic"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tramCheckBox" />
+                app:layout_constraintTop_toBottomOf="@+id/tramCheckBox"
+                />
 
             <TextView
                 android:id="@+id/textViewAttractions"
@@ -304,6 +313,16 @@
                 android:indeterminateDuration="@integer/material_motion_duration_short_2"
                 app:layout_constraintStart_toEndOf="@+id/generateItinerary"
                 app:layout_constraintTop_toBottomOf="@+id/addressEditText" />
+
+<!--            <TextView-->
+<!--                android:id="@+id/coverCircular"-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:layout_marginTop="32dp"-->
+<!--                android:background="@color/white"-->
+<!--                android:visibility="visible"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/generateItinerary"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/addressEditText" />-->
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

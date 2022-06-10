@@ -1,6 +1,7 @@
 package com.example.travel;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +15,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.time.format.DateTimeFormatter;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -30,6 +35,8 @@ public class FragmentItinerary extends Fragment {
     String dayNumber;
     ArrayList<String> dayOrder;
     ArrayList<String> daysInfo;
+    long seconds;
+    ArrayList<Integer> departureTime;
 
     public FragmentItinerary() {
         // Required empty public constructor
@@ -97,7 +104,8 @@ public class FragmentItinerary extends Fragment {
         accommodationAddress = accommodationAddress.replace(" ", "%20").replace(",", "%2C").replace("à", "%C3%A0");
         String location;
         daysInfo = new ArrayList<>();
-
+        departureTime = new ArrayList<>();
+        String route = null;
         for (int i = 0; i < dayOrder.size() - 1; i++) {
             String location1 = dayOrder.get(i);
             String location1Address = "";
@@ -124,7 +132,7 @@ public class FragmentItinerary extends Fragment {
             location1Address = location1Address.replace(" ", "%20").replace(",", "%2C").replace("à", "%C3%A0");
             location2Address = location2Address.replace(" ", "%20").replace(",", "%2C").replace("à", "%C3%A0");
 
-            String url = generateURL(location1Address, location2Address);
+            String url = generateURL(location1Address, location2Address, i, route);
 
             OkHttpClient client = new OkHttpClient().newBuilder()
                     .build();
@@ -135,7 +143,8 @@ public class FragmentItinerary extends Fragment {
             try {
                 Response response = client.newCall(request).execute();
                 JSONObject directionObject = new JSONObject(response.body().string());
-                String route = parseObject(directionObject);
+                Log.i("direction object", directionObject.toString());
+                route = parseObject(directionObject);
                 daysInfo.add(route);
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
@@ -159,7 +168,7 @@ public class FragmentItinerary extends Fragment {
                 if (steps != null) {
                     for (int i = 0; i < steps.length(); i++) {
                         if (steps.optJSONObject(i) != null) {
-                            route.append(i).append(":\n");
+                            route.append("Step ").append(i+1).append(":\n");
                             JSONObject durationStep = steps.optJSONObject(i).optJSONObject("duration");
                             int seconds = durationStep.optInt("value");
                             int minutesStep = seconds / 60;
@@ -188,9 +197,9 @@ public class FragmentItinerary extends Fragment {
                                         }
                                         String shortName = line.optString("short_name");
                                         route.append("Vehicle name: ").append(shortName).append("\n");
-                                        int stops = line.optInt("num_stops");
-                                        route.append("Number of stops: ").append(stops).append("\n");
                                     }
+                                    int stops = transitDetails.optInt("num_stops");
+                                    route.append("Number of stops: ").append(stops).append("\n");
                                 }
                             }
                         }
@@ -201,7 +210,7 @@ public class FragmentItinerary extends Fragment {
         return route.toString();
     }
 
-    private String generateURL(String location1, String location2) {
+    private String generateURL(String location1, String location2, int position, String route) {
         StringBuilder url = new StringBuilder("https://maps.googleapis.com/maps/api/directions/json?origin=");
         url.append(location1).append("&destination=").append(location2);
         if (transport.contains("car")) {
@@ -222,8 +231,81 @@ public class FragmentItinerary extends Fragment {
             }
             url.deleteCharAt(url.length() - 1);
         }
+        if(position==0) {
+            setSecondsOffset(url);
+            departureTime.add(540);
+        }else{
+            String[] daySplit = route.split("\n", 2);
+            String minutesForTraveling = daySplit[0].substring(12);
+            Log.i("minutesForTraveling", minutesForTraveling);
+            int minutesTravel = Integer.valueOf(minutesForTraveling);
+            int secondsForTraveling = minutesTravel*60;
+            int minutesVisitTime=0;
+
+            Log.i("minutesAttraction", dayOrder.get(position));
+            for (int i = 0; i < attractions.size(); i++) {
+                if (attractions.get(i).getName().equals(dayOrder.get(position))) {
+                    minutesVisitTime = attractions.get(i).getVisitTime();
+                    break;
+                }
+            }
+
+            int secondsVisitTime = minutesVisitTime*60;
+
+            Log.i("minutesVisit", Integer.toString(minutesVisitTime));
+            Log.i("minutesPrevious", Integer.toString(departureTime.get(position-1)));
+            departureTime.add( departureTime.get(position-1) + minutesTravel + minutesVisitTime);
+            Log.i("minutesDeparture", Integer.toString(departureTime.get(position)));
+            seconds += secondsForTraveling;
+            seconds += secondsVisitTime;
+
+        }
+        url.append("&departure_time=").append(seconds);
         url.append("&key=").append(ConfigureItinerary.API_KEY);
         return url.toString();
+    }
+
+    private void setSecondsOffset(StringBuilder url) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        Date firstDate = null;
+        long diffInSec=0;
+        try {
+            firstDate = sdf.parse("1970-01-01T00:00:00");
+            Calendar calendar =Calendar.getInstance();
+            calendar.add(Calendar.DAY_OF_YEAR, 1);
+            Date tomorrow = calendar.getTime();
+
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String tomorrowAsString = dateFormat.format(tomorrow);
+            String tomorrowMorning = tomorrowAsString+"T09:00:00";
+            Date tomorrowDate = sdf.parse(tomorrowMorning);
+            diffInSec = (Math.abs(tomorrowDate.getTime() - firstDate.getTime())) / 1000;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        StringBuilder urlForTimeZone = new StringBuilder("https://maps.googleapis.com/maps/api/timezone/json?location=");
+        urlForTimeZone.append(Double.toString(MainActivity.lat)).append("%2C").append(Double.toString(MainActivity.lng));
+        urlForTimeZone.append("&timestamp=").append(Long.toString(diffInSec));
+        urlForTimeZone.append("&key=").append(ConfigureItinerary.API_KEY);
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        Request request = new Request.Builder()
+                .url(urlForTimeZone.toString())
+                .method("GET", null).build();
+        int rawOffset=0;
+        int dstOffset=0;
+        try {
+            Response response = client.newCall(request).execute();
+            JSONObject timeZoneObject = new JSONObject(response.body().string());
+            rawOffset = timeZoneObject.optInt("rawOffset");
+            dstOffset = timeZoneObject.optInt("dstOffset");
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+        seconds = diffInSec-rawOffset-dstOffset;
     }
 
     @Override
@@ -235,7 +317,7 @@ public class FragmentItinerary extends Fragment {
         getTransportInfo();
         int accommodationImage = getResources().getIdentifier("accommodation", "drawable", getContext().getPackageName());
         RecyclerView recyclerView = root.findViewById(R.id.attarctionItineraryRecyclerView);
-        ItineraryAttraction_RecyclerViewAdapter adapter = new ItineraryAttraction_RecyclerViewAdapter(getContext(), dayOrder, daysInfo, attractions, accommodationImage);
+        ItineraryAttraction_RecyclerViewAdapter adapter = new ItineraryAttraction_RecyclerViewAdapter(getContext(), dayOrder, daysInfo, attractions, departureTime, accommodationImage);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 

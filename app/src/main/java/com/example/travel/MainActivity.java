@@ -10,7 +10,6 @@ import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -64,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static ArrayList<String> pickedAttractions;
     public static String accommodationAddress;
     public static int numberOfDays;
+    public static double lat, lng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         findViewById(R.id.descriptionCityImage).setVisibility(View.VISIBLE);
                         findViewById(R.id.descriptionCityTitle).setVisibility(View.VISIBLE);
                     }
-                } else if (currentFragment instanceof FragmentCityAttractions || currentFragment instanceof FragmentCityAttraction || currentFragment instanceof FragmentCityConfigureItinerary ) {
+                } else if (currentFragment instanceof FragmentCityAttractions || currentFragment instanceof FragmentCityAttraction || currentFragment instanceof FragmentCityConfigureItinerary) {
                     findViewById(R.id.linearLayout).setVisibility(View.VISIBLE);
                     findViewById(R.id.linearLayout2).setVisibility(View.VISIBLE);
                     findViewById(R.id.descriptionCityImage).setVisibility(View.GONE);
@@ -147,13 +147,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     findViewById(R.id.descriptionCityTitle).setVisibility(View.GONE);
                 }
 
-                if(currentFragment instanceof FragmentCityConfigureItinerary){
+                if (currentFragment instanceof FragmentCityConfigureItinerary) {
                     findViewById(R.id.progressBar).setVisibility(View.INVISIBLE);
                 }
-                if(!(currentFragment instanceof FragmentItinerary)){
+                if (!(currentFragment instanceof FragmentItinerary)) {
                     findViewById(R.id.linearLayoutDays).setVisibility(View.GONE);
-                }
-                else{
+                } else {
                     findViewById(R.id.linearLayoutDays).setVisibility(View.VISIBLE);
                 }
 
@@ -219,7 +218,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             findViewById(R.id.descriptionCityTitle).setVisibility(View.GONE);
         }
 
-        if(!(fragment instanceof FragmentItinerary)){
+        if (!(fragment instanceof FragmentItinerary)) {
             findViewById(R.id.linearLayoutDays).setVisibility(View.GONE);
         }
 
@@ -484,26 +483,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (verifyTheItineraryConfiguration()) {
             Log.i("status", "ok");
             Log.i("list", pickedAttractions.toString());
-            findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
-//            ((Button) findViewById(R.id.generateItinerary)).setTextScaleX(0);
-
+//            findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
 
             accommodationAddress = ((EditText) findViewById(R.id.addressEditText)).getText().toString();
             ConfigureItinerary configureItinerary = new ConfigureItinerary();
             ArrayList<String> order = configureItinerary.getOrder(accommodationAddress);
-//            ArrayList<String> attractionsOrder = configureItinerary.getAttractionsOrder(accommodationAddress);
-//            Log.i("attractions order", attractionsOrder.toString());
-
             ArrayList<String> transport = getTransportSelected();
             replaceFragment(FragmentItinerary.newInstance(order, FragmentCityConfigureItinerary.attractions, transport, "day1"));
-
-//            ArrayList<String> transport = getTransportSelected();
-//            replaceFragment(FragmentItinerary.newInstance(attractionsOrder, FragmentCityConfigureItinerary.attractions, transport));
-
-            //TODO
         } else {
             Log.i("status", "not ok");
         }
+
+
     }
 
     private ArrayList<String> getTransportSelected() {
@@ -540,8 +531,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             ((TextView) findViewById(R.id.textViewNumberOfDays)).requestFocus();
             ((TextView) findViewById(R.id.textViewNumberOfDays)).setError("Select the number of days");
             return false;
-        }
-        else{
+        } else {
 
         }
 
@@ -568,17 +558,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             ((TextView) findViewById(R.id.textViewAttractions)).requestFocus();
             ((TextView) findViewById(R.id.textViewAttractions)).setError("Select at least one attraction");
             return false;
-        }
-        else {
+        } else {
             int id = group.getCheckedRadioButtonId();
             RadioButton radioButton = findViewById(id);
-            numberOfDays = Integer.valueOf( radioButton.getText().toString());
-            Log.i("number:" , Integer.toString( numberOfDays));
-            if (pickedAttractions.size() > (numberOfDays*4)) {
+            numberOfDays = Integer.valueOf(radioButton.getText().toString());
+            Log.i("number:", Integer.toString(numberOfDays));
+            if (pickedAttractions.size() > (numberOfDays * 4)) {
                 ((TextView) findViewById(R.id.textViewAttractions)).requestFocus();
-                if(numberOfDays==1){
+                if (numberOfDays == 1) {
                     ((TextView) findViewById(R.id.textViewAttractions)).setError("There are too many attractions for " + numberOfDays + " day. Select maximim " + numberOfDays * 4 + ".");
-                }else {
+                } else {
                     ((TextView) findViewById(R.id.textViewAttractions)).setError("There are too many attractions for " + numberOfDays + " days. Select maximim " + numberOfDays * 4 + ".");
                 }
                 return false;
@@ -615,7 +604,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private boolean checkBoundaries(String address, JSONObject object) {
-        double latNE, lngNE, latSW, lngSW, lat, lng;
+        double latNE, lngNE, latSW, lngSW;
         JSONArray results = object.optJSONArray("results");
         if (results != null) {
             JSONObject geometry = results.optJSONObject(0).optJSONObject("geometry");
@@ -660,6 +649,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
         return false;
+    }
+
+    public void setNumberOfDaysNoError(View view) {
+        ((TextView) findViewById(R.id.textViewNumberOfDays)).setError(null);
+    }
+
+    public void setTransportTypeNoError(View view) {
+        ((TextView) findViewById(R.id.textViewTrnsportTypes)).setError(null);
+    }
+
+    public void setPickAttractionsNoError(View view) {
+        ((TextView) findViewById(R.id.textViewAttractions)).setError(null);
     }
 
 }

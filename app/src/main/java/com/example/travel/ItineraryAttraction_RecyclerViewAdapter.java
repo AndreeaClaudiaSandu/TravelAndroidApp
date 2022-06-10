@@ -23,13 +23,15 @@ public class ItineraryAttraction_RecyclerViewAdapter extends RecyclerView.Adapte
     ArrayList<String> daysInfo;
     ArrayList<Attraction> attractions;
     ArrayList<String> dayOrder;
+    ArrayList<Integer> departureTime;
     int accommodationImage;
 
-    public ItineraryAttraction_RecyclerViewAdapter(Context context, ArrayList<String> dayOrder, ArrayList<String> daysInfo, ArrayList<Attraction> attractions, int accommodationImage) {
+    public ItineraryAttraction_RecyclerViewAdapter(Context context, ArrayList<String> dayOrder, ArrayList<String> daysInfo, ArrayList<Attraction> attractions, ArrayList<Integer> departureTime, int accommodationImage) {
         this.context = context;
         this.dayOrder = dayOrder;
         this.daysInfo = daysInfo;
         this.attractions = attractions;
+        this.departureTime = departureTime;
         this.accommodationImage = accommodationImage;
     }
 
@@ -59,15 +61,26 @@ public class ItineraryAttraction_RecyclerViewAdapter extends RecyclerView.Adapte
             holder.attractionName.setText("accommodation");
         }
         if (position < dayOrder.size() - 1) {
-            if (position == 0) {
-                holder.departureTime.setText("9am");
-            } else {
-                holder.departureTime.setText("nush");
+
+            int hour = departureTime.get(position) / 60;
+            int minutes = departureTime.get(position) % 60;
+            String hourString;
+            String minutesString;
+            if(hour<10){
+                hourString = "0" + Integer.toString(hour);
+            }else{
+                hourString = Integer.toString(hour);
             }
+            if(minutes<10){
+                minutesString = "0" + Integer.toString(minutes);
+            }else{
+                minutesString = Integer.toString(minutes);
+            }
+            holder.departureTime.setText(hourString + ":" + minutesString);
             String dayInfo = daysInfo.get(position);
             if (dayInfo.startsWith("Total time:")) {
                 String[] daySplit = dayInfo.split("\n", 2);
-                holder.totalTime.setText(daySplit[0].substring(12));
+                holder.totalTime.setText(daySplit[0].substring(12) + " minutes");
                 holder.travelInfo.setText(daySplit[1]);
             }
         } else {
