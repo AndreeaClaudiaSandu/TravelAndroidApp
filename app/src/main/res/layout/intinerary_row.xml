@@ -194,7 +194,7 @@
                 android:fontFamily="serif"
                 android:text="TextView"
                 android:textColor="@color/loginDarkBlue"
-                android:textSize="14dp"
+                android:textSize="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

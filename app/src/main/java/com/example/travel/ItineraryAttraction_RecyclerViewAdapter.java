@@ -50,7 +50,7 @@ public class ItineraryAttraction_RecyclerViewAdapter extends RecyclerView.Adapte
                 if (attractions.get(i).getName().equals(dayOrder.get(position))) {
                     holder.imageView.setImageResource(attractions.get(i).getImage());
                     holder.attractionName.setText(attractions.get(i).getName());
-                    holder.visitDuration.setText(attractions.get(i).getVisitTime() + "minutes");
+                    holder.visitDuration.setText(attractions.get(i).getVisitTime() + " minutes");
                     break;
                 }
             }

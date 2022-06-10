@@ -117,6 +117,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            Fragment previousFragment = getSupportFragmentManager().getFragments().get(getSupportFragmentManager().getFragments().size() - 1);
+            String previousDay = null;
+            if (previousFragment instanceof FragmentItinerary) {
+                previousDay = ((FragmentItinerary) previousFragment).dayNumber;
+            }
             getSupportFragmentManager().popBackStackImmediate();
             if (getSupportFragmentManager().getFragments().size() > 0) {
                 Fragment currentFragment = getSupportFragmentManager().getFragments().get(getSupportFragmentManager().getFragments().size() - 1);
@@ -135,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         findViewById(R.id.descriptionCityImage).setVisibility(View.VISIBLE);
                         findViewById(R.id.descriptionCityTitle).setVisibility(View.VISIBLE);
                     }
-                } else if (currentFragment instanceof FragmentCityAttractions || currentFragment instanceof FragmentCityAttraction || currentFragment instanceof FragmentCityConfigureItinerary) {
+                } else if (currentFragment instanceof FragmentCityAttractions || currentFragment instanceof FragmentCityAttraction || currentFragment instanceof FragmentCityConfigureItinerary || currentFragment instanceof FragmentItinerary) {
                     findViewById(R.id.linearLayout).setVisibility(View.VISIBLE);
                     findViewById(R.id.linearLayout2).setVisibility(View.VISIBLE);
                     findViewById(R.id.descriptionCityImage).setVisibility(View.GONE);
@@ -147,13 +152,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     findViewById(R.id.descriptionCityTitle).setVisibility(View.GONE);
                 }
 
-                if (currentFragment instanceof FragmentCityConfigureItinerary) {
-                    findViewById(R.id.progressBar).setVisibility(View.INVISIBLE);
-                }
                 if (!(currentFragment instanceof FragmentItinerary)) {
                     findViewById(R.id.linearLayoutDays).setVisibility(View.GONE);
                 } else {
                     findViewById(R.id.linearLayoutDays).setVisibility(View.VISIBLE);
+                    String currentDay = ((FragmentItinerary) currentFragment).dayNumber;
+                    setDaysColor(previousDay, currentDay);
+                }
+
+                if (currentFragment instanceof FragmentCityConfigureItinerary) {
+                    findViewById(R.id.progressBar).setVisibility(View.INVISIBLE);
                 }
 
             }
@@ -162,6 +170,66 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
 
+    }
+
+    private void setDaysColor(String previousDay, String currentDay) {
+        if(previousDay!=null) {
+            switch (previousDay) {
+                case "day1":
+                    setUnselectedDayColor(R.id.day1);
+                    break;
+                case "day2":
+                    setUnselectedDayColor(R.id.day2);
+                    break;
+                case "day3":
+                    setUnselectedDayColor(R.id.day3);
+                    break;
+                case "day4":
+                    setUnselectedDayColor(R.id.day4);
+                    break;
+                case "day5":
+                    setUnselectedDayColor(R.id.day5);
+                    break;
+                case "day6":
+                    setUnselectedDayColor(R.id.day6);
+                    break;
+                case "day7":
+                    setUnselectedDayColor(R.id.day7);
+                    break;
+            }
+        }
+        switch (currentDay) {
+            case "day1":
+                setSelectedDayColor(R.id.day1);
+                break;
+            case "day2":
+                setSelectedDayColor(R.id.day2);
+                break;
+            case "day3":
+                setSelectedDayColor(R.id.day3);
+                break;
+            case "day4":
+                setSelectedDayColor(R.id.day4);
+                break;
+            case "day5":
+                setSelectedDayColor(R.id.day5);
+                break;
+            case "day6":
+                setSelectedDayColor(R.id.day6);
+                break;
+            case "day7":
+                setSelectedDayColor(R.id.day7);
+                break;
+        }
+    }
+
+    private void setUnselectedDayColor(int day) {
+        ((TextView) findViewById(day)).setBackground(getResources().getDrawable(R.drawable.round_border_menu_item));
+        ((TextView) findViewById(day)).setTextColor(getResources().getColor(R.color.white));
+    }
+    private void setSelectedDayColor(int day) {
+        ((TextView) findViewById(day)).setBackground(getResources().getDrawable(R.drawable.day_shape));
+        ((TextView) findViewById(day)).setTextColor(getResources().getColor(R.color.loginDarkBlue));
     }
 
     @Override
@@ -481,15 +549,44 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void configureItinerary(View view) {
 
         if (verifyTheItineraryConfiguration()) {
-            Log.i("status", "ok");
-            Log.i("list", pickedAttractions.toString());
-//            findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
-
+            findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
             accommodationAddress = ((EditText) findViewById(R.id.addressEditText)).getText().toString();
-            ConfigureItinerary configureItinerary = new ConfigureItinerary();
-            ArrayList<String> order = configureItinerary.getOrder(accommodationAddress);
-            ArrayList<String> transport = getTransportSelected();
-            replaceFragment(FragmentItinerary.newInstance(order, FragmentCityConfigureItinerary.attractions, transport, "day1"));
+
+            class Background extends AsyncTask<Void, Void, Void> {
+
+                ArrayList<String> order;
+                ArrayList<String> transport;
+
+                @Override
+                protected void onPostExecute(Void unused) {
+                    replaceFragment(FragmentItinerary.newInstance(order, FragmentCityConfigureItinerary.attractions, transport, "day1"));
+                    ((TextView) findViewById(R.id.day1)).setBackground(getResources().getDrawable(R.drawable.day_shape));
+                    ((TextView) findViewById(R.id.day1)).setTextColor(getResources().getColor(R.color.loginDarkBlue));
+                    ((TextView) findViewById(R.id.day2)).setBackground(getResources().getDrawable(R.drawable.round_border_menu_item));
+                    ((TextView) findViewById(R.id.day2)).setTextColor(getResources().getColor(R.color.white));
+                    ((TextView) findViewById(R.id.day3)).setBackground(getResources().getDrawable(R.drawable.round_border_menu_item));
+                    ((TextView) findViewById(R.id.day3)).setTextColor(getResources().getColor(R.color.white));
+                    ((TextView) findViewById(R.id.day4)).setBackground(getResources().getDrawable(R.drawable.round_border_menu_item));
+                    ((TextView) findViewById(R.id.day4)).setTextColor(getResources().getColor(R.color.white));
+                    ((TextView) findViewById(R.id.day5)).setBackground(getResources().getDrawable(R.drawable.round_border_menu_item));
+                    ((TextView) findViewById(R.id.day5)).setTextColor(getResources().getColor(R.color.white));
+                    ((TextView) findViewById(R.id.day6)).setBackground(getResources().getDrawable(R.drawable.round_border_menu_item));
+                    ((TextView) findViewById(R.id.day6)).setTextColor(getResources().getColor(R.color.white));
+                    ((TextView) findViewById(R.id.day7)).setBackground(getResources().getDrawable(R.drawable.round_border_menu_item));
+                    ((TextView) findViewById(R.id.day7)).setTextColor(getResources().getColor(R.color.white));
+                }
+
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    ConfigureItinerary configureItinerary = new ConfigureItinerary();
+                    order = configureItinerary.getOrder(accommodationAddress);
+                    transport = getTransportSelected();
+                    return null;
+                }
+            }
+
+            Background background = new Background();
+            background.execute();
         } else {
             Log.i("status", "not ok");
         }
@@ -631,7 +728,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         JSONArray accommodationResults = accommodationObj.optJSONArray("results");
                         if (accommodationResults != null && accommodationResults.optJSONObject(0) != null) {
                             JSONObject accommodationGeometry = accommodationResults.optJSONObject(0).optJSONObject("geometry");
-                            if (geometry != null) {
+                            if (accommodationGeometry != null) {
                                 JSONObject location = accommodationGeometry.optJSONObject("location");
                                 if (location != null) {
                                     lat = location.optDouble("lat");
