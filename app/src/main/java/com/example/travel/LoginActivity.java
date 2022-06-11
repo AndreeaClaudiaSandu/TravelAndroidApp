@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     public static String server = "http://192.168.0.102/travel/";
 
     public static String connectedAccount;
-
+    public static int idAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 protected void onPostExecute(String s) {
                     Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
-                    if (s.equals("Login successfully")) {
+                    if (s.contains("Login successfully")) {
                         connectedAccount = email;
                         Intent intent = new Intent();
                         intent.setClass(context, MainActivity.class);
@@ -103,7 +103,12 @@ public class LoginActivity extends AppCompatActivity {
                         InputStream input = http.getInputStream();
                         BufferedReader reader = new BufferedReader(new InputStreamReader(input, StandardCharsets.ISO_8859_1));
                         String line;
+                        int nr=0;
                         while ((line = reader.readLine()) != null) {
+                            if(nr==1){
+                                idAccount = Integer.valueOf(line);
+                            }
+                            nr++;
                             result.append(line);
                         }
                         reader.close();

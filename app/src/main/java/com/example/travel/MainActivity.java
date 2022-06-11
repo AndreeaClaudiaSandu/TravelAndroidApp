@@ -1,5 +1,6 @@
 package com.example.travel;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -64,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static String accommodationAddress;
     public static int numberOfDays;
     public static double lat, lng;
+    int cityId;
+    int itineraryId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void setDaysColor(String previousDay, String currentDay) {
-        if(previousDay!=null) {
+        if (previousDay != null) {
             switch (previousDay) {
                 case "day1":
                     setUnselectedDayColor(R.id.day1);
@@ -227,6 +230,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ((TextView) findViewById(day)).setBackground(getResources().getDrawable(R.drawable.round_border_menu_item));
         ((TextView) findViewById(day)).setTextColor(getResources().getColor(R.color.white));
     }
+
     private void setSelectedDayColor(int day) {
         ((TextView) findViewById(day)).setBackground(getResources().getDrawable(R.drawable.day_shape));
         ((TextView) findViewById(day)).setTextColor(getResources().getColor(R.color.loginDarkBlue));
@@ -758,6 +762,284 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void setPickAttractionsNoError(View view) {
         ((TextView) findViewById(R.id.textViewAttractions)).setError(null);
+    }
+
+    public void saveItinerary(View view) {
+
+        setCityId();
+
+
+    }
+
+    public void setCityId() {
+
+        class Background extends AsyncTask<String, String, String> {
+            Context context;
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                if (s.equals("The city was not found") || s.equals("Connection error. Try again.")) {
+                    Toast.makeText(MainActivity.this, s, Toast.LENGTH_LONG).show();
+                } else {
+                    insertItinerary(LoginActivity.idAccount, cityId, MainActivity.numberOfDays, MainActivity.accommodationAddress);
+                }
+            }
+
+            public Background(Context context) {
+                this.context = context;
+            }
+
+            @Override
+            protected String doInBackground(String... voids) {
+
+                StringBuilder result = new StringBuilder();
+                String server = LoginActivity.server.concat("getCityId.php");
+                try {
+                    URL url = new URL(server);
+                    HttpURLConnection http = (HttpURLConnection) url.openConnection();
+                    http.setRequestMethod("POST");
+                    http.setDoInput(true);
+                    http.setDoOutput(true);
+
+                    OutputStream output = http.getOutputStream();
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(output, StandardCharsets.UTF_8));
+
+                    Uri.Builder builder = new Uri.Builder().appendQueryParameter("city", voids[0]);
+
+                    String data = builder.build().getEncodedQuery();
+                    writer.write(data);
+                    writer.flush();
+                    writer.close();
+                    output.close();
+
+                    InputStream input = http.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(input, StandardCharsets.ISO_8859_1));
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        result.append(line);
+                        cityId = Integer.valueOf(line);
+                    }
+                    reader.close();
+                    input.close();
+                    http.disconnect();
+                    return result.toString();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    result = new StringBuilder(Objects.requireNonNull(e.getMessage()));
+                }
+
+
+                return result.toString();
+            }
+        }
+        Background background = new Background(MainActivity.this);
+        background.execute(FragmentItinerary.city);
+
+    }
+
+    public void insertItinerary(int idAccount, int idCity, int numberOfDays, String accommodationAddress) {
+
+        String idAccountString = Integer.toString(idAccount);
+        String idCityString = Integer.toString(idCity);
+        String numberOfDaysString = Integer.toString(numberOfDays);
+
+        class Background extends AsyncTask<String, String, String> {
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                if (!s.contains("Itinerary added")) {
+                    Toast.makeText(MainActivity.this, s, Toast.LENGTH_LONG).show();
+                } else {
+                    ArrayList<String> transport = FragmentItinerary.transport;
+                    for (int i = 0; i < transport.size(); i++) {
+                        getTransportTypeId(transport.get(i));
+                    }
+                }
+            }
+
+            @Override
+            protected String doInBackground(String... strings) {
+
+                String server = LoginActivity.server.concat("insertItinerary.php");
+                StringBuilder result = new StringBuilder();
+                try {
+                    URL url = new URL(server);
+                    HttpURLConnection http = (HttpURLConnection) url.openConnection();
+                    http.setRequestMethod("POST");
+                    http.setDoInput(true);
+                    http.setDoOutput(true);
+
+                    OutputStream output = http.getOutputStream();
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(output, StandardCharsets.UTF_8));
+
+                    Uri.Builder builder = new Uri.Builder().appendQueryParameter("idAccount", strings[0]).appendQueryParameter("idCity", strings[1]).appendQueryParameter("nrOfDays", strings[2]).appendQueryParameter("accommodationAddress", strings[3]);
+                    String data = builder.build().getEncodedQuery();
+                    writer.write(data);
+                    writer.flush();
+                    writer.close();
+                    output.close();
+
+                    InputStream input = http.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(input, StandardCharsets.ISO_8859_1));
+                    String line;
+                    int nr = 0;
+                    while ((line = reader.readLine()) != null) {
+                        if (nr == 1) {
+                            itineraryId = Integer.valueOf(line);
+                        }
+                        nr++;
+                        result.append(line);
+                    }
+                    reader.close();
+                    input.close();
+                    http.disconnect();
+                    return result.toString();
+
+                } catch (
+                        IOException e) {
+                    e.printStackTrace();
+                    result = new StringBuilder(Objects.requireNonNull(e.getMessage()));
+                }
+
+
+                return result.toString();
+            }
+        }
+
+        Background background = new Background();
+        background.execute(idAccountString, idCityString, numberOfDaysString, accommodationAddress);
+
+
+    }
+
+    public void getTransportTypeId(String type) {
+
+        class Background extends AsyncTask<String, String, String> {
+            Context context;
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                if (s.equals("A type of transport was not found") || s.equals("Connection error. Try again.")) {
+                    Toast.makeText(MainActivity.this, s, Toast.LENGTH_LONG).show();
+                } else {
+                    insertTransportItinerary(s);
+                }
+
+            }
+
+            public Background(Context context) {
+                this.context = context;
+            }
+
+            @Override
+            protected String doInBackground(String... voids) {
+
+                StringBuilder result = new StringBuilder();
+                String server = LoginActivity.server.concat("getTransportTypeId.php");
+                try {
+                    URL url = new URL(server);
+                    HttpURLConnection http = (HttpURLConnection) url.openConnection();
+                    http.setRequestMethod("POST");
+                    http.setDoInput(true);
+                    http.setDoOutput(true);
+
+                    OutputStream output = http.getOutputStream();
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(output, StandardCharsets.UTF_8));
+
+                    Uri.Builder builder = new Uri.Builder().appendQueryParameter("transportType", voids[0]);
+
+                    String data = builder.build().getEncodedQuery();
+                    writer.write(data);
+                    writer.flush();
+                    writer.close();
+                    output.close();
+
+                    InputStream input = http.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(input, StandardCharsets.ISO_8859_1));
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        result.append(line);
+                    }
+                    reader.close();
+                    input.close();
+                    http.disconnect();
+                    return result.toString();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    result = new StringBuilder(Objects.requireNonNull(e.getMessage()));
+                }
+
+
+                return result.toString();
+            }
+        }
+        Background background = new Background(MainActivity.this);
+        background.execute(type);
+
+    }
+
+    public void insertTransportItinerary(String idTransport) {
+        class Background2 extends AsyncTask<String, String, String> {
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                Toast.makeText(MainActivity.this, s, Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            protected String doInBackground(String... strings) {
+                {
+
+                    StringBuilder result = new StringBuilder();
+                    String server = LoginActivity.server.concat("insertTransportItinerary.php");
+                    try {
+                        URL url = new URL(server);
+                        HttpURLConnection http = (HttpURLConnection) url.openConnection();
+                        http.setRequestMethod("POST");
+                        http.setDoInput(true);
+                        http.setDoOutput(true);
+
+                        OutputStream output = http.getOutputStream();
+                        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(output, StandardCharsets.UTF_8));
+
+                        Uri.Builder builder = new Uri.Builder().appendQueryParameter("idItinerary", strings[0]).appendQueryParameter("idTransport", strings[1]);
+
+                        String data = builder.build().getEncodedQuery();
+                        writer.write(data);
+                        writer.flush();
+                        writer.close();
+                        output.close();
+
+                        InputStream input = http.getInputStream();
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(input, StandardCharsets.ISO_8859_1));
+                        String line;
+                        while ((line = reader.readLine()) != null) {
+                            result.append(line);
+                        }
+                        reader.close();
+                        input.close();
+                        http.disconnect();
+                        return result.toString();
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        result = new StringBuilder(Objects.requireNonNull(e.getMessage()));
+                    }
+
+
+                    return result.toString();
+                }
+            }
+        }
+        Background2 background2 = new Background2();
+        background2.execute(Integer.toString(itineraryId), idTransport);
     }
 
 }

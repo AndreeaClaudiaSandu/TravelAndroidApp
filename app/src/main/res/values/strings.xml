@@ -67,6 +67,7 @@
     <string name="send_code">Send code</string>
     <string name="send_mail_reset_password">A code for resetting the password will be sent. Enter the email of your account.</string>
     <string name="enter_the_address_of_your_accommodation">Enter the address of your accommodation</string>
+    <string name="save_the_itinerary_for_all_days">Save the itinerary for all days</string>
 
 
 </resources>

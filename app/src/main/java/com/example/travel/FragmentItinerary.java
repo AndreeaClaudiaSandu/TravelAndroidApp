@@ -1,12 +1,16 @@
 package com.example.travel;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -27,13 +31,23 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 import java.util.TimeZone;
 
 import okhttp3.OkHttpClient;
@@ -44,7 +58,7 @@ public class FragmentItinerary extends Fragment {
 
     ArrayList<String> attractionsOrder;
     ArrayList<Attraction> attractions;
-    ArrayList<String> transport;
+    static ArrayList<String>  transport;
     String dayNumber;
     ArrayList<String> dayOrder;
     ArrayList<String> daysInfo;
@@ -54,6 +68,8 @@ public class FragmentItinerary extends Fragment {
     GoogleMap googleMap;
     ArrayList<String> locationsOrderAddress;
     ArrayList<LatLng> latLngs;
+    static String city;
+
 
     public FragmentItinerary() {
         // Required empty public constructor
@@ -254,6 +270,9 @@ public class FragmentItinerary extends Fragment {
                 location1Address = MainActivity.accommodationAddress;
             } else {
                 for (int j = 0; j < attractions.size(); j++) {
+                    if(city==null || city.isEmpty()){
+                        city = attractions.get(i).getCity();
+                    }
                     if (attractions.get(j).getName().equals(location1)) {
                         location1Address = attractions.get(j).getLocation();
                     }
@@ -464,7 +483,7 @@ public class FragmentItinerary extends Fragment {
 
         getTransportInfo();
         setLatLng();
-        mapView = (MapView) root.findViewById(R.id.mapView);
+        mapView = (CustomMapView) root.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.onResume();
 
@@ -478,7 +497,7 @@ public class FragmentItinerary extends Fragment {
                     LatLng latLng = latLngs.get(i);
                     if(latLng!=null) {
                         MarkerOptions markerOptions = new MarkerOptions();
-                        markerOptions.position(latLng).title(dayOrder.get(i));
+                        markerOptions.position(latLng).title(dayOrder.get(i).toUpperCase());
                         if( i==0){
                             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
                             CameraPosition cameraPosition = new CameraPosition.Builder().target(latLngs.get(0)).zoom(13).build();
@@ -619,5 +638,6 @@ public class FragmentItinerary extends Fragment {
             getActivity().findViewById(R.id.day7).setVisibility(View.VISIBLE);
         }
     }
+
 
 }
