@@ -56,7 +56,7 @@ import okhttp3.Response;
 
 public class FragmentItinerary extends Fragment {
 
-    ArrayList<String> attractionsOrder;
+    static ArrayList<String> attractionsOrder;
     ArrayList<Attraction> attractions;
     static ArrayList<String>  transport;
     String dayNumber;
