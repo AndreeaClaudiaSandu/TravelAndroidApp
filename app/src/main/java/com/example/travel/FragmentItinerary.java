@@ -1,16 +1,11 @@
 package com.example.travel;
 
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -26,28 +21,19 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Objects;
 import java.util.TimeZone;
 
 import okhttp3.OkHttpClient;
@@ -333,6 +319,9 @@ public class FragmentItinerary extends Fragment {
                     if (steps != null) {
                         for (int i = 0; i < steps.length(); i++) {
                             if (steps.optJSONObject(i) != null) {
+                                if(i!=0){
+                                    route.append("\n");
+                                }
                                 route.append("Step ").append(i + 1).append(":\n");
                                 JSONObject durationStep = steps.optJSONObject(i).optJSONObject("duration");
                                 int seconds = durationStep.optInt("value");
@@ -481,6 +470,12 @@ public class FragmentItinerary extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_itinerary, container, false);
 
+        if((((NavigationView) getActivity().findViewById(R.id.nav_view)).getMenu().findItem(R.id.myitineraries).isChecked())){
+            root.findViewById(R.id.saveItineraryButton).setVisibility(View.GONE);
+        }else{
+            root.findViewById(R.id.saveItineraryButton).setVisibility(View.VISIBLE);
+        }
+
         getTransportInfo();
         setLatLng();
         mapView = (CustomMapView) root.findViewById(R.id.mapView);
@@ -543,10 +538,7 @@ public class FragmentItinerary extends Fragment {
                         if (location != null) {
                             double lat = location.optDouble("lat");
                             double lng = location.optDouble("lng");
-                            Log.i("lat", Double.toString( lat));
-                            Log.i("latlng", Double.toString( lng));
                             LatLng latLng = new LatLng(lat,lng);
-                            Log.i("latlngs", latLng.toString());
                             latLngs.add(latLng);
                         }
                     }
@@ -586,11 +578,12 @@ public class FragmentItinerary extends Fragment {
 
     private void setTheDaysVisibility() {
 
-        getActivity().findViewById(R.id.linearLayout).setVisibility(View.VISIBLE);
-        getActivity().findViewById(R.id.linearLayout2).setVisibility(View.VISIBLE);
-        getActivity().findViewById(R.id.descriptionCityImage).setVisibility(View.GONE);
-        getActivity().findViewById(R.id.descriptionCityTitle).setVisibility(View.GONE);
-
+        if( ! ((NavigationView) getActivity().findViewById(R.id.nav_view)).getMenu().findItem(R.id.myitineraries).isChecked() ) {
+            getActivity().findViewById(R.id.linearLayout).setVisibility(View.VISIBLE);
+            getActivity().findViewById(R.id.linearLayout2).setVisibility(View.VISIBLE);
+            getActivity().findViewById(R.id.descriptionCityImage).setVisibility(View.GONE);
+            getActivity().findViewById(R.id.descriptionCityTitle).setVisibility(View.GONE);
+        }
         getActivity().findViewById(R.id.linearLayoutDays).setVisibility(View.VISIBLE);
         if (MainActivity.numberOfDays == 1) {
             getActivity().findViewById(R.id.day1).setVisibility(View.VISIBLE);

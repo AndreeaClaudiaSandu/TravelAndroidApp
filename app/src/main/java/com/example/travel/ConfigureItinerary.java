@@ -70,8 +70,6 @@ public class ConfigureItinerary {
             orderForADay = getOrderForADay(combinations, orderForADay, maybeVisited);
 
             alreadyVisited.addAll(alreadyVisited.size(), maybeVisited);
-            Log.i("now now already", alreadyVisited.toString());
-            Log.i("now now order", orderForADay.toString());
             orderByDay.add("day" + (j+1));
             orderByDay.addAll(orderByDay.size(),orderForADay);
         }

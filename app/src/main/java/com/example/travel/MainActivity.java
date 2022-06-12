@@ -128,14 +128,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager().popBackStackImmediate();
             if (getSupportFragmentManager().getFragments().size() > 0) {
                 Fragment currentFragment = getSupportFragmentManager().getFragments().get(getSupportFragmentManager().getFragments().size() - 1);
-                if (currentFragment instanceof FragmentActivities || currentFragment instanceof FragmentActivity) {
-                    ((Toolbar) findViewById(R.id.toolbar)).setTitle(getResources().getString(R.string.experiences));
-                    navigationView.getMenu().findItem(R.id.experiences).setChecked(true);
-                } else {
-                    ((Toolbar) findViewById(R.id.toolbar)).setTitle(getResources().getString(R.string.pick_a_city));
-                    navigationView.getMenu().findItem(R.id.pick_city).setChecked(true);
-                }
 
+                if(!(navigationView.getMenu().findItem(R.id.myitineraries).isChecked() && currentFragment instanceof FragmentItinerary)) {
+                    if (currentFragment instanceof FragmentActivities || currentFragment instanceof FragmentActivity) {
+                        ((Toolbar) findViewById(R.id.toolbar)).setTitle(getResources().getString(R.string.experiences));
+                        navigationView.getMenu().findItem(R.id.experiences).setChecked(true);
+                    } else if (currentFragment instanceof FragmentMyItineraries) {
+                        ((Toolbar) findViewById(R.id.toolbar)).setTitle(getResources().getString(R.string.my_itineraries));
+                        navigationView.getMenu().findItem(R.id.myitineraries).setChecked(true);
+                    }else{
+                        ((Toolbar) findViewById(R.id.toolbar)).setTitle(getResources().getString(R.string.pick_a_city));
+                        navigationView.getMenu().findItem(R.id.pick_city).setChecked(true);
+                    }
+                }
                 if (currentFragment instanceof FragmentCityDescription || currentFragment instanceof FragmentCityTransport) {
                     if (findViewById(R.id.descriptionCityImage) != null) {
                         findViewById(R.id.linearLayout).setVisibility(View.VISIBLE);
@@ -143,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         findViewById(R.id.descriptionCityImage).setVisibility(View.VISIBLE);
                         findViewById(R.id.descriptionCityTitle).setVisibility(View.VISIBLE);
                     }
-                } else if (currentFragment instanceof FragmentCityAttractions || currentFragment instanceof FragmentCityAttraction || currentFragment instanceof FragmentCityConfigureItinerary || currentFragment instanceof FragmentItinerary) {
+                } else if ((currentFragment instanceof FragmentCityAttractions || currentFragment instanceof FragmentCityAttraction || currentFragment instanceof FragmentCityConfigureItinerary || currentFragment instanceof FragmentItinerary) && !(((NavigationView) findViewById(R.id.nav_view)).getMenu().findItem(R.id.myitineraries).isChecked())) {
                     findViewById(R.id.linearLayout).setVisibility(View.VISIBLE);
                     findViewById(R.id.linearLayout2).setVisibility(View.VISIBLE);
                     findViewById(R.id.descriptionCityImage).setVisibility(View.GONE);
@@ -258,6 +263,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 toolbar.setTitle(getResources().getString(R.string.change_password));
                 replaceFragment(FragmentChangePassword.newInstance());
                 break;
+            case R.id.myitineraries:
+                toolbar.setTitle(getResources().getString(R.string.my_itineraries));
+                replaceFragment(FragmentMyItineraries.newInstance());
+                break;
             case R.id.logout:
                 LoginActivity.connectedAccount = null;
                 getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -278,7 +287,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             findViewById(R.id.linearLayout2).setVisibility(View.VISIBLE);
             findViewById(R.id.descriptionCityImage).setVisibility(View.VISIBLE);
             findViewById(R.id.descriptionCityTitle).setVisibility(View.VISIBLE);
-        } else if (fragment instanceof FragmentCityAttractions || fragment instanceof FragmentCityAttraction || fragment instanceof FragmentCityConfigureItinerary || fragment instanceof FragmentItinerary) {
+        } else if ( (fragment instanceof FragmentCityAttractions || fragment instanceof FragmentCityAttraction || fragment instanceof FragmentCityConfigureItinerary || fragment instanceof FragmentItinerary) && !(((NavigationView) findViewById(R.id.nav_view)).getMenu().findItem(R.id.myitineraries).isChecked())) {
             findViewById(R.id.linearLayout).setVisibility(View.VISIBLE);
             findViewById(R.id.linearLayout2).setVisibility(View.VISIBLE);
             findViewById(R.id.descriptionCityImage).setVisibility(View.GONE);
@@ -318,7 +327,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 protected void onPostExecute(String s) {
                     super.onPostExecute(s);
                     Toast.makeText(MainActivity.this, s, Toast.LENGTH_SHORT).show();
-                    Log.i("ups", s);
                 }
 
                 @Override
@@ -592,7 +600,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Background background = new Background();
             background.execute();
         } else {
-            Log.i("status", "not ok");
+
         }
 
 
@@ -629,7 +637,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         RadioGroup group = findViewById(R.id.radioGroup);
         if (group.getCheckedRadioButtonId() == -1) {
-            ((TextView) findViewById(R.id.textViewNumberOfDays)).requestFocus();
+            findViewById(R.id.textViewNumberOfDays).requestFocus();
             ((TextView) findViewById(R.id.textViewNumberOfDays)).setError("Select the number of days");
             return false;
         } else {
@@ -643,7 +651,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         CheckBox train = findViewById(R.id.trainCheckBox);
 
         if (!car.isChecked() && !bus.isChecked() && !subway.isChecked() && !tram.isChecked() && !train.isChecked()) {
-            ((TextView) findViewById(R.id.textViewTrnsportTypes)).requestFocus();
+            findViewById(R.id.textViewTrnsportTypes).requestFocus();
             ((TextView) findViewById(R.id.textViewTrnsportTypes)).setError("Select at least one transport type");
             return false;
         }
@@ -656,16 +664,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
         if (pickedAttractions.size() == 0) {
-            ((TextView) findViewById(R.id.textViewAttractions)).requestFocus();
+            findViewById(R.id.textViewAttractions).requestFocus();
             ((TextView) findViewById(R.id.textViewAttractions)).setError("Select at least one attraction");
             return false;
         } else {
             int id = group.getCheckedRadioButtonId();
             RadioButton radioButton = findViewById(id);
             numberOfDays = Integer.valueOf(radioButton.getText().toString());
-            Log.i("number:", Integer.toString(numberOfDays));
             if (pickedAttractions.size() > (numberOfDays * 4)) {
-                ((TextView) findViewById(R.id.textViewAttractions)).requestFocus();
+                findViewById(R.id.textViewAttractions).requestFocus();
                 if (numberOfDays == 1) {
                     ((TextView) findViewById(R.id.textViewAttractions)).setError("There are too many attractions for " + numberOfDays + " day. Select maximim " + numberOfDays * 4 + ".");
                 } else {
@@ -676,11 +683,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         if (((EditText) findViewById(R.id.addressEditText)).getText().toString().isEmpty()) {
-            ((TextView) findViewById(R.id.addressEditText)).requestFocus();
+            findViewById(R.id.addressEditText).requestFocus();
             ((TextView) findViewById(R.id.addressEditText)).setError("Enter the address of your accommodation for the best configuration");
             return false;
         } else {
-            Log.i("city", ((TextView) findViewById(R.id.descriptionCityTitle)).getText().toString());
             OkHttpClient client = new OkHttpClient().newBuilder().build();
             String url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + ((TextView) findViewById(R.id.descriptionCityTitle)).getText().toString() + "&key=" + ConfigureItinerary.API_KEY;
             Request request = new Request.Builder()
@@ -691,7 +697,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Response response = client.newCall(request).execute();
                 JSONObject object = new JSONObject(response.body().string());
                 if (!checkBoundaries(((EditText) findViewById(R.id.addressEditText)).getText().toString(), object)) {
-                    ((TextView) findViewById(R.id.addressEditText)).requestFocus();
+                    findViewById(R.id.addressEditText).requestFocus();
                     ((TextView) findViewById(R.id.addressEditText)).setError("The address is not in the city");
                     return false;
                 }
@@ -928,7 +934,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-
     private void insertAttraction(int itineraryId, String attraction, String day, int nrOfAttractionInADay, int cityId) {
 
         class Background2 extends AsyncTask<String, String, String> {
@@ -1051,4 +1056,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         background2.execute(Integer.toString(itineraryId), transport);
     }
 
+    public static void setAccommodationAddress(String accommodationAddress) {
+        MainActivity.accommodationAddress = accommodationAddress;
+    }
+
+    public static void setNumberOfDays(int numberOfDays) {
+        MainActivity.numberOfDays = numberOfDays;
+    }
 }

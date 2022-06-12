@@ -20,15 +20,19 @@
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/update_profile"
-                    android:icon="@drawable/profile_icon"
+                    android:icon="@drawable/update_account"
                     android:title="@string/update_profile_info" />
                 <item
                     android:id="@+id/change_password"
                     android:icon="@drawable/password_darkblue"
                     android:title="@string/change_password" />
                 <item
+                    android:id="@+id/myitineraries"
+                    android:icon="@drawable/map"
+                    android:title="@string/my_itineraries" />
+                <item
                     android:id="@+id/logout"
-                    android:icon="@drawable/logout_icon"
+                    android:icon="@drawable/logout"
                     android:title="Logout" />
             </group>
         </menu>
