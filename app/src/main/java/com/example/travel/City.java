@@ -7,15 +7,17 @@ public class City {
     String description;
     String busTimetable;
     String metroTimetable;
+    String tramTimetable;
     int img;
 
-    public City(String name, String country, String description, String busTimetable, String metroTimetable, int img) {
+    public City(String name, String country, String description, String busTimetable, String metroTimetable, String tramTimetable, int img) {
         this.name = name;
         this.country = country;
         this.description = description;
         this.busTimetable = busTimetable;
         this.metroTimetable = metroTimetable;
         this.img = img;
+        this.tramTimetable = tramTimetable;
     }
 
     public String getName() {
@@ -44,6 +46,10 @@ public class City {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getTramTimetable() {
+        return tramTimetable;
     }
 }
 

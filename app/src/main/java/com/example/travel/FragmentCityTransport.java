@@ -145,7 +145,7 @@ public class FragmentCityTransport extends Fragment {
                     RecyclerView recyclerView = getView().findViewById(R.id.internalRecyclerView);
                     InternalTransport_RecyclerViewAdapter adapter = new InternalTransport_RecyclerViewAdapter(getContext(), internalTransports);
                     getView().findViewById(R.id.internalTransport).setVisibility(View.VISIBLE);
-                    if ((city.getBusTimetable()!=null && !city.getBusTimetable().isEmpty()) || (city.getMetroTimetable()!=null && !city.getMetroTimetable().isEmpty()) ){
+                    if ((city.getBusTimetable()!=null && !city.getBusTimetable().isEmpty()) || (city.getMetroTimetable()!=null && !city.getMetroTimetable().isEmpty()) || (city.getTramTimetable()!=null && !city.getTramTimetable().isEmpty()) ){
                         getView().findViewById(R.id.timetable).setVisibility(View.VISIBLE);
                         if(city.getBusTimetable()!=null && !city.getBusTimetable().isEmpty()){
                             getView().findViewById(R.id.bus).setVisibility(View.VISIBLE);
@@ -156,6 +156,11 @@ public class FragmentCityTransport extends Fragment {
                             getView().findViewById(R.id.metro).setVisibility(View.VISIBLE);
                             ((TextView) getView().findViewById(R.id.metroTimetable)).setText(Html.fromHtml(city.getMetroTimetable()));
                             getView().findViewById(R.id.metroTimetable).setVisibility(View.VISIBLE);
+                        }
+                        if(city.getTramTimetable()!=null && !city.getTramTimetable().isEmpty()){
+                            getView().findViewById(R.id.tram).setVisibility(View.VISIBLE);
+                            ((TextView) getView().findViewById(R.id.tramTimetable)).setText(Html.fromHtml(city.getTramTimetable()));
+                            getView().findViewById(R.id.tramTimetable).setVisibility(View.VISIBLE);
                         }
                     }
                     getView().findViewById(R.id.tickets).setVisibility(View.VISIBLE);

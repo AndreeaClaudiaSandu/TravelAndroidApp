@@ -80,8 +80,7 @@ public class FragmentPickCity extends Fragment {
                     while ((line = reader.readLine()) != null) {
                         result.append(line);
                         String[] fields = line.split("=,");
-
-                        cities.add(new City(fields[0], fields[1], fields[2], fields[3] == "null" ? null: fields[3], fields[4] == "null" ? null: fields[4], getResources().getIdentifier(fields[0], "drawable", getContext().getPackageName())));
+                        cities.add(new City(fields[0], fields[1], fields[2], fields[3].equals("null") ? null: fields[3], fields[4].equals("null") ? null: fields[4], fields[5].equals("null") ? null: fields[5], getResources().getIdentifier(fields[0], "drawable", getContext().getPackageName())));
                     }
                     reader.close();
                     input.close();

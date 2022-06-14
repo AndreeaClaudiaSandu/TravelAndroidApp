@@ -169,6 +169,46 @@
                 app:layout_constraintTop_toBottomOf="@+id/metro" />
 
             <TextView
+                android:id="@+id/tram"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/round_border_nav"
+                android:fontFamily="sans-serif-light"
+                android:paddingStart="8dp"
+                android:paddingTop="1dp"
+                android:paddingBottom="1dp"
+                android:text="Tram"
+                android:textAlignment="textStart"
+                android:textColor="@color/loginDarkBlue"
+                android:textSize="16sp"
+                android:textStyle="bold|italic"
+                android:visibility="gone"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/metroTimetable" />
+
+            <TextView
+                android:id="@+id/tramTimetable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="sans-serif"
+                android:text="TextView"
+                android:textAlignment="textStart"
+                android:textSize="16sp"
+                android:visibility="gone"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tram" />
+
+            <TextView
                 android:id="@+id/tickets"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -189,7 +229,7 @@
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/metroTimetable" />
+                app:layout_constraintTop_toBottomOf="@+id/tramTimetable" />
 
 
             <androidx.recyclerview.widget.RecyclerView
