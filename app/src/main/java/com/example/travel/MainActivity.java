@@ -689,6 +689,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             OkHttpClient client = new OkHttpClient().newBuilder().build();
             String url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + ((TextView) findViewById(R.id.descriptionCityTitle)).getText().toString() + "&key=" + ConfigureItinerary.API_KEY;
+            Log.i("url", url);
             Request request = new Request.Builder()
                     .url(url)
                     .method("GET", null)

@@ -418,6 +418,7 @@ public class FragmentItinerary extends Fragment {
         }
         url.append("&departure_time=").append(seconds);
         url.append("&key=").append(ConfigureItinerary.API_KEY);
+        Log.i("urlll", url.toString());
         return url.toString();
     }
 
@@ -446,6 +447,7 @@ public class FragmentItinerary extends Fragment {
         urlForTimeZone.append(Double.toString(MainActivity.lat)).append("%2C").append(Double.toString(MainActivity.lng));
         urlForTimeZone.append("&timestamp=").append(Long.toString(diffInSec));
         urlForTimeZone.append("&key=").append(ConfigureItinerary.API_KEY);
+        Log.i("url timezone", urlForTimeZone.toString());
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()

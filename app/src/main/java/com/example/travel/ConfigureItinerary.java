@@ -218,14 +218,14 @@ public class ConfigureItinerary {
         StringBuilder addressesString = new StringBuilder();
         for (int i = 0; i < addresses.size(); i++) {
             String address = addresses.get(i);
-            address.replace(" ", "%20").replace(",", "%2C").replace("à", "%C3%A0");
+            address = address.replace(" ", "%20").replace(",", "%2C").replace("à", "%C3%A0").replace("Ã","%C3%83").replace("ã", "%C3%A3");
             addressesString.append(address).append("%7C");
         }
 
         url.append(addressesString.toString()).append("&destinations=").append(addressesString.toString());
         url.append("&mode=walking");
         url.append("&key=").append(API_KEY);
-
+        Log.i("url matrix", url.toString());
         return url.toString();
     }
 

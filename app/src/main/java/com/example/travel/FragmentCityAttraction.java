@@ -43,7 +43,6 @@ public class FragmentCityAttraction extends Fragment {
         ((TextView) root.findViewById(R.id.specificAttractionPrices)).setText(Html.fromHtml( attraction.getPrice()));
         ((TextView) root.findViewById(R.id.specificAttractionVisitDuration)).setText(Integer.toString(attraction.getVisitTime()));
         ((TextView) root.findViewById(R.id.specificAttractionLocation)).setText(attraction.getLocation());
-        ((TextView) root.findViewById(R.id.specificAttractionStation)).setText(attraction.getStation());
 
         StringBuilder hyperlink = new StringBuilder();
         hyperlink.append("<a href=\"").append(attraction.getLink()).append("\">").append(attraction.getLink()).append("</a>");

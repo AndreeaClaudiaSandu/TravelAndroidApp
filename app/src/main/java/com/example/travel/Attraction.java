@@ -13,7 +13,7 @@ public class Attraction {
     String link;
     int image;
 
-    public Attraction(String name, String city, String description, String location, String timetable, String price, String visitTime, String station, String link, int image) {
+    public Attraction(String name, String city, String description, String location, String timetable, String price, String visitTime, String link, int image) {
         this.name = name;
         this.city = city;
         this.description = description;
@@ -21,7 +21,6 @@ public class Attraction {
         this.timetable = timetable;
         this.price = price;
         this.visitTime = Integer.valueOf(visitTime);
-        this.station = station;
         this.link = link;
         this.image = image;
     }
@@ -52,10 +51,6 @@ public class Attraction {
 
     public int getVisitTime() {
         return visitTime;
-    }
-
-    public String getStation() {
-        return station;
     }
 
     public String getLink() {
