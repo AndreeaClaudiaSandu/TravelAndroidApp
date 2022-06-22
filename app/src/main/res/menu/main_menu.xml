@@ -14,7 +14,6 @@
 
     </group>
 
-
     <item android:title="@string/my_profile" >
         <menu>
             <group android:checkableBehavior="single">

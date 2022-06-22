@@ -67,12 +67,14 @@ public class LoginActivity extends AppCompatActivity {
 
                 @Override
                 protected void onPostExecute(String s) {
-                    Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
-                    if (s.contains("Login successfully")) {
+                    if (!s.equals("Wrong password") && !s.equals("Not a valid account") && !s.equals("Connection error. Try again.")) {
                         connectedAccount = email;
                         Intent intent = new Intent();
                         intent.setClass(context, MainActivity.class);
                         context.startActivity(intent);
+                    }
+                    else{
+                        Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -103,12 +105,8 @@ public class LoginActivity extends AppCompatActivity {
                         InputStream input = http.getInputStream();
                         BufferedReader reader = new BufferedReader(new InputStreamReader(input, StandardCharsets.ISO_8859_1));
                         String line;
-                        int nr=0;
                         while ((line = reader.readLine()) != null) {
-                            if(nr==1){
-                                idAccount = Integer.valueOf(line);
-                            }
-                            nr++;
+                            idAccount = Integer.valueOf(line);
                             result.append(line);
                         }
                         reader.close();

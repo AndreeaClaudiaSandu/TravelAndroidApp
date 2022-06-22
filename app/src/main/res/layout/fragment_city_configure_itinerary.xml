@@ -48,7 +48,8 @@
                 android:textSize="18dp"
                 android:textStyle="bold|italic"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/titleConfigureItinerary" />
+                app:layout_constraintTop_toBottomOf="@+id/titleConfigureItinerary"
+                tools:ignore="TouchTargetSizeCheck" />
 
             <RadioGroup
                 android:id="@+id/radioGroup"
@@ -123,7 +124,8 @@
                 android:textStyle="bold|italic"
                 app:autoSizeTextType="none"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup"
+                tools:ignore="TouchTargetSizeCheck" />
 
             <CheckBox
                 android:id="@+id/carCheckBox"
@@ -133,6 +135,7 @@
                 android:layout_marginTop="8dp"
                 android:button="@null"
                 android:drawableLeft="@drawable/checkbox"
+                android:onClick="setTransportTypeNoError"
                 android:paddingEnd="8dp"
                 android:text="@string/car"
                 android:textColor="@color/loginDarkBlue"
@@ -140,7 +143,7 @@
                 android:textStyle="italic"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewTrnsportTypes"
-                android:onClick="setTransportTypeNoError"/>
+                tools:ignore="TouchTargetSizeCheck" />
 
             <CheckBox
                 android:id="@+id/busCheckBox"
@@ -150,6 +153,7 @@
                 android:layout_marginTop="8dp"
                 android:button="@null"
                 android:drawableLeft="@drawable/checkbox"
+                android:onClick="setTransportTypeNoError"
                 android:paddingEnd="8dp"
                 android:text="@string/bus"
                 android:textColor="@color/loginDarkBlue"
@@ -157,7 +161,7 @@
                 android:textStyle="italic"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/carCheckBox"
-                android:onClick="setTransportTypeNoError"/>
+                tools:ignore="TouchTargetSizeCheck" />
 
             <CheckBox
                 android:id="@+id/subwayCheckBox"
@@ -167,6 +171,7 @@
                 android:layout_marginTop="8dp"
                 android:button="@null"
                 android:drawableLeft="@drawable/checkbox"
+                android:onClick="setTransportTypeNoError"
                 android:paddingEnd="8dp"
                 android:text="@string/subway"
                 android:textColor="@color/loginDarkBlue"
@@ -174,7 +179,7 @@
                 android:textStyle="italic"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/busCheckBox"
-                android:onClick="setTransportTypeNoError"/>
+                tools:ignore="TouchTargetSizeCheck" />
 
             <CheckBox
                 android:id="@+id/tramCheckBox"
@@ -184,6 +189,7 @@
                 android:layout_marginTop="8dp"
                 android:button="@null"
                 android:drawableLeft="@drawable/checkbox"
+                android:onClick="setTransportTypeNoError"
                 android:paddingEnd="8dp"
                 android:text="@string/tram"
                 android:textColor="@color/loginDarkBlue"
@@ -191,7 +197,7 @@
                 android:textStyle="italic"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/subwayCheckBox"
-                android:onClick="setTransportTypeNoError"/>
+                tools:ignore="TouchTargetSizeCheck" />
 
             <CheckBox
                 android:id="@+id/trainCheckBox"
@@ -208,7 +214,7 @@
                 android:textStyle="italic"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tramCheckBox"
-                />
+                tools:ignore="TouchTargetSizeCheck" />
 
             <TextView
                 android:id="@+id/textViewAttractions"
@@ -229,7 +235,8 @@
                 app:autoSizeMinTextSize="16dp"
                 app:autoSizeTextType="none"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/trainCheckBox" />
+                app:layout_constraintTop_toBottomOf="@+id/trainCheckBox"
+                tools:ignore="TouchTargetSizeCheck" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/chooseAttractionsRecyclerView"
@@ -263,7 +270,8 @@
                 android:textStyle="bold|italic"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/chooseAttractionsRecyclerView" />
+                app:layout_constraintTop_toBottomOf="@+id/chooseAttractionsRecyclerView"
+                tools:ignore="TouchTargetSizeCheck" />
 
             <EditText
                 android:id="@+id/addressEditText"
@@ -281,7 +289,8 @@
                 android:textSize="14dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/addressTextView" />
+                app:layout_constraintTop_toBottomOf="@+id/addressTextView"
+                tools:ignore="TextContrastCheck" />
 
 
             <Button

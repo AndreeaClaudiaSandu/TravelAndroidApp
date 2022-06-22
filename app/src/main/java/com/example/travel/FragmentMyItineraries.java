@@ -74,7 +74,7 @@ public class FragmentMyItineraries extends Fragment {
                     Toast.makeText(getContext(), s, Toast.LENGTH_LONG).show();
                 } else {
                     RecyclerView recyclerView = getView().findViewById(R.id.myItineraries_recyclerView);
-                    MyItineraries_RecyclerViewAdapter adapter = new MyItineraries_RecyclerViewAdapter(getContext(), cities, numberOfDays, images,idItineraries, this);
+                    MyItineraries_RecyclerViewAdapter adapter = new MyItineraries_RecyclerViewAdapter(getContext(), cities, numberOfDays, images, idItineraries, this);
                     recyclerView.setAdapter(adapter);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -137,253 +137,254 @@ public class FragmentMyItineraries extends Fragment {
             @Override
             public void onItemClick(String s, int position) {
 
-                MainActivity.setAccommodationAddress(accommodations.get(position));
-                MainActivity.setNumberOfDays(numberOfDays.get(position));
-                ArrayList<String> transport = new ArrayList<>();
-                ArrayList<Boolean> check = new ArrayList<>();
-                ArrayList<String> order = new ArrayList<>();
-                String city = cities.get(position);
-                ArrayList<Attraction> attractionsCity = new ArrayList<>();
+                    MainActivity.itineraryId = Integer.valueOf( idItineraries.get(position));
+                    MainActivity.setAccommodationAddress(accommodations.get(position));
+                    MainActivity.setNumberOfDays(numberOfDays.get(position));
+                    ArrayList<String> transport = new ArrayList<>();
+                    ArrayList<Boolean> check = new ArrayList<>();
+                    ArrayList<String> order = new ArrayList<>();
+                    String city = cities.get(position);
+                    ArrayList<Attraction> attractionsCity = new ArrayList<>();
 
-                class Background2 extends AsyncTask<String, String, String> {
+                    class Background2 extends AsyncTask<String, String, String> {
 
-                    @Override
-                    protected void onPostExecute(String s) {
-                        super.onPostExecute(s);
-                        if (s.equals("No transport types found") || s.equals("Connection error. Try again.")) {
-                            check.add(false);
-                            Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
-                        }
-                        else{
-                            check.add(true);
-                            if(check.size()==3 && !check.contains(false)){
-                                replaceFragment(FragmentItinerary.newInstance(order, attractionsCity, transport, "day1"));
-                                setColorDays();
-                            }
-                        }
-                    }
-
-                    @Override
-                    protected String doInBackground(String... strings) {
-                        {
-
-                            StringBuilder result = new StringBuilder();
-                            String server = LoginActivity.server.concat("getTransportTypes.php");
-                            try {
-                                URL url = new URL(server);
-                                HttpURLConnection http = (HttpURLConnection) url.openConnection();
-                                http.setRequestMethod("POST");
-                                http.setDoInput(true);
-                                http.setDoOutput(true);
-
-                                OutputStream output = http.getOutputStream();
-                                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(output, StandardCharsets.UTF_8));
-
-                                Uri.Builder builder = new Uri.Builder().appendQueryParameter("idtraseu", strings[0]);
-
-                                String data = builder.build().getEncodedQuery();
-                                writer.write(data);
-                                writer.flush();
-                                writer.close();
-                                output.close();
-
-                                InputStream input = http.getInputStream();
-                                BufferedReader reader = new BufferedReader(new InputStreamReader(input, StandardCharsets.ISO_8859_1));
-                                String line;
-                                while ((line = reader.readLine()) != null) {
-                                    result.append(line);
-                                    transport.add(line);
+                        @Override
+                        protected void onPostExecute(String s) {
+                            super.onPostExecute(s);
+                            if (s.equals("No transport types found") || s.equals("Connection error. Try again.")) {
+                                check.add(false);
+                                Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
+                            } else {
+                                check.add(true);
+                                if (check.size() == 3 && !check.contains(false)) {
+                                    replaceFragment(FragmentItinerary.newInstance(order, attractionsCity, transport, "day1"));
+                                    setColorDays();
                                 }
-                                reader.close();
-                                input.close();
-                                http.disconnect();
-                                return result.toString();
-
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                                result = new StringBuilder(Objects.requireNonNull(e.getMessage()));
                             }
-
-
-                            return result.toString();
                         }
-                    }
-                }
-                Background2 background2 = new Background2();
-                background2.execute(s);
 
-                ArrayList<String> attractions = new ArrayList<>();
-                ArrayList<String> days = new ArrayList<>();
-                ArrayList<Integer> number = new ArrayList<>();
+                        @Override
+                        protected String doInBackground(String... strings) {
+                            {
 
-                class Background3 extends AsyncTask<String, String, String> {
+                                StringBuilder result = new StringBuilder();
+                                String server = LoginActivity.server.concat("getTransportTypes.php");
+                                try {
+                                    URL url = new URL(server);
+                                    HttpURLConnection http = (HttpURLConnection) url.openConnection();
+                                    http.setRequestMethod("POST");
+                                    http.setDoInput(true);
+                                    http.setDoOutput(true);
 
-                    @Override
-                    protected void onPostExecute(String s) {
-                        super.onPostExecute(s);
-                        if (s.equals("No attractions found") || s.equals("Connection error. Try again.")) {
-                            check.add(false);
-                            Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
-                        }
-                        else{
+                                    OutputStream output = http.getOutputStream();
+                                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(output, StandardCharsets.UTF_8));
 
-                            for(int i=0; i<numberOfDays.get(position);i++){
-                                SortedMap<Integer, String> pairs = new TreeMap<>();
-                                String day = "day"+(i+1);
-                                order.add(day);
-                                order.add("accommodation");
+                                    Uri.Builder builder = new Uri.Builder().appendQueryParameter("idtraseu", strings[0]);
 
-                                for(int j=0;j<days.size();j++){
-                                    if(days.get(j).equals(day)){
-                                        pairs.put(number.get(j), attractions.get(j));
+                                    String data = builder.build().getEncodedQuery();
+                                    writer.write(data);
+                                    writer.flush();
+                                    writer.close();
+                                    output.close();
+
+                                    InputStream input = http.getInputStream();
+                                    BufferedReader reader = new BufferedReader(new InputStreamReader(input, StandardCharsets.ISO_8859_1));
+                                    String line;
+                                    while ((line = reader.readLine()) != null) {
+                                        result.append(line);
+                                        transport.add(line);
                                     }
+                                    reader.close();
+                                    input.close();
+                                    http.disconnect();
+                                    return result.toString();
+
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                    result = new StringBuilder(Objects.requireNonNull(e.getMessage()));
                                 }
-                                Set set = pairs.entrySet();
-                                Iterator iterator = set.iterator();
 
-                                while (iterator.hasNext()) {
-                                    Map.Entry entry = (Map.Entry) iterator.next();
-                                    order.add((String) entry.getValue());
-                                }
 
-                                order.add("accommodation");
-                            }
-
-                            check.add(true);
-                            if(check.size()==3 && !check.contains(false)){
-                                replaceFragment(FragmentItinerary.newInstance(order, attractionsCity, transport, "day1"));
-                                setColorDays();
-                            }
-
-                        }
-                    }
-
-                    @Override
-                    protected String doInBackground(String... strings) {
-                        {
-
-                            StringBuilder result = new StringBuilder();
-                            String server = LoginActivity.server.concat("getAttractionsSavedItinerary.php");
-                            try {
-                                URL url = new URL(server);
-                                HttpURLConnection http = (HttpURLConnection) url.openConnection();
-                                http.setRequestMethod("POST");
-                                http.setDoInput(true);
-                                http.setDoOutput(true);
-
-                                OutputStream output = http.getOutputStream();
-                                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(output, StandardCharsets.UTF_8));
-
-                                Uri.Builder builder = new Uri.Builder().appendQueryParameter("idtraseu", strings[0]);
-
-                                String data = builder.build().getEncodedQuery();
-                                writer.write(data);
-                                writer.flush();
-                                writer.close();
-                                output.close();
-
-                                InputStream input = http.getInputStream();
-                                BufferedReader reader = new BufferedReader(new InputStreamReader(input, StandardCharsets.ISO_8859_1));
-                                String line;
-                                while ((line = reader.readLine()) != null) {
-                                    String[] splits = line.split("=,");
-                                    if(splits.length==3){
-                                        days.add(splits[0]);
-                                        number.add(Integer.valueOf(splits[1]));
-                                        attractions.add(splits[2]);
-                                    }
-                                    result.append(line);
-
-                                }
-                                reader.close();
-                                input.close();
-                                http.disconnect();
                                 return result.toString();
-
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                                result = new StringBuilder(Objects.requireNonNull(e.getMessage()));
                             }
-
-
-                            return result.toString();
                         }
                     }
-                }
-                Background3 background3 = new Background3();
-                background3.execute(s);
+                    Background2 background2 = new Background2();
+                    background2.execute(s);
 
-                class GetAttractions extends AsyncTask<String, String, String>  {
+                    ArrayList<String> attractions = new ArrayList<>();
+                    ArrayList<String> days = new ArrayList<>();
+                    ArrayList<Integer> number = new ArrayList<>();
 
-                    @Override
-                    protected void onPostExecute(String s) {
-                        super.onPostExecute(s);
-                        if (s.equals("Connection error. Try again.") || s.equals("No attractions")) {
-                            Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
-                            check.add(false);
-                        } else {
-                          check.add(true);
-                          Log.i("attractions", attractionsCity.toString());
-                          if(check.size()==3 && !check.contains(false)){
-                              replaceFragment(FragmentItinerary.newInstance(order, attractionsCity, transport, "day1"));
-                              setColorDays();
-                          }
+                    class Background3 extends AsyncTask<String, String, String> {
+
+                        @Override
+                        protected void onPostExecute(String s) {
+                            super.onPostExecute(s);
+                            if (s.equals("No attractions found") || s.equals("Connection error. Try again.")) {
+                                check.add(false);
+                                Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
+                            } else {
+
+                                for (int i = 0; i < numberOfDays.get(position); i++) {
+                                    SortedMap<Integer, String> pairs = new TreeMap<>();
+                                    String day = "day" + (i + 1);
+                                    order.add(day);
+                                    order.add("accommodation");
+
+                                    for (int j = 0; j < days.size(); j++) {
+                                        if (days.get(j).equals(day)) {
+                                            pairs.put(number.get(j), attractions.get(j));
+                                        }
+                                    }
+                                    Set set = pairs.entrySet();
+                                    Iterator iterator = set.iterator();
+
+                                    while (iterator.hasNext()) {
+                                        Map.Entry entry = (Map.Entry) iterator.next();
+                                        order.add((String) entry.getValue());
+                                    }
+
+                                    order.add("accommodation");
+                                }
+
+                                check.add(true);
+                                if (check.size() == 3 && !check.contains(false)) {
+                                    replaceFragment(FragmentItinerary.newInstance(order, attractionsCity, transport, "day1"));
+                                    setColorDays();
+                                }
+
+                            }
                         }
-                    }
 
-                    @Override
-                    protected String doInBackground(String... strings) {
-                        {
+                        @Override
+                        protected String doInBackground(String... strings) {
+                            {
 
-                            String server = LoginActivity.server.concat("getAttractions.php");
-                            StringBuilder result = new StringBuilder();
-                            try {
-                                URL url = new URL(server);
-                                HttpURLConnection http = (HttpURLConnection) url.openConnection();
-                                http.setRequestMethod("POST");
-                                http.setDoInput(true);
-                                http.setDoOutput(true);
+                                StringBuilder result = new StringBuilder();
+                                String server = LoginActivity.server.concat("getAttractionsSavedItinerary.php");
+                                try {
+                                    URL url = new URL(server);
+                                    HttpURLConnection http = (HttpURLConnection) url.openConnection();
+                                    http.setRequestMethod("POST");
+                                    http.setDoInput(true);
+                                    http.setDoOutput(true);
 
-                                OutputStream output = http.getOutputStream();
-                                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(output, StandardCharsets.UTF_8));
+                                    OutputStream output = http.getOutputStream();
+                                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(output, StandardCharsets.UTF_8));
 
-                                Uri.Builder builder = new Uri.Builder().appendQueryParameter("city", strings[0]);
-                                String data = builder.build().getEncodedQuery();
-                                writer.write(data);
-                                writer.flush();
-                                writer.close();
-                                output.close();
+                                    Uri.Builder builder = new Uri.Builder().appendQueryParameter("idtraseu", strings[0]);
 
-                                InputStream input = http.getInputStream();
-                                BufferedReader reader = new BufferedReader(new InputStreamReader(input, StandardCharsets.ISO_8859_1));
-                                String line;
-                                while ((line = reader.readLine()) != null) {
-                                    result.append(line);
-                                    String[] fields = line.split("=,");
-                                    if (fields.length > 1) {
-                                        attractionsCity.add(new Attraction(fields[0],city, fields[1],fields[2],fields[3],fields[4],fields[5],fields[6], getResources().getIdentifier(fields[0].replace(" ", "_"), "drawable", getContext().getPackageName())));
+                                    String data = builder.build().getEncodedQuery();
+                                    writer.write(data);
+                                    writer.flush();
+                                    writer.close();
+                                    output.close();
+
+                                    InputStream input = http.getInputStream();
+                                    BufferedReader reader = new BufferedReader(new InputStreamReader(input, StandardCharsets.ISO_8859_1));
+                                    String line;
+                                    while ((line = reader.readLine()) != null) {
+                                        String[] splits = line.split("=,");
+                                        if (splits.length == 3) {
+                                            days.add(splits[0]);
+                                            number.add(Integer.valueOf(splits[1]));
+                                            attractions.add(splits[2]);
+                                        }
+                                        result.append(line);
 
                                     }
+                                    reader.close();
+                                    input.close();
+                                    http.disconnect();
+                                    return result.toString();
+
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                    result = new StringBuilder(Objects.requireNonNull(e.getMessage()));
                                 }
-                                reader.close();
-                                input.close();
-                                http.disconnect();
+
+
                                 return result.toString();
-
-                            } catch (
-                                    IOException e) {
-                                e.printStackTrace();
-                                return (new StringBuilder(Objects.requireNonNull(e.getMessage()))).toString();
                             }
-
                         }
                     }
+                    Background3 background3 = new Background3();
+                    background3.execute(s);
+
+                    class GetAttractions extends AsyncTask<String, String, String> {
+
+                        @Override
+                        protected void onPostExecute(String s) {
+                            super.onPostExecute(s);
+                            if (s.equals("Connection error. Try again.") || s.equals("No attractions")) {
+                                Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
+                                check.add(false);
+                            } else {
+                                check.add(true);
+                                Log.i("attractions", attractionsCity.toString());
+                                if (check.size() == 3 && !check.contains(false)) {
+                                    replaceFragment(FragmentItinerary.newInstance(order, attractionsCity, transport, "day1"));
+                                    setColorDays();
+                                }
+                            }
+                        }
+
+                        @Override
+                        protected String doInBackground(String... strings) {
+                            {
+
+                                String server = LoginActivity.server.concat("getAttractions.php");
+                                StringBuilder result = new StringBuilder();
+                                try {
+                                    URL url = new URL(server);
+                                    HttpURLConnection http = (HttpURLConnection) url.openConnection();
+                                    http.setRequestMethod("POST");
+                                    http.setDoInput(true);
+                                    http.setDoOutput(true);
+
+                                    OutputStream output = http.getOutputStream();
+                                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(output, StandardCharsets.UTF_8));
+
+                                    Uri.Builder builder = new Uri.Builder().appendQueryParameter("city", strings[0]);
+                                    String data = builder.build().getEncodedQuery();
+                                    writer.write(data);
+                                    writer.flush();
+                                    writer.close();
+                                    output.close();
+
+                                    InputStream input = http.getInputStream();
+                                    BufferedReader reader = new BufferedReader(new InputStreamReader(input, StandardCharsets.ISO_8859_1));
+                                    String line;
+                                    while ((line = reader.readLine()) != null) {
+                                        result.append(line);
+                                        String[] fields = line.split("=,");
+                                        if (fields.length > 1) {
+                                            attractionsCity.add(new Attraction(fields[0], city, fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], getResources().getIdentifier(fields[0].replace(" ", "_"), "drawable", getContext().getPackageName())));
+
+                                        }
+                                    }
+                                    reader.close();
+                                    input.close();
+                                    http.disconnect();
+                                    return result.toString();
+
+                                } catch (
+                                        IOException e) {
+                                    e.printStackTrace();
+                                    return (new StringBuilder(Objects.requireNonNull(e.getMessage()))).toString();
+                                }
+
+                            }
+                        }
+
+                    }
+                    GetAttractions getAttractions = new GetAttractions();
+                    getAttractions.execute(city);
 
                 }
-                GetAttractions getAttractions = new GetAttractions();
-                getAttractions.execute(city);
 
-            }
+
         }
 
         Background background = new Background();
@@ -409,7 +410,7 @@ public class FragmentMyItineraries extends Fragment {
         return inflater.inflate(R.layout.fragment_my_itineraries, container, false);
     }
 
-    public void setColorDays(){
+    public void setColorDays() {
         ((TextView) getActivity().findViewById(R.id.day1)).setBackground(getResources().getDrawable(R.drawable.day_shape));
         ((TextView) getActivity().findViewById(R.id.day1)).setTextColor(getResources().getColor(R.color.loginDarkBlue));
         ((TextView) getActivity().findViewById(R.id.day2)).setBackground(getResources().getDrawable(R.drawable.round_border_menu_item));

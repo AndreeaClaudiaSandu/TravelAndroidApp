@@ -22,7 +22,8 @@
                 android:fadingEdge="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SpeakableTextPresentCheck" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/attarctionItineraryRecyclerView"
@@ -53,9 +54,27 @@
                 android:textSize="14sp"
                 android:textStyle="bold|italic"
                 android:onClick="saveItinerary"
+                app:layout_constraintBottom_toTopOf="@+id/deleteItineraryButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/deleteItineraryButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/round_button"
+                android:backgroundTint="@color/loginBlue"
+                android:fontFamily="sans-serif"
+                android:text="Delete itinerary"
+                android:textColor="@color/loginDarkBlue"
+                android:textSize="14sp"
+                android:textStyle="bold|italic"
+                android:onClick="deleteItinerary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

@@ -117,7 +117,7 @@ public class EnterEmailActivity extends AppCompatActivity {
 
     private void sendResetPasswordCode() {
         final String username = "exploretheworldnow.app@gmail.com";
-        final String password = "parola1234P";
+        final String password = "thgiqlvzhvdwpeni";
         forgotPasswordCode = RegisterActivity.generateCode();
         String messageToSend = "Your code for resetting the password is: " + forgotPasswordCode + ".";
         Properties properties = new Properties();

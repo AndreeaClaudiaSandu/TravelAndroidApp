@@ -28,7 +28,7 @@
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/drawable/round_border_right_menu_item.xml" value="0.157" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/drawable/round_button.xml" value="0.2265" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/drawable/wave_down.xml" value="0.136" />
-        <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/activity_activate_account.xml" value="0.176" />
+        <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/activity_activate_account.xml" value="0.25" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/activity_enter_email.xml" value="0.264" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/activity_forgot_password.xml" value="0.20854700854700856" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/activity_login.xml" value="0.2" />
@@ -48,7 +48,7 @@
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/fragment_city.xml" value="0.2" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/fragment_city_attraction.xml" value="0.20854700854700856" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/fragment_city_attractions.xml" value="0.2" />
-        <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/fragment_city_configure_itinerary.xml" value="0.264" />
+        <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/fragment_city_configure_itinerary.xml" value="0.2" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/fragment_city_description.xml" value="0.2" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/fragment_city_transport.xml" value="0.2" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/fragment_gallery.xml" value="0.20854700854700856" />
@@ -57,7 +57,7 @@
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/fragment_loading.xml" value="0.20854700854700856" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/fragment_my_itineraries.xml" value="0.20854700854700856" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/fragment_pick_attraction_recycler_view_row.xml" value="0.2" />
-        <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/fragment_pick_city.xml" value="0.20854700854700856" />
+        <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/fragment_pick_city.xml" value="0.264" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/fragment_profile.xml" value="0.20854700854700856" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/fragment_slideshow.xml" value="0.20854700854700856" />
         <entry key="..\:/facultate/licentaTravel/app/src/main/res/layout/header.xml" value="0.2" />
@@ -76,5 +76,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.2" />
+      </ProjectState>
+    </option>
   </component>
 </project>

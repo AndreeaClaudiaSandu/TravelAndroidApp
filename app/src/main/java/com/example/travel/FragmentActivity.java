@@ -38,7 +38,11 @@ public class FragmentActivity extends Fragment {
         ((TextView) root.findViewById(R.id.specificActivityTitle)).setText(activity.getName());
         ((TextView) root.findViewById(R.id.specificActivityDescription)).setText(activity.getDescription());
         ((TextView) root.findViewById(R.id.specificActivityLocation)).setText(activity.getCountry() + ", " + activity.getCity());
-        ((TextView) root.findViewById(R.id.specificActiivityPrice)).setText("Starting from: " + activity.getPrice());
+        if (activity.getPrice().equals("free")) {
+            ((TextView) root.findViewById(R.id.specificActiivityPrice)).setText(activity.getPrice().substring(0, 1).toUpperCase() + activity.getPrice().substring(1));
+        } else {
+            ((TextView) root.findViewById(R.id.specificActiivityPrice)).setText("Starting from: " + activity.getPrice() + " euro");
+        }
         ((ImageView) root.findViewById(R.id.specificActivityImage)).setImageResource(activity.getImage());
         return root;
     }

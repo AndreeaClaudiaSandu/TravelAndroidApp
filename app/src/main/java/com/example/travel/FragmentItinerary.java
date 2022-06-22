@@ -55,6 +55,8 @@ public class FragmentItinerary extends Fragment {
     ArrayList<String> locationsOrderAddress;
     ArrayList<LatLng> latLngs;
     static String city;
+//    boolean lunch;
+//    boolean extra;
 
 
     public FragmentItinerary() {
@@ -249,6 +251,7 @@ public class FragmentItinerary extends Fragment {
         daysInfo = new ArrayList<>();
         departureTime = new ArrayList<>();
         String route = null;
+        int minutesVisit = 0;
         for (int i = 0; i < dayOrder.size() - 1; i++) {
             String location1 = dayOrder.get(i);
             String location1Address = "";
@@ -261,6 +264,7 @@ public class FragmentItinerary extends Fragment {
                     }
                     if (attractions.get(j).getName().equals(location1)) {
                         location1Address = attractions.get(j).getLocation();
+                        minutesVisit += attractions.get(j).getVisitTime();
                     }
                 }
             }
@@ -298,6 +302,14 @@ public class FragmentItinerary extends Fragment {
                 e.printStackTrace();
             }
         }
+//        Log.i("minutesVisittt", Integer.toString(minutesVisit));
+//        minutesVisit+=(dayOrder.size()-2)*30;
+//        Log.i("minutesVisitttAfter", Integer.toString(minutesVisit));
+//        if(minutesVisit<=300){
+//            extra = true;
+//        }else if(minutesVisit<=480){
+//            lunch = true;
+//        }
     }
 
     private String parseObject(JSONObject directionObject) {
@@ -474,8 +486,10 @@ public class FragmentItinerary extends Fragment {
 
         if((((NavigationView) getActivity().findViewById(R.id.nav_view)).getMenu().findItem(R.id.myitineraries).isChecked())){
             root.findViewById(R.id.saveItineraryButton).setVisibility(View.GONE);
+            root.findViewById(R.id.deleteItineraryButton).setVisibility(View.VISIBLE);
         }else{
             root.findViewById(R.id.saveItineraryButton).setVisibility(View.VISIBLE);
+            root.findViewById(R.id.deleteItineraryButton).setVisibility(View.GONE);
         }
 
         getTransportInfo();

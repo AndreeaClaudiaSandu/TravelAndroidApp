@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static int numberOfDays;
     public static double lat, lng;
     int cityId;
-    int itineraryId;
+    public static int itineraryId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -849,6 +849,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String idCityString = Integer.toString(idCity);
         String numberOfDaysString = Integer.toString(numberOfDays);
 
+
         class Background extends AsyncTask<String, String, String> {
 
             @Override
@@ -857,6 +858,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (!s.contains("Itinerary added")) {
                     Toast.makeText(MainActivity.this, s, Toast.LENGTH_LONG).show();
                 } else {
+                    Toast.makeText(MainActivity.this, "Itinerary saved", Toast.LENGTH_LONG).show();
                     ArrayList<String> transport = FragmentItinerary.transport;
                     for (int i = 0; i < transport.size(); i++) {
                         insertTransportItinerary(itineraryId, transport.get(i));
@@ -1055,6 +1057,72 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         Background2 background2 = new Background2();
         background2.execute(Integer.toString(itineraryId), transport);
+    }
+
+    public void deleteItinerary(View view){
+
+        class Background extends AsyncTask<String, String, String> {
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                if (!s.isEmpty()) {
+                    Toast.makeText(MainActivity.this, s, Toast.LENGTH_LONG).show();
+                }else{
+                    replaceFragment(FragmentMyItineraries.newInstance());
+
+                }
+            }
+
+            @Override
+            protected String doInBackground(String... strings) {
+                {
+
+                    StringBuilder result = new StringBuilder();
+                    String server = LoginActivity.server.concat("deleteItinerary.php");
+                    try {
+                        URL url = new URL(server);
+                        HttpURLConnection http = (HttpURLConnection) url.openConnection();
+                        http.setRequestMethod("POST");
+                        http.setDoInput(true);
+                        http.setDoOutput(true);
+
+                        OutputStream output = http.getOutputStream();
+                        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(output, StandardCharsets.UTF_8));
+
+                        Uri.Builder builder = new Uri.Builder().appendQueryParameter("idItinerary", strings[0]);
+
+                        String data = builder.build().getEncodedQuery();
+                        writer.write(data);
+                        writer.flush();
+                        writer.close();
+                        output.close();
+
+                        InputStream input = http.getInputStream();
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(input, StandardCharsets.ISO_8859_1));
+                        String line;
+                        while ((line = reader.readLine()) != null) {
+                            result.append(line);
+                        }
+                        reader.close();
+                        input.close();
+                        http.disconnect();
+                        return result.toString();
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        result = new StringBuilder(Objects.requireNonNull(e.getMessage()));
+                    }
+
+
+                    return result.toString();
+                }
+            }
+        }
+        Background background = new Background();
+        Log.i("idddd", Integer.toString(itineraryId));
+        background.execute(Integer.toString(itineraryId));
+
     }
 
     public static void setAccommodationAddress(String accommodationAddress) {

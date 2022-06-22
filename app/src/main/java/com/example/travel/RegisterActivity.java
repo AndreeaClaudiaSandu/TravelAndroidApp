@@ -156,7 +156,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void sendCode() {
         final String username = "exploretheworldnow.app@gmail.com";
-        final String password = "parola1234P";
+        final String password = "thgiqlvzhvdwpeni";
         activationCode = generateCode();
         String messageToSend = "Your activation code is: " + activationCode + ".";
         Properties properties = new Properties();
