@@ -55,8 +55,8 @@ public class FragmentItinerary extends Fragment {
     ArrayList<String> locationsOrderAddress;
     ArrayList<LatLng> latLngs;
     static String city;
-//    boolean lunch;
-//    boolean extra;
+    boolean lunch;
+    boolean extra;
 
 
     public FragmentItinerary() {
@@ -251,6 +251,7 @@ public class FragmentItinerary extends Fragment {
         daysInfo = new ArrayList<>();
         departureTime = new ArrayList<>();
         String route = null;
+        int position = -1;
         int minutesVisit = 0;
         for (int i = 0; i < dayOrder.size() - 1; i++) {
             String location1 = dayOrder.get(i);
@@ -263,8 +264,20 @@ public class FragmentItinerary extends Fragment {
                         city = attractions.get(i).getCity();
                     }
                     if (attractions.get(j).getName().equals(location1)) {
+                        Log.i("ordera", attractions.get(j).getName());
                         location1Address = attractions.get(j).getLocation();
                         minutesVisit += attractions.get(j).getVisitTime();
+                        minutesVisit+=30;
+                        Log.i("ordermin", Integer.toString(minutesVisit));
+                        if(minutesVisit>180 && position ==-1){
+                            if(minutesVisit<=330) {
+                                Log.i("orderaici", Integer.toString(position));
+                                position = i + 1;
+                            }
+                            else{
+                                position=i;
+                            }
+                        }
                     }
                 }
             }
@@ -302,14 +315,19 @@ public class FragmentItinerary extends Fragment {
                 e.printStackTrace();
             }
         }
-//        Log.i("minutesVisittt", Integer.toString(minutesVisit));
+        Log.i("minutesVisittt", Integer.toString(minutesVisit));
 //        minutesVisit+=(dayOrder.size()-2)*30;
-//        Log.i("minutesVisitttAfter", Integer.toString(minutesVisit));
+        Log.i("minutesVisitttAfter", Integer.toString(minutesVisit));
 //        if(minutesVisit<=300){
 //            extra = true;
-//        }else if(minutesVisit<=480){
-//            lunch = true;
-//        }
+//        }else
+            if(minutesVisit<=480 && position != -1){
+            lunch = true;
+            Log.i("order before crush", dayOrder.toString());
+            Log.i("order pos", Integer.toString(position));
+            dayOrder.add(position,"lunch");
+        }
+        Log.i("orderBoom", dayOrder.toString());
     }
 
     private String parseObject(JSONObject directionObject) {
@@ -412,6 +430,7 @@ public class FragmentItinerary extends Fragment {
 
             Log.i("minutesAttraction", dayOrder.get(position));
             for (int i = 0; i < attractions.size(); i++) {
+
                 if (attractions.get(i).getName().equals(dayOrder.get(position))) {
                     minutesVisitTime = attractions.get(i).getVisitTime();
                     break;
@@ -526,7 +545,7 @@ public class FragmentItinerary extends Fragment {
 
         int accommodationImage = getResources().getIdentifier("accommodation", "drawable", getContext().getPackageName());
         RecyclerView recyclerView = root.findViewById(R.id.attarctionItineraryRecyclerView);
-        ItineraryAttraction_RecyclerViewAdapter adapter = new ItineraryAttraction_RecyclerViewAdapter(getContext(), dayOrder, daysInfo, attractions, departureTime, accommodationImage);
+        ItineraryAttraction_RecyclerViewAdapter adapter = new ItineraryAttraction_RecyclerViewAdapter(getContext(), dayOrder, daysInfo, attractions, departureTime, accommodationImage, lunch);
         recyclerView.setAdapter(adapter);
         setTheDaysVisibility();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

@@ -37,7 +37,7 @@ public class FragmentActivity extends Fragment {
         View root = inflater.inflate(R.layout.fragment_activity, container, false);
         ((TextView) root.findViewById(R.id.specificActivityTitle)).setText(activity.getName());
         ((TextView) root.findViewById(R.id.specificActivityDescription)).setText(activity.getDescription());
-        ((TextView) root.findViewById(R.id.specificActivityLocation)).setText(activity.getCountry() + ", " + activity.getCity());
+        ((TextView) root.findViewById(R.id.specificActivityLocation)).setText(activity.getLocation());
         if (activity.getPrice().equals("free")) {
             ((TextView) root.findViewById(R.id.specificActiivityPrice)).setText(activity.getPrice().substring(0, 1).toUpperCase() + activity.getPrice().substring(1));
         } else {

@@ -98,20 +98,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    private void setFrameLayoutHeight() {
-        display = getWindowManager().getDefaultDisplay();
-        DisplayMetrics metrics = new DisplayMetrics();
-        display.getMetrics(metrics);
-
-        float density = getResources().getDisplayMetrics().density;
-        int dpHeight = (int) (metrics.heightPixels / density);
-        int frameHeightdp = dpHeight - 90;
-        int frameHeightPixels = (int) (frameHeightdp * density);
-        FrameLayout layout = (FrameLayout) findViewById(R.id.frameLayout);
-        ViewGroup.LayoutParams parms = (ViewGroup.LayoutParams) layout.getLayoutParams();
-        parms.height = frameHeightPixels;
-        layout.setLayoutParams(parms);
-    }
+//    private void setFrameLayoutHeight() {
+//        display = getWindowManager().getDefaultDisplay();
+//        DisplayMetrics metrics = new DisplayMetrics();
+//        display.getMetrics(metrics);
+//
+//        float density = getResources().getDisplayMetrics().density;
+//        int dpHeight = (int) (metrics.heightPixels / density);
+//        int frameHeightdp = dpHeight - 90;
+//        int frameHeightPixels = (int) (frameHeightdp * density);
+//        FrameLayout layout = (FrameLayout) findViewById(R.id.frameLayout);
+//        ViewGroup.LayoutParams parms = (ViewGroup.LayoutParams) layout.getLayoutParams();
+//        parms.height = frameHeightPixels;
+//        layout.setLayoutParams(parms);
+//    }
 
 
     @Override

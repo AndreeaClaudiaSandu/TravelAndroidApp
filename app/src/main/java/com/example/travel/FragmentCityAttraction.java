@@ -44,12 +44,16 @@ public class FragmentCityAttraction extends Fragment {
         ((TextView) root.findViewById(R.id.specificAttractionVisitDuration)).setText(Integer.toString(attraction.getVisitTime()) + " minutes");
         ((TextView) root.findViewById(R.id.specificAttractionLocation)).setText(attraction.getLocation());
 
-        StringBuilder hyperlink = new StringBuilder();
-        hyperlink.append("<a href=\"").append(attraction.getLink()).append("\">").append(attraction.getLink()).append("</a>");
-        ((TextView) root.findViewById(R.id.specificAttractionLink)).setText(Html.fromHtml(hyperlink.toString()));
-        ((TextView) root.findViewById(R.id.specificAttractionLink)).setMovementMethod(LinkMovementMethod.getInstance());
-        ((TextView) root.findViewById(R.id.specificAttractionLink)).setLinkTextColor(getResources().getColor(R.color.darkerBlue));
-
+        if(attraction.getLink() != null) {
+            StringBuilder hyperlink = new StringBuilder();
+            hyperlink.append("<a href=\"").append(attraction.getLink()).append("\">").append(attraction.getLink()).append("</a>");
+            ((TextView) root.findViewById(R.id.specificAttractionLink)).setText(Html.fromHtml(hyperlink.toString()));
+            ((TextView) root.findViewById(R.id.specificAttractionLink)).setMovementMethod(LinkMovementMethod.getInstance());
+            ((TextView) root.findViewById(R.id.specificAttractionLink)).setLinkTextColor(getResources().getColor(R.color.darkerBlue));
+        }else{
+            root.findViewById(R.id.specificAttractionLink).setVisibility(View.GONE);
+            root.findViewById(R.id.AttractionLink).setVisibility(View.GONE);
+        }
         return root;
     }
 

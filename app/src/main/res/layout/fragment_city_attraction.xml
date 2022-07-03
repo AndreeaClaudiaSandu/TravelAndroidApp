@@ -199,7 +199,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:fontFamily="sans-serif"
-                android:text="Tickets site"
+                android:text="Attraction site"
                 android:textColor="@color/loginDarkBlue"
                 android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"

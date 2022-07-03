@@ -43,6 +43,7 @@ public class FragmentCityAttractions extends Fragment {
 
     public static FragmentCityAttractions newInstance(City city) {
         FragmentCityAttractions fragment = new FragmentCityAttractions();
+        attractions = new ArrayList<>();
         fragment.city = city;
         return fragment;
     }
@@ -107,8 +108,12 @@ public class FragmentCityAttractions extends Fragment {
                         while ((line = reader.readLine()) != null) {
                             result.append(line);
                             String[] fields = line.split("=,");
-                            if (fields.length > 1) {
+                            if (fields.length ==7) {
                                 attractions.add(new Attraction(fields[0],city.getName(), fields[1],fields[2],fields[3],fields[4],fields[5],fields[6], getResources().getIdentifier(fields[0].replace(" ", "_"), "drawable", getContext().getPackageName())));
+
+                            }
+                            else if( fields.length==6){
+                                attractions.add(new Attraction(fields[0],city.getName(), fields[1],fields[2],fields[3],fields[4],fields[5],null, getResources().getIdentifier(fields[0].replace(" ", "_"), "drawable", getContext().getPackageName())));
 
                             }
                         }

@@ -5,16 +5,14 @@ public class Activity {
     private String name;
     private String description;
     private String price;
-    private String city;
-    private String country;
+    private String location;
     private int image;
 
-    public Activity(String denumire, String descriere, String pret, String oras, String tara, int image) {
+    public Activity(String denumire, String descriere, String pret, String location, int image) {
         this.name = denumire;
         this.description = descriere;
         this.price = pret;
-        this.city = oras;
-        this.country = tara;
+        this.location = location;
         this.image = image;
     }
 
@@ -26,12 +24,8 @@ public class Activity {
         return description;
     }
 
-    public String getCity() {
-        return city;
-    }
-
-    public String getCountry() {
-        return country;
+    public String getLocation() {
+        return location;
     }
 
     public int getImage() {

@@ -51,16 +51,16 @@ public class FragmentActivities extends Fragment {
 
         {
 
-            class GetActivities extends AsyncTask<String, String, String> implements Activities_RecyclerViewAdapter.ItemClickListener{
+            class GetActivities extends AsyncTask<String, String, String> implements Activities_RecyclerViewAdapter.ItemClickListener {
 
                 @Override
                 protected void onPostExecute(String s) {
                     super.onPostExecute(s);
                     if (s.equals("Connection error. Try again.") || s.equals("No activities")) {
                         Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
-                    } else{
+                    } else {
                         RecyclerView recyclerView = getView().findViewById(R.id.activitiesRecyclerView);
-                        Activities_RecyclerViewAdapter adapter = new Activities_RecyclerViewAdapter(getContext(), activities, this );
+                        Activities_RecyclerViewAdapter adapter = new Activities_RecyclerViewAdapter(getContext(), activities, this);
                         recyclerView.setAdapter(adapter);
                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -83,11 +83,10 @@ public class FragmentActivities extends Fragment {
                         String line;
                         while ((line = reader.readLine()) != null) {
                             result.append(line);
-                            String[] fields=  line.split("=,");
-
-                            String tara = fields[4].substring(0,1).toUpperCase() + fields[4].substring(1);
-                            String oras = fields[3].substring(0,1).toUpperCase() + fields[3].substring(1);
-                            activities.add(new Activity(fields[0],fields[1], fields[2], oras,tara,getResources().getIdentifier(fields[0].replace(" ", "").toLowerCase(), "drawable", getContext().getPackageName())));
+                            String[] fields = line.split("=,");
+                            if (fields.length > 1) {
+                                activities.add(new Activity(fields[0], fields[1], fields[2], fields[3], getResources().getIdentifier(fields[0].replace(" ", "").toLowerCase(), "drawable", getContext().getPackageName())));
+                            }
                         }
                         reader.close();
                         input.close();
@@ -103,7 +102,7 @@ public class FragmentActivities extends Fragment {
                 }
 
                 @Override
-                    public void onItemClick(Activity activity) {
+                public void onItemClick(Activity activity) {
                     Toast.makeText(getContext(), activity.getName(), Toast.LENGTH_SHORT).show();
                     Fragment fragment = FragmentActivity.newInstance(activity);
                     ((MainActivity) getActivity()).replaceFragment(fragment);

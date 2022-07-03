@@ -58,9 +58,9 @@ public class FragmentCityConfigureItinerary extends Fragment {
         return root;
     }
 
-    private void setAttractions(){
+    private void setAttractions() {
 
-        class GetAttractions extends AsyncTask<String, String, String> implements PickAttractions_RecyclerViewAdapter.ItemClickListener  {
+        class GetAttractions extends AsyncTask<String, String, String> implements PickAttractions_RecyclerViewAdapter.ItemClickListener {
 
             @Override
             protected void onPostExecute(String s) {
@@ -69,7 +69,7 @@ public class FragmentCityConfigureItinerary extends Fragment {
                     Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
                 } else {
                     RecyclerView recyclerView = getView().findViewById(R.id.chooseAttractionsRecyclerView);
-                    PickAttractions_RecyclerViewAdapter adapter = new PickAttractions_RecyclerViewAdapter(getContext(), attractions, this );
+                    PickAttractions_RecyclerViewAdapter adapter = new PickAttractions_RecyclerViewAdapter(getContext(), attractions, this);
                     recyclerView.setAdapter(adapter);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -105,8 +105,11 @@ public class FragmentCityConfigureItinerary extends Fragment {
                         while ((line = reader.readLine()) != null) {
                             result.append(line);
                             String[] fields = line.split("=,");
-                            if (fields.length > 1) {
-                                attractions.add(new Attraction(fields[0],city.getName(), fields[1],fields[2],fields[3],fields[4],fields[5],fields[6], getResources().getIdentifier(fields[0].replace(" ", "_"), "drawable", getContext().getPackageName())));
+                            if (fields.length == 7) {
+                                attractions.add(new Attraction(fields[0], city.getName(), fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], getResources().getIdentifier(fields[0].replace(" ", "_"), "drawable", getContext().getPackageName())));
+
+                            } else if (fields.length == 6) {
+                                attractions.add(new Attraction(fields[0], city.getName(), fields[1], fields[2], fields[3], fields[4], fields[5], null, getResources().getIdentifier(fields[0].replace(" ", "_"), "drawable", getContext().getPackageName())));
 
                             }
                         }
@@ -144,7 +147,6 @@ public class FragmentCityConfigureItinerary extends Fragment {
         }
         transaction.commit();
     }
-
 
 
 }

@@ -36,8 +36,7 @@ public class Activities_RecyclerViewAdapter extends RecyclerView.Adapter<Activit
     @Override
     public void onBindViewHolder(@NonNull Activities_RecyclerViewAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.activityName.setText(activities.get(position).getName());
-        String location = activities.get(position).getCountry() + ", " +  activities.get(position).getCity();
-        holder.activityLocation.setText(location);
+        holder.activityLocation.setText(activities.get(position).getLocation());
         holder.imageView.setImageResource(activities.get(position).getImage());
 
         holder.itemView.setOnClickListener(v -> clickListener.onItemClick(activities.get(position)));

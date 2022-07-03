@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -27,11 +28,13 @@ import java.util.Objects;
 public class LoginActivity extends AppCompatActivity {
 
     EditText emailField, passwordField;
-//    public static String server = "http://192.168.0.101/travel/";
+    public static String server = "http://192.168.0.101/travel/";
+
+//    public static String server = "http://192.168.137.18/travel/";
 
 //    public static String server = "http://172.20.10.2/travel/";
 
-    public static String server = "http://192.168.0.102/travel/";
+//    public static String server = "http://192.168.0.102/travel/";
 
     public static String connectedAccount;
     public static int idAccount;
@@ -53,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
+        Log.i("login", "login");
         String email = emailField.getText().toString().trim();
         String password = passwordField.getText().toString().trim();
 
@@ -67,6 +71,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 @Override
                 protected void onPostExecute(String s) {
+                    Log.i("post", s);
                     if (!s.equals("Wrong password") && !s.equals("Not a valid account") && !s.equals("Connection error. Try again.")) {
                         connectedAccount = email;
                         Intent intent = new Intent();
@@ -81,10 +86,11 @@ public class LoginActivity extends AppCompatActivity {
 
                 @Override
                 protected String doInBackground(String... voids) {
-
+                    Log.i("doInBack", "here");
                     StringBuilder result = new StringBuilder();
                     String server = LoginActivity.server.concat("login.php");
                     try {
+
                         URL url = new URL(server);
                         HttpURLConnection http = (HttpURLConnection) url.openConnection();
                         http.setRequestMethod("POST");
@@ -102,6 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                         writer.close();
                         output.close();
 
+                        Log.i("doinback", "later");
                         InputStream input = http.getInputStream();
                         BufferedReader reader = new BufferedReader(new InputStreamReader(input, StandardCharsets.ISO_8859_1));
                         String line;
@@ -112,9 +119,11 @@ public class LoginActivity extends AppCompatActivity {
                         reader.close();
                         input.close();
                         http.disconnect();
+                        Log.i("doinbACK", result.toString());
                         return result.toString();
 
                     } catch (IOException e) {
+
                         e.printStackTrace();
                         result = new StringBuilder(Objects.requireNonNull(e.getMessage()));
                     }
@@ -123,8 +132,11 @@ public class LoginActivity extends AppCompatActivity {
                     return result.toString();
                 }
             }
+
             Background background = new Background(this);
+            Log.i("login before exec", "");
             background.execute(email, password);
+            Log.i("login after exec","");
         }
     }
 
